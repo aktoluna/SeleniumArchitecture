@@ -1,0 +1,252 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.saha.slnarch</groupId>
+  <artifactId>slnarch-parent</artifactId>
+  <version>BETA-1.0.0</version>
+  <packaging>pom</packaging>
+
+  <name>${project.artifactId}</name>
+  <description>Selenium Architecture Project</description>
+  <url>http://maven.apache.org</url>
+  <inceptionYear>2017</inceptionYear>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Ali Aktolun</name>
+      <email>ali.aktolun@sahabt.com</email>
+      <organization>Saha Information Technologies</organization>
+      <organizationUrl>http://www.sahabt.com</organizationUrl>
+      <roles>
+        <role>Developper</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>1.8</java.version>
+    <!--Dependency Version-->
+    <junit.version>4.12</junit.version>
+    <guava.version>23.3-jre</guava.version>
+    <selenium.version>3.6.0</selenium.version>
+    <log4j2.version>2.9.1</log4j2.version>
+    <logback.version>1.2.3</logback.version>
+    <aspectj.version>1.8.9</aspectj.version>
+    <feather.version>1.0</feather.version>
+    <apache.common.version>3.6</apache.common.version>
+    <kotlin.version>1.1.51</kotlin.version>
+    <!--Build Plugins Version-->
+    <maven.complier.version>3.5.1</maven.complier.version>
+    <maven.surefire.version>2.20.1</maven.surefire.version>
+    <jacoco.version>0.7.9</jacoco.version>
+  </properties>
+
+  <modules>
+    <module>slnarch-common</module>
+    <module>slnarch-core</module>
+    <module>slnarch-di</module>
+    <module>slnarch-junit</module>
+    <module>slnarch-testng</module>
+    <module>slnarch-demo</module>
+  </modules>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>kotlin-maven-plugin</artifactId>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <version>${kotlin.version}</version>
+        <executions>
+          <execution>
+            <id>compile</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <sourceDirs>
+                <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                <sourceDir>${project.basedir}/src/main/java</sourceDir>
+              </sourceDirs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>test-compile</id>
+            <goals>
+              <goal>test-compile</goal>
+            </goals>
+            <configuration>
+              <sourceDirs>
+                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                <sourceDir>${project.basedir}/src/test/java</sourceDir>
+              </sourceDirs>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.complier.version}</version>
+        <configuration>
+          <compilerVersion>${java.version}</compilerVersion>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <forceJavacCompilerUse>true</forceJavacCompilerUse>
+        </configuration>
+        <executions>
+          <!-- Replacing default-compile as it is treated specially by maven -->
+          <execution>
+            <id>default-compile</id>
+            <phase>none</phase>
+          </execution>
+          <!-- Replacing default-testCompile as it is treated specially by maven -->
+          <execution>
+            <id>default-testCompile</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>java-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>java-test-compile</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven.surefire.version}</version>
+        <configuration>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+        </configuration>
+      </plugin>
+      <!--<plugin>-->
+        <!--<groupId>org.codehaus.mojo</groupId>-->
+        <!--<artifactId>findbugs-maven-plugin</artifactId>-->
+        <!--<version>3.0.3</version>-->
+        <!--<configuration>-->
+          <!--<effort>Max</effort>-->
+          <!--<threshold>Max</threshold>-->
+          <!--<xmlOutput>true</xmlOutput>-->
+        <!--</configuration>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<id>findbugs-verify</id>-->
+            <!--<goals>-->
+              <!--<goal>check</goal>-->
+            <!--</goals>-->
+          <!--</execution>-->
+        <!--</executions>-->
+      <!--</plugin>-->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.version}</version>
+        <!-- preparing agent that is used for analysis -->
+        <executions>
+          <execution>
+            <id>default-prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+
+          <!-- creates Jacoco reports on site phase
+              is better keep generating reports on site phase and
+              for developer better life create please custom mvn command with site in it.
+          -->
+          <execution>
+            <id>jacoco-default-report</id>
+            <phase>site</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+
+
+          <!-- running analysis on test phase -->
+          <execution>
+            <id>jacoco-check</id>
+            <phase>test</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <rule implementation="org.jacoco.maven.RuleConfiguration">
+                  <element>BUNDLE</element>
+                  <limits>
+                    <limit implementation="org.jacoco.report.check.Limit">
+                      <counter>INSTRUCTION</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.55</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-stdlib</artifactId>
+      <version>${kotlin.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-test-junit</artifactId>
+      <version>${kotlin.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+
+
+    <!--<dependency>-->
+    <!--<groupId>org.apache.logging.log4j</groupId>-->
+    <!--<artifactId>log4j-api</artifactId>-->
+    <!--<version>${log4j2.version}</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+    <!--<groupId>org.apache.logging.log4j</groupId>-->
+    <!--<artifactId>log4j-core</artifactId>-->
+    <!--<version>${log4j2.version}</version>-->
+    <!--</dependency>-->
+  </dependencies>
+</project>
