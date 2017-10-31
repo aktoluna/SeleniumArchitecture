@@ -3,7 +3,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.saha.slnarch</groupId>
+  <groupId>io.github.aktoluna</groupId>
   <artifactId>slnarch-parent</artifactId>
   <version>BETA-1.0.0</version>
   <packaging>pom</packaging>
@@ -53,6 +53,7 @@
     <feather.version>1.0</feather.version>
     <apache.common.version>3.6</apache.common.version>
     <kotlin.version>1.1.51</kotlin.version>
+    <commons.lang3.version>3.5</commons.lang3.version>
     <!--Build Plugins Version-->
     <maven.complier.version>3.5.1</maven.complier.version>
     <maven.surefire.version>2.20.1</maven.surefire.version>
@@ -262,17 +263,17 @@
               </execution>
             </executions>
           </plugin>
-          <!--<plugin>-->
-            <!--<groupId>org.sonatype.plugins</groupId>-->
-            <!--<artifactId>nexus-staging-maven-plugin</artifactId>-->
-            <!--<version>1.6.7</version>-->
-            <!--<extensions>true</extensions>-->
-            <!--<configuration>-->
-              <!--<serverId>ossrh</serverId>-->
-              <!--<nexusUrl>https://oss.sonatype.org/</nexusUrl>-->
-              <!--<autoReleaseAfterClose>true</autoReleaseAfterClose>-->
-            <!--</configuration>-->
-          <!--</plugin>-->
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.7</version>
+            <extensions>true</extensions>
+            <configuration>
+              <serverId>ossrh</serverId>
+              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+          </plugin>
         </plugins>
       </build>
     </profile>
@@ -306,18 +307,18 @@
   </dependencies>
 
   <distributionManagement>
-    <!--<snapshotRepository>-->
-      <!--<id>ossrh</id>-->
-      <!--<url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
-    <!--</snapshotRepository>-->
-    <!--<repository>-->
-      <!--<id>ossrh</id>-->
-      <!--<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
-    <!--</repository>-->
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
     <repository>
-      <id>bintray</id>
-      <name>aktoluna-SeleniumArchitecture</name>
-      <url>https://api.bintray.com/maven/aktoluna/SeleniumArchitecture/SeleniumArchitecture/;publish=1</url>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
+    <!--<repository>-->
+      <!--<id>bintray</id>-->
+      <!--<name>aktoluna-SeleniumArchitecture</name>-->
+      <!--<url>https://api.bintray.com/maven/aktoluna/SeleniumArchitecture/SeleniumArchitecture/;publish=1</url>-->
+    <!--</repository>-->
   </distributionManagement>
 </project>
