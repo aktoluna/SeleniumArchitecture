@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import com.saha.slnarch.common.helper.StringHelper;
 import org.junit.Test;
 
+
 public class StringHelperTest {
 
   @Test

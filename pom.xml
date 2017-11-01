@@ -5,7 +5,7 @@
 
   <groupId>io.github.aktoluna</groupId>
   <artifactId>slnarch-parent</artifactId>
-  <version>BETA-1.0.0</version>
+  <version>BETA-1.1.1</version>
   <packaging>pom</packaging>
 
   <name>${project.artifactId}</name>
@@ -24,7 +24,8 @@
   <scm>
     <url>https://github.com/aktoluna/SeleniumArchitecture</url>
     <connection>scm:git:git://github.com/aktoluna/SeleniumArchitecture.git</connection>
-    <developerConnection>scm:git:aktoluna@github.com:aktoluna/SeleniumArchitecture.git</developerConnection>
+    <developerConnection>scm:git:aktoluna@github.com:aktoluna/SeleniumArchitecture.git
+    </developerConnection>
   </scm>
   <developers>
     <developer>
@@ -44,7 +45,6 @@
     <bintray.repo>bintray-examples/repo</bintray.repo>
     <bintray.package>maven-example</bintray.package>
     <!--Dependency Version-->
-    <junit.version>4.12</junit.version>
     <guava.version>23.3-jre</guava.version>
     <selenium.version>3.6.0</selenium.version>
     <log4j2.version>2.9.1</log4j2.version>
@@ -54,9 +54,13 @@
     <apache.common.version>3.6</apache.common.version>
     <kotlin.version>1.1.51</kotlin.version>
     <commons.lang3.version>3.5</commons.lang3.version>
+    <junit.version>4.12</junit.version>
+    <junit.jupiter.version>5.0.1</junit.jupiter.version>
+    <junit.vintage.version>${junit.version}.1</junit.vintage.version>
+    <junit.platform.version>1.0.1</junit.platform.version>
     <!--Build Plugins Version-->
     <maven.complier.version>3.5.1</maven.complier.version>
-    <maven.surefire.version>2.20.1</maven.surefire.version>
+    <maven.surefire.version>2.19</maven.surefire.version>
     <maven.source.version>2.2.1</maven.source.version>
     <maven.javadoc.version>2.9.1</maven.javadoc.version>
     <maven.gpg.version>1.6</maven.gpg.version>
@@ -149,24 +153,36 @@
         <configuration>
           <argLine>-Dfile.encoding=UTF-8</argLine>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-surefire-provider</artifactId>
+            <version>${junit.platform.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <!--<plugin>-->
-        <!--<groupId>org.codehaus.mojo</groupId>-->
-        <!--<artifactId>findbugs-maven-plugin</artifactId>-->
-        <!--<version>3.0.3</version>-->
-        <!--<configuration>-->
-          <!--<effort>Max</effort>-->
-          <!--<threshold>Max</threshold>-->
-          <!--<xmlOutput>true</xmlOutput>-->
-        <!--</configuration>-->
-        <!--<executions>-->
-          <!--<execution>-->
-            <!--<id>findbugs-verify</id>-->
-            <!--<goals>-->
-              <!--<goal>check</goal>-->
-            <!--</goals>-->
-          <!--</execution>-->
-        <!--</executions>-->
+      <!--<groupId>org.codehaus.mojo</groupId>-->
+      <!--<artifactId>findbugs-maven-plugin</artifactId>-->
+      <!--<version>3.0.3</version>-->
+      <!--<configuration>-->
+      <!--<effort>Max</effort>-->
+      <!--<threshold>Max</threshold>-->
+      <!--<xmlOutput>true</xmlOutput>-->
+      <!--</configuration>-->
+      <!--<executions>-->
+      <!--<execution>-->
+      <!--<id>findbugs-verify</id>-->
+      <!--<goals>-->
+      <!--<goal>check</goal>-->
+      <!--</goals>-->
+      <!--</execution>-->
+      <!--</executions>-->
       <!--</plugin>-->
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -218,11 +234,6 @@
       <id>release</id>
       <build>
         <plugins>
-          <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-jar-plugin</artifactId>-->
-            <!--<version>2.3.2</version>-->
-          <!--</plugin>-->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
@@ -279,13 +290,39 @@
     </profile>
   </profiles>
 
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <!--<repository>-->
+    <!--<id>bintray</id>-->
+    <!--<name>aktoluna-SeleniumArchitecture</name>-->
+    <!--<url>https://api.bintray.com/maven/aktoluna/SeleniumArchitecture/SeleniumArchitecture/;publish=1</url>-->
+    <!--</repository>-->
+  </distributionManagement>
+
   <dependencies>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <version>${junit.vintage.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
@@ -306,19 +343,5 @@
     </dependency>
   </dependencies>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <!--<repository>-->
-      <!--<id>bintray</id>-->
-      <!--<name>aktoluna-SeleniumArchitecture</name>-->
-      <!--<url>https://api.bintray.com/maven/aktoluna/SeleniumArchitecture/SeleniumArchitecture/;publish=1</url>-->
-    <!--</repository>-->
-  </distributionManagement>
+
 </project>

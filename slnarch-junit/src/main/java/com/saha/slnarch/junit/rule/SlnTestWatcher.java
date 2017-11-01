@@ -8,8 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SlnTestWatcher extends TestWatcher {
+
   private Stopwatch stopwatch = Stopwatch.createUnstarted();
-  private Logger logger= LoggerFactory.getLogger(SlnTestWatcher.class);
+  private Logger logger = LoggerFactory.getLogger(SlnTestWatcher.class);
 
 
   @Override

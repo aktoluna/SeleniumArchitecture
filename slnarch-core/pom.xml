@@ -13,7 +13,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.saha.slnarch</groupId>
+      <groupId>io.github.aktoluna</groupId>
       <artifactId>slnarch-common</artifactId>
       <version>${project.version}</version>
     </dependency>
