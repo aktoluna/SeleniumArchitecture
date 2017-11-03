@@ -60,10 +60,12 @@
     <junit.platform.version>1.0.1</junit.platform.version>
     <!--Build Plugins Version-->
     <maven.complier.version>3.5.1</maven.complier.version>
-    <maven.surefire.version>2.19</maven.surefire.version>
+    <maven.surefire.version>2.19.1</maven.surefire.version>
     <maven.source.version>2.2.1</maven.source.version>
     <maven.javadoc.version>2.9.1</maven.javadoc.version>
     <maven.gpg.version>1.6</maven.gpg.version>
+    <maven.nexus.version>1.6.7</maven.nexus.version>
+    <maven.release.version>2.5.3</maven.release.version>
     <jacoco.version>0.7.9</jacoco.version>
   </properties>
 
@@ -78,6 +80,17 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>${maven.nexus.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>false</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
       <plugin>
         <artifactId>kotlin-maven-plugin</artifactId>
         <groupId>org.jetbrains.kotlin</groupId>
@@ -120,12 +133,10 @@
           <forceJavacCompilerUse>true</forceJavacCompilerUse>
         </configuration>
         <executions>
-          <!-- Replacing default-compile as it is treated specially by maven -->
           <execution>
             <id>default-compile</id>
             <phase>none</phase>
           </execution>
-          <!-- Replacing default-testCompile as it is treated specially by maven -->
           <execution>
             <id>default-testCompile</id>
             <phase>none</phase>
@@ -159,36 +170,12 @@
             <artifactId>junit-platform-surefire-provider</artifactId>
             <version>${junit.platform.version}</version>
           </dependency>
-          <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.jupiter.version}</version>
-          </dependency>
         </dependencies>
       </plugin>
-      <!--<plugin>-->
-      <!--<groupId>org.codehaus.mojo</groupId>-->
-      <!--<artifactId>findbugs-maven-plugin</artifactId>-->
-      <!--<version>3.0.3</version>-->
-      <!--<configuration>-->
-      <!--<effort>Max</effort>-->
-      <!--<threshold>Max</threshold>-->
-      <!--<xmlOutput>true</xmlOutput>-->
-      <!--</configuration>-->
-      <!--<executions>-->
-      <!--<execution>-->
-      <!--<id>findbugs-verify</id>-->
-      <!--<goals>-->
-      <!--<goal>check</goal>-->
-      <!--</goals>-->
-      <!--</execution>-->
-      <!--</executions>-->
-      <!--</plugin>-->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco.version}</version>
-        <!-- preparing agent that is used for analysis -->
         <executions>
           <execution>
             <id>default-prepare-agent</id>
@@ -226,9 +213,21 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>${maven.release.version}</version>
+        <configuration>
+          <releaseProfiles>release</releaseProfiles>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
+  <!--
+  Profile : Release
+  Javadoc, GPG, Source Plugins
+  -->
   <profiles>
     <profile>
       <id>release</id>
@@ -274,22 +273,12 @@
               </execution>
             </executions>
           </plugin>
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.7</version>
-            <extensions>true</extensions>
-            <configuration>
-              <serverId>ossrh</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
-            </configuration>
-          </plugin>
         </plugins>
       </build>
     </profile>
   </profiles>
 
+  <!--Repo Url-->
   <distributionManagement>
     <snapshotRepository>
       <id>ossrh</id>
@@ -299,30 +288,9 @@
       <id>ossrh</id>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
-    <!--<repository>-->
-    <!--<id>bintray</id>-->
-    <!--<name>aktoluna-SeleniumArchitecture</name>-->
-    <!--<url>https://api.bintray.com/maven/aktoluna/SeleniumArchitecture/SeleniumArchitecture/;publish=1</url>-->
-    <!--</repository>-->
   </distributionManagement>
 
   <dependencies>
-
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.junit.vintage</groupId>
-      <artifactId>junit-vintage-engine</artifactId>
-      <version>${junit.vintage.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
@@ -341,6 +309,22 @@
       <version>${kotlin.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <version>${junit.vintage.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+
   </dependencies>
 
 
