@@ -5,6 +5,7 @@ import com.saha.slnarch.core.element.by.ByFactory;
 import com.saha.slnarch.core.element.by.ByType;
 import com.saha.slnarch.core.js.JavaScriptAction;
 import com.saha.slnarch.core.js.JavaScriptOperation;
+import com.saha.slnarch.core.model.ElementInfo;
 import java.util.List;
 import javax.inject.Inject;
 import org.openqa.selenium.By;
@@ -47,6 +48,16 @@ public class ElementActionImpl implements
   @Override
   public WebElement findElement(String name) {
     return findElement(getByCreate().createBy(name));
+  }
+
+  @Override
+  public WebElement findElement(ByType byType, String name) {
+    return findElement(ByFactory.buildBy(byType).createBy(name));
+  }
+
+  @Override
+  public WebElement findElement(ElementInfo elementInfo) {
+    return findElement(elementInfo.getType(), elementInfo.getKey());
   }
 
   @Override
@@ -117,6 +128,18 @@ public class ElementActionImpl implements
   @Override
   public ElementAction clickElement(String name) {
     clickElement(findElement(name));
+    return this;
+  }
+
+  @Override
+  public ElementAction clickElement(ByType byType, String name) {
+    clickElement(findElement(byType, name));
+    return this;
+  }
+
+  @Override
+  public ElementAction clickElement(ElementInfo elementInfo) {
+    clickElement(findElement(elementInfo));
     return this;
   }
 

@@ -1,0 +1,16 @@
+{
+    "depPort":
+    {
+      "value":".//*[@id='searchText']",
+      "type":"XPATH"
+    },
+    "arrPort": "ARRPORT",
+    "flightType": "flightType",
+    "dateDay": "OnlineTicket_ddlGidisGun",
+    "buttonSearch": "btnSearch",
+    "dateMonth": "OnlineTicket_ddlGidisAyYil",
+    "tripType": "TRIPTYPE",
+    "infant": "INFANT",
+    "child": "CHILD",
+    "adult": "ADULT"
+}

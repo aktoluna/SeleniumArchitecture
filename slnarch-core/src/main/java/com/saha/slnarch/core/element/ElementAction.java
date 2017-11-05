@@ -1,6 +1,8 @@
 package com.saha.slnarch.core.element;
 
 import com.saha.slnarch.core.element.by.ByCreate;
+import com.saha.slnarch.core.element.by.ByType;
+import com.saha.slnarch.core.model.ElementInfo;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -14,6 +16,10 @@ public interface ElementAction<T extends ElementAction> {
   WebElement findElement(By by);
 
   WebElement findElement(String name);
+
+  WebElement findElement(ByType byType, String name);
+
+  WebElement findElement(ElementInfo elementInfo);
 
   WebElement findElement(By by, int index);
 
@@ -38,6 +44,10 @@ public interface ElementAction<T extends ElementAction> {
   T clickElement(By by);
 
   T clickElement(String name);
+
+  T clickElement(ByType byType, String name);
+
+  T clickElement(ElementInfo elementInfo);
 
   T hoverElement(WebElement element);
 
