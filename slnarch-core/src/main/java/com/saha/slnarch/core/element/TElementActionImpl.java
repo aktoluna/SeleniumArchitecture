@@ -3,7 +3,6 @@ package com.saha.slnarch.core.element;
 import com.saha.slnarch.core.element.by.ByCreate;
 import com.saha.slnarch.core.element.by.ByFactory;
 import com.saha.slnarch.core.element.by.ByType;
-import com.saha.slnarch.core.js.JavaScriptAction;
 import com.saha.slnarch.core.js.JavaScriptOperation;
 import com.saha.slnarch.core.model.ElementInfo;
 import java.util.List;
@@ -14,15 +13,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
-public class ElementActionImpl implements
-    ElementAction<ElementAction>, JavaScriptAction<JavaScriptAction> {
+class TElementActionImpl implements
+    ElementAction<ElementAction> {
 
   final WebDriver driver;
   final JavaScriptOperation javaScriptOperation;
   ByCreate byCreate;
 
   @Inject
-  public ElementActionImpl(WebDriver driver, JavaScriptOperation javaScriptOperation,
+  public TElementActionImpl(WebDriver driver, JavaScriptOperation javaScriptOperation,
       ByCreate byCreate) {
     this.driver = driver;
     this.javaScriptOperation = javaScriptOperation;
@@ -30,7 +29,7 @@ public class ElementActionImpl implements
   }
 
   @Inject
-  public ElementActionImpl(WebDriver driver, JavaScriptOperation javaScriptOperation) {
+  public TElementActionImpl(WebDriver driver, JavaScriptOperation javaScriptOperation) {
     this(driver, javaScriptOperation, ByFactory.buildBy(ByType.CSS));
   }
 
@@ -175,7 +174,7 @@ public class ElementActionImpl implements
 
   @Override
   public ElementAction scrollToElement(WebElement element) {
-    scrollToWithJs(element.getLocation().getX(), element.getLocation().getY());
+//    scrollToWithJs(element.getLocation().getX(), element.getLocation().getY());
     return this;
   }
 
@@ -237,49 +236,5 @@ public class ElementActionImpl implements
     return null;
   }
 
-  @Override
-  public JavaScriptAction clickWithJs(WebDriver driver, WebElement element) {
-    javaScriptOperation.executeJS("arguments[0].click();", element);
-    return this;
-  }
 
-  @Override
-  public JavaScriptAction clickWithJs(By by, int... index) {
-    clickWithJs(driver, findElement(by, index[0]));
-    return this;
-  }
-
-  @Override
-  public JavaScriptAction hoverElementWithJs(WebElement element) {
-    javaScriptOperation.executeJS("var element = arguments[0];"
-        + "var mouseEventObj = document.createEvent('MouseEvents');"
-        + "mouseEventObj.initEvent( 'mouseover', true, true );"
-        + "element.dispatchEvent(mouseEventObj);", element);
-    return this;
-  }
-
-  @Override
-  public JavaScriptAction highlightElementWithJs(WebElement element) {
-    javaScriptOperation.executeJS("arguments[0].setAttribute('style', arguments[1]);", element,
-        "color: red;border: 1px dashed red; border");
-    return this;
-  }
-
-  @Override
-  public JavaScriptAction scrollToWithJs(int x, int y) {
-    javaScriptOperation.executeJS(String.format("window.scrollTo(%d, %d);", x, y), true);
-    return this;
-  }
-
-  @Override
-  public JavaScriptAction scrollToPageUpWithJs() {
-    javaScriptOperation.executeJS("window.scrollTo(document.body.scrollHeight, 0)", true);
-    return this;
-  }
-
-  @Override
-  public JavaScriptAction scrollToPageEndWithJs() {
-    javaScriptOperation.executeJS("window.scrollTo(0, document.body.scrollHeight)", true);
-    return this;
-  }
 }

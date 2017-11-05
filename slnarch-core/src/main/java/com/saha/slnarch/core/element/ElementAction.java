@@ -7,7 +7,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public interface ElementAction<T extends ElementAction> {
+public interface ElementAction<T> {
 
   ByCreate getByCreate();
 
@@ -74,7 +74,6 @@ public interface ElementAction<T extends ElementAction> {
   T scrollToElement(By by, int x, int y);
 
   T scrollToElement(String name, int x, int y);
-
 
   T selectComboItem(WebElement element, String value);
 

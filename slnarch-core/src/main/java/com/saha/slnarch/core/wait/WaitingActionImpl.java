@@ -39,7 +39,7 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
       waitByMs(SLEEP_MILLIS);
       driverWait.until(expectation);
     } catch (Throwable error) {
-      log.error("Page Wait Exception", error);
+      log.error("Page Wait Exception");
     }
     return this;
   }
@@ -53,7 +53,7 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
       waitByMs(SLEEP_MILLIS);
       driverWait.until(expectation);
     } catch (Throwable error) {
-      log.error("Angular Wait Exception", error);
+      log.error("Angular Wait Exception");
     }
     return this;
   }
@@ -63,19 +63,16 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
     try {
       javaScriptOperation.executeJS("window.jQuery");
       if (javaScriptOperation.executeJS("return jQuery.active").toString().equals("0")) {
-        System.out.println("Page Is loaded.");
         return this;
       }
-
       for (int i = 0; i < 25; i++) {
         waitByMs(SLEEP_MILLIS);
-        System.out.println("i " + i);
         if (javaScriptOperation.executeJS("return jQuery.active").toString().equals("0")) {
           break;
         }
       }
     } catch (Exception e) {
-      log.error("Jquery Wait Exception", e);
+      log.error("Jquery Wait Exception");
     }
     return this;
   }

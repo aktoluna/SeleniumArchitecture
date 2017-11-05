@@ -1,10 +1,10 @@
-package com.saha.slnarch.core.js;
+package com.saha.slnarch.core.element;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public interface JavaScriptAction<T extends JavaScriptAction> {
+public interface JavaScriptAction<T extends Element> {
 
   T clickWithJs(WebDriver driver, WebElement element);
 

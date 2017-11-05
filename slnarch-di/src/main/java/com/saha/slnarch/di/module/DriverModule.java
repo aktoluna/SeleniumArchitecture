@@ -2,9 +2,8 @@ package com.saha.slnarch.di.module;
 
 import com.saha.slnarch.core.driver.DriverAction;
 import com.saha.slnarch.core.driver.DriverActionImpl;
-import com.saha.slnarch.core.element.ElementAction;
-import com.saha.slnarch.core.element.ElementActionImpl;
-import com.saha.slnarch.core.js.JavaScriptAction;
+import com.saha.slnarch.core.element.Element;
+import com.saha.slnarch.core.element.ElementImp;
 import com.saha.slnarch.core.js.JavaScriptOperation;
 import com.saha.slnarch.core.js.JavaScriptOperationImpl;
 import com.saha.slnarch.core.wait.WaitingAction;
@@ -56,15 +55,8 @@ public class DriverModule {
 
   @Provides
   @Singleton
-  public ElementAction provideElementAction(WebDriver driver,
+  public Element provideElement(WebDriver driver,
       JavaScriptOperation javaScriptOperation) {
-    return new ElementActionImpl(driver, javaScriptOperation);
-  }
-
-  @Provides
-  @Singleton
-  public JavaScriptAction provideJavaScriptAction(WebDriver driver,
-      JavaScriptOperation javaScriptOperation) {
-    return new ElementActionImpl(driver, javaScriptOperation);
+    return new ElementImp(driver, javaScriptOperation);
   }
 }
