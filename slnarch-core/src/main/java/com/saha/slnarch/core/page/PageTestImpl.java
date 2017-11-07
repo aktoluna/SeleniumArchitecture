@@ -1,6 +1,6 @@
 package com.saha.slnarch.core.page;
 
-import com.saha.slnarch.common.file.PropertyHelper;
+import com.saha.slnarch.common.helper.PropertyHelper;
 import com.saha.slnarch.core.browser.BrowserFactory;
 import com.saha.slnarch.core.js.JavaScriptOperationImpl;
 import com.saha.slnarch.core.listener.WaitEventListener;

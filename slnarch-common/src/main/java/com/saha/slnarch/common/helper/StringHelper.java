@@ -27,4 +27,14 @@ public class StringHelper {
     }
     return converted;
   }
+
+  public static String convertIntToString(int value) {
+    String converted = "";
+    try {
+      converted = String.valueOf(value);
+    } catch (Exception e) {
+      logger.error("Int Convert String Error", e);
+    }
+    return converted;
+  }
 }

@@ -13,25 +13,25 @@ public interface ElementAction<T> {
 
   void setByCreate(ByCreate byCreate);
 
-  WebElement findElement(By by);
+  WebElement find(By by);
 
-  WebElement findElement(String name);
+  WebElement find(String name);
 
-  WebElement findElement(ByType byType, String name);
+  WebElement find(ByType byType, String name);
 
-  WebElement findElement(ElementInfo elementInfo);
+  WebElement find(ElementInfo elementInfo);
 
-  WebElement findElement(By by, int index);
+  WebElement find(By by, int index);
 
-  WebElement findElement(String name, int index);
+  WebElement find(String name, int index);
 
-  WebElement findElementIn(WebElement parent, By by, int index);
+  WebElement findIn(WebElement parent, By by, int index);
 
-  WebElement findElementIn(WebElement parent, String name, int index);
+  WebElement findIn(WebElement parent, String name, int index);
 
-  List<WebElement> findElements(By by);
+  List<WebElement> finds(By by);
 
-  List<WebElement> findElements(String name);
+  List<WebElement> finds(String name);
 
   T sendKeys(WebElement webElement, String keys);
 
@@ -39,41 +39,41 @@ public interface ElementAction<T> {
 
   T sendKeys(By by, String keys);
 
-  T clickElement(WebElement webElement);
+  T click(WebElement webElement);
 
-  T clickElement(By by);
+  T click(By by);
 
-  T clickElement(String name);
+  T click(String name);
 
-  T clickElement(ByType byType, String name);
+  T click(ByType byType, String name);
 
-  T clickElement(ElementInfo elementInfo);
+  T click(ElementInfo elementInfo);
 
-  T hoverElement(WebElement element);
+  T hover(WebElement element);
 
-  T hoverElement(By by);
+  T hover(By by);
 
-  T hoverElement(String name);
+  T hover(String name);
 
-  T hoverElementByNth(By by, int index);
+  T hoverByNth(By by, int index);
 
-  T hoverElementByNth(String name, int index);
+  T hoverByNth(String name, int index);
 
-  T scrollToElement(WebElement element);
+  T scrollTo(WebElement element);
 
-  T scrollToElement(By by);
+  T scrollTo(By by);
 
-  T scrollToElement(String name);
+  T scrollTo(String name);
 
-  T scrollToElementByNth(By by, int... index);
+  T scrollToByNth(By by, int... index);
 
-  T scrollToElementByNth(String name, int... index);
+  T scrollToByNth(String name, int... index);
 
-  T scrollToElement(WebElement element, int x, int y);
+  T scrollTo(WebElement element, int x, int y);
 
-  T scrollToElement(By by, int x, int y);
+  T scrollTo(By by, int x, int y);
 
-  T scrollToElement(String name, int x, int y);
+  T scrollTo(String name, int x, int y);
 
   T selectComboItem(WebElement element, String value);
 

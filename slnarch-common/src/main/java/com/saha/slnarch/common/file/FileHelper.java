@@ -15,6 +15,9 @@ import java.nio.charset.StandardCharsets;
 
 public class FileHelper implements FileParser, FileReader, FileWriter {
 
+  private static FileHelper instance;
+  private static Object lock = new Object();
+
   private static final Charset UTF8 = StandardCharsets.UTF_8;
   private static final String DOT = ".";
   private static final String YAML = DOT + "yaml";
@@ -22,8 +25,17 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
   private static final String XML = DOT + "xml";
   private static final String PROP = DOT + "properties";
 
-  public FileHelper() {
+  private FileHelper() {
 
+  }
+
+  public static FileHelper getInstance() {
+    synchronized (lock) {
+      if (instance == null) {
+        instance = new FileHelper();
+      }
+    }
+    return instance;
   }
 
   @Override
@@ -31,7 +43,7 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
     Preconditions.checkNotNull(filePath);
     T t = null;
     try {
-      t = getParser(filePath).parseFile(getFileStream(filePath),output);
+      t = getParser(filePath).parseFile(getFileStream(filePath), output);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -44,13 +56,7 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
       parser = new YamlParser();
     } else if (filePath.endsWith(JSON)) {
       parser = new JsonParser();
-    }
-//    } else if (filePath.endsWith(XML)) {
-//      parser = new JsonParser<>();
-//    } else if (filePath.endsWith(PROP)) {
-//      parser = new JsonParser<>();
-//    }
-    else {
+    } else {
       throw new Exception("File Type Not Found");
     }
     return parser;
@@ -92,7 +98,6 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
   }
 
 
-
   private File toFile(String path) {
     return new File(path);
   }
@@ -104,7 +109,6 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
   private URI toUrI(File file) {
     return file.getAbsoluteFile().toURI();
   }
-
 
 
   private ByteArrayOutputStream toByteStream(InputStream is) {

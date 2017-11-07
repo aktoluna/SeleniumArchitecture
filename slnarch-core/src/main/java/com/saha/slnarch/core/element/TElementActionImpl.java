@@ -45,53 +45,53 @@ class TElementActionImpl implements
   }
 
   @Override
-  public WebElement findElement(String name) {
-    return findElement(getByCreate().createBy(name));
+  public WebElement find(String name) {
+    return find(getByCreate().createBy(name));
   }
 
   @Override
-  public WebElement findElement(ByType byType, String name) {
-    return findElement(ByFactory.buildBy(byType).createBy(name));
+  public WebElement find(ByType byType, String name) {
+    return find(ByFactory.buildBy(byType).createBy(name));
   }
 
   @Override
-  public WebElement findElement(ElementInfo elementInfo) {
-    return findElement(elementInfo.getType(), elementInfo.getKey());
+  public WebElement find(ElementInfo elementInfo) {
+    return find(elementInfo.getType(), elementInfo.getKey());
   }
 
   @Override
-  public WebElement findElement(By by) {
+  public WebElement find(By by) {
     return driver.findElement(by);
   }
 
   @Override
-  public WebElement findElement(By by, int index) {
+  public WebElement find(By by, int index) {
     return driver.findElements(by).get(index);
   }
 
   @Override
-  public WebElement findElement(String name, int index) {
-    return findElement(getByCreate().createBy(name), index);
+  public WebElement find(String name, int index) {
+    return find(getByCreate().createBy(name), index);
   }
 
   @Override
-  public WebElement findElementIn(WebElement parent, By by, int index) {
+  public WebElement findIn(WebElement parent, By by, int index) {
     return parent.findElements(by).get(index);
   }
 
   @Override
-  public WebElement findElementIn(WebElement parent, String name, int index) {
-    return findElementIn(parent, getByCreate().createBy(name), index);
+  public WebElement findIn(WebElement parent, String name, int index) {
+    return findIn(parent, getByCreate().createBy(name), index);
   }
 
   @Override
-  public List<WebElement> findElements(By by) {
+  public List<WebElement> finds(By by) {
     return driver.findElements(by);
   }
 
   @Override
-  public List<WebElement> findElements(String name) {
-    return findElements(getByCreate().createBy(name));
+  public List<WebElement> finds(String name) {
+    return finds(getByCreate().createBy(name));
   }
 
   @Override
@@ -102,116 +102,116 @@ class TElementActionImpl implements
 
   @Override
   public ElementAction sendKeys(String name, String keys) {
-    sendKeys(findElement(name), keys);
+    sendKeys(find(name), keys);
     return this;
   }
 
   @Override
   public ElementAction sendKeys(By by, String keys) {
-    sendKeys(findElement(by), keys);
+    sendKeys(find(by), keys);
     return this;
   }
 
   @Override
-  public ElementAction clickElement(WebElement webElement) {
+  public ElementAction click(WebElement webElement) {
     webElement.click();
     return this;
   }
 
   @Override
-  public ElementAction clickElement(By by) {
-    clickElement(findElement(by));
+  public ElementAction click(By by) {
+    click(find(by));
     return this;
   }
 
   @Override
-  public ElementAction clickElement(String name) {
-    clickElement(findElement(name));
+  public ElementAction click(String name) {
+    click(find(name));
     return this;
   }
 
   @Override
-  public ElementAction clickElement(ByType byType, String name) {
-    clickElement(findElement(byType, name));
+  public ElementAction click(ByType byType, String name) {
+    click(find(byType, name));
     return this;
   }
 
   @Override
-  public ElementAction clickElement(ElementInfo elementInfo) {
-    clickElement(findElement(elementInfo));
+  public ElementAction click(ElementInfo elementInfo) {
+    click(find(elementInfo));
     return this;
   }
 
   @Override
-  public ElementAction hoverElement(WebElement element) {
+  public ElementAction hover(WebElement element) {
     new Actions(driver).moveToElement(element).build().perform();
     return this;
   }
 
   @Override
-  public ElementAction hoverElement(By by) {
-    hoverElement(findElement(by));
+  public ElementAction hover(By by) {
+    hover(find(by));
     return this;
   }
 
   @Override
-  public ElementAction hoverElement(String name) {
-    hoverElement(findElement(name));
+  public ElementAction hover(String name) {
+    hover(find(name));
     return this;
   }
 
   @Override
-  public ElementAction hoverElementByNth(By by, int index) {
-    hoverElement(findElement(by, index));
+  public ElementAction hoverByNth(By by, int index) {
+    hover(find(by, index));
     return this;
   }
 
   @Override
-  public ElementAction hoverElementByNth(String name, int index) {
-    hoverElement(findElement(name, index));
+  public ElementAction hoverByNth(String name, int index) {
+    hover(find(name, index));
     return this;
   }
 
   @Override
-  public ElementAction scrollToElement(WebElement element) {
+  public ElementAction scrollTo(WebElement element) {
 //    scrollToWithJs(element.getLocation().getX(), element.getLocation().getY());
     return this;
   }
 
   @Override
-  public ElementAction scrollToElement(By by) {
-    scrollToElement(findElement(by));
+  public ElementAction scrollTo(By by) {
+    scrollTo(find(by));
     return this;
   }
 
   @Override
-  public ElementAction scrollToElement(String name) {
-    scrollToElement(findElement(name));
+  public ElementAction scrollTo(String name) {
+    scrollTo(find(name));
     return this;
   }
 
   @Override
-  public ElementAction scrollToElementByNth(By by, int... index) {
-    return scrollToElement(findElements(by).get(index[0]));
+  public ElementAction scrollToByNth(By by, int... index) {
+    return scrollTo(finds(by).get(index[0]));
   }
 
   @Override
-  public ElementAction scrollToElementByNth(String name, int... index) {
-    return scrollToElement(findElements(name).get(index[0]));
+  public ElementAction scrollToByNth(String name, int... index) {
+    return scrollTo(finds(name).get(index[0]));
   }
 
   @Override
-  public ElementAction scrollToElement(WebElement element, int x, int y) {
+  public ElementAction scrollTo(WebElement element, int x, int y) {
     return null;
   }
 
   @Override
-  public ElementAction scrollToElement(By by, int x, int y) {
+  public ElementAction scrollTo(By by, int x, int y) {
     return null;
   }
 
   @Override
-  public ElementAction scrollToElement(String name, int x, int y) {
+  public ElementAction scrollTo(String name, int x, int y) {
     return null;
   }
 
@@ -223,12 +223,12 @@ class TElementActionImpl implements
 
   @Override
   public ElementAction selectComboItem(By by, String value) {
-    return selectComboItem(findElement(by), value);
+    return selectComboItem(find(by), value);
   }
 
   @Override
   public ElementAction selectComboItem(String name, String value) {
-    return selectComboItem(findElement(name), value);
+    return selectComboItem(find(name), value);
   }
 
   @Override

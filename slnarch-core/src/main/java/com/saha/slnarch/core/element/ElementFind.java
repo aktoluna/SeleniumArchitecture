@@ -8,43 +8,44 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public interface ElementFind<T extends Element> {
+
   ByCreate getByCreate();
 
   T setByCreate(ByCreate byCreate);
 
-  T findElement(By by);
+  T find(By by);
 
-  T findElement(String name);
+  T find(String name);
 
-  T findElement(ByType byType, String name);
+  T find(ByType byType, String name);
 
-  T findElement(ElementInfo elementInfo);
+  T find(ElementInfo elementInfo);
 
-  T findElement(By by, int index);
+  T find(By by, int index);
 
-  T findElement(String name, int index);
+  T find(String name, int index);
 
-  T findElementIn(WebElement parent, By by, int index);
+  T findIn(WebElement parent, By by, int index);
 
-  T findElementIn(WebElement parent, String name, int index);
+  T findIn(WebElement parent, String name, int index);
 
-  T findElements(By by);
+  T finds(By by);
 
-  T findElements(String name);
+  T finds(String name);
 
-  T set(WebElement element);
+  T setElementList(WebElement element);
 
-  T set(List<WebElement> elements);
+  T setElementList(List<WebElement> elements);
 
-  T add(WebElement element);
+  T addElementList(WebElement element);
 
-  T add(List<WebElement> elements);
+  T addElementList(List<WebElement> elements);
 
-  T clear();
+  T clearElementList();
 
-  List<WebElement> gets();
+  List<WebElement> getElements();
 
-  WebElement gets(int index);
+  WebElement getElement(int index);
 
-  WebElement get();
+  WebElement getElement();
 }

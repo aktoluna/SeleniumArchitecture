@@ -2,7 +2,9 @@ package com.saha.slnarch.common.file;
 
 import static org.hamcrest.Matchers.is;
 
-import com.saha.slnarch.common.file.Prop.PropType;
+import com.saha.slnarch.common.helper.Prop;
+import com.saha.slnarch.common.helper.Prop.PropType;
+import com.saha.slnarch.common.helper.PropertyHelper;
 import java.util.Properties;
 import org.junit.Assert;
 import org.junit.Test;

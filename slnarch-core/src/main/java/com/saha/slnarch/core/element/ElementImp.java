@@ -51,102 +51,102 @@ public class ElementImp implements Element<ElementImp> {
   }
 
   @Override
-  public ElementImp findElement(By by) {
+  public ElementImp find(By by) {
     logger.info("Find Element {}", by);
-    set(driver.findElement(by));
+    setElementList(driver.findElement(by));
     return this;
   }
 
   @Override
-  public ElementImp findElement(String name) {
-    return findElement(getByCreate().createBy(name));
+  public ElementImp find(String name) {
+    return find(getByCreate().createBy(name));
   }
 
   @Override
-  public ElementImp findElement(ByType byType, String name) {
-    return findElement(ByFactory.buildBy(byType).createBy(name));
+  public ElementImp find(ByType byType, String name) {
+    return find(ByFactory.buildBy(byType).createBy(name));
   }
 
   @Override
-  public ElementImp findElement(ElementInfo elementInfo) {
-    return findElement(ByFactory.buildBy(elementInfo.getType()).createBy(elementInfo.getKey()));
+  public ElementImp find(ElementInfo elementInfo) {
+    return find(ByFactory.buildBy(elementInfo.getType()).createBy(elementInfo.getKey()));
   }
 
   @Override
-  public ElementImp findElement(By by, int index) {
-    set(driver.findElements(by).get(index));
+  public ElementImp find(By by, int index) {
+    setElementList(driver.findElements(by).get(index));
     return this;
   }
 
   @Override
-  public ElementImp findElement(String name, int index) {
-    return findElement(getByCreate().createBy(name), index);
+  public ElementImp find(String name, int index) {
+    return find(getByCreate().createBy(name), index);
   }
 
   @Override
-  public ElementImp findElementIn(WebElement parent, By by, int index) {
-    set(parent.findElements(by).get(index));
+  public ElementImp findIn(WebElement parent, By by, int index) {
+    setElementList(parent.findElements(by).get(index));
     return this;
   }
 
   @Override
-  public ElementImp findElementIn(WebElement parent, String name, int index) {
-    return findElementIn(parent, getByCreate().createBy(name), index);
+  public ElementImp findIn(WebElement parent, String name, int index) {
+    return findIn(parent, getByCreate().createBy(name), index);
   }
 
   @Override
-  public ElementImp findElements(By by) {
-    set(driver.findElements(by));
+  public ElementImp finds(By by) {
+    setElementList(driver.findElements(by));
     return this;
   }
 
   @Override
-  public ElementImp findElements(String name) {
-    return findElements(getByCreate().createBy(name));
+  public ElementImp finds(String name) {
+    return finds(getByCreate().createBy(name));
   }
 
   @Override
-  public ElementImp set(WebElement element) {
+  public ElementImp setElementList(WebElement element) {
     logger.info("Set Element Name={} Tag={}", element.getText(), element.getTagName());
-    return clear().add(element);
+    return clearElementList().addElementList(element);
   }
 
   @Override
-  public ElementImp set(List<WebElement> elements) {
-    return clear().add(elements);
+  public ElementImp setElementList(List<WebElement> elements) {
+    return clearElementList().addElementList(elements);
   }
 
   @Override
-  public ElementImp add(WebElement element) {
+  public ElementImp addElementList(WebElement element) {
     elementList.add(element);
     return this;
   }
 
   @Override
-  public ElementImp add(List<WebElement> elements) {
+  public ElementImp addElementList(List<WebElement> elements) {
     elementList.addAll(elements);
     return this;
   }
 
   @Override
-  public ElementImp clear() {
+  public ElementImp clearElementList() {
     elementList.clear();
     return this;
   }
 
   @Override
-  public List<WebElement> gets() {
+  public List<WebElement> getElements() {
     return elementList;
   }
 
   @Override
-  public WebElement gets(int index) {
+  public WebElement getElement(int index) {
     return elementList.get(index);
   }
 
   @Override
-  public WebElement get() {
-    return gets(0);
+  public WebElement getElement() {
+    return getElement(0);
   }
 
 
@@ -161,25 +161,47 @@ public class ElementImp implements Element<ElementImp> {
   }
 
   @Override
-  public ElementImp clickElement(WebElement element) {
+  public ElementImp click(WebElement element) {
     logger.info("Click Element={}", element.getTagName());
     element.click();
     return this;
   }
 
   @Override
-  public ElementImp clickElement(List<WebElement> elements, int index) {
-    return clickElement(elements.get(index));
+  public ElementImp click(List<WebElement> elements, int index) {
+    return click(elements.get(index));
   }
 
   @Override
-  public ElementImp clickElement() {
-    return clickElement(get());
+  public ElementImp click() {
+    return click(getElement());
   }
 
   @Override
-  public ElementImp clickElement(int index) {
-    return clickElement(gets(), index);
+  public ElementImp click(int index) {
+    return click(getElements(), index);
+  }
+
+  @Override
+  public ElementImp clear(WebElement element) {
+    logger.info("Clear Element={} Old Text={}", element.getTagName(), element.getText());
+    element.clear();
+    return this;
+  }
+
+  @Override
+  public ElementImp clear(List<WebElement> elements, int index) {
+    return clear(elements.get(index));
+  }
+
+  @Override
+  public ElementImp clear() {
+    return clear(getElement());
+  }
+
+  @Override
+  public ElementImp clear(int index) {
+    return clear(getElements(), index);
   }
 
   @Override
@@ -191,7 +213,7 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp sendKeys(CharSequence... keys) {
-    return sendKeys(get(), keys);
+    return sendKeys(getElement(), keys);
   }
 
   @Override
@@ -201,7 +223,7 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp sendKeys(int index, CharSequence... keys) {
-    return sendKeys(gets(), index, keys);
+    return sendKeys(getElements(), index, keys);
   }
 
   @Override
@@ -217,33 +239,33 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp selectComboItem(String value) {
-    return selectComboItem(get(), value);
+    return selectComboItem(getElement(), value);
   }
 
   @Override
   public ElementImp selectComboItem(String value, int index) {
-    return selectComboItem(gets(), index, value);
+    return selectComboItem(getElements(), index, value);
   }
 
   @Override
-  public ElementImp hoverElement(WebElement element) {
+  public ElementImp hover(WebElement element) {
     newAction().moveToElement(element).build().perform();
     return this;
   }
 
   @Override
-  public ElementImp hoverElement(List<WebElement> elements, int index) {
-    return hoverElement(elements.get(index));
+  public ElementImp hover(List<WebElement> elements, int index) {
+    return hover(elements.get(index));
   }
 
   @Override
-  public ElementImp hoverElement() {
-    return hoverElement(get());
+  public ElementImp hover() {
+    return hover(getElement());
   }
 
   @Override
-  public ElementImp hoverElement(int index) {
-    return hoverElement(gets(), index);
+  public ElementImp hover(int index) {
+    return hover(getElements(), index);
   }
 
   @Override
@@ -254,7 +276,7 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp clickWithJs(By by, int... index) {
-    return clickWithJs(driver, findElement(by, index[0]).get());
+    return clickWithJs(driver, find(by, index[0]).getElement());
   }
 
   @Override

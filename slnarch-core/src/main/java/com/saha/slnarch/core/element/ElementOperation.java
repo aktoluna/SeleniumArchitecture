@@ -11,13 +11,21 @@ public interface ElementOperation<T extends Element> {
 
   Select newSelect(WebElement element);
 
-  T clickElement(WebElement element);
+  T click(WebElement element);
 
-  T clickElement(List<WebElement> elements, int index);
+  T click(List<WebElement> elements, int index);
 
-  T clickElement();
+  T click();
 
-  T clickElement(int index);
+  T click(int index);
+
+  T clear(WebElement element);
+
+  T clear(List<WebElement> elements, int index);
+
+  T clear();
+
+  T clear(int index);
 
   T sendKeys(WebElement element, CharSequence... keys);
 
@@ -35,11 +43,11 @@ public interface ElementOperation<T extends Element> {
 
   T selectComboItem(String value, int index);
 
-  T hoverElement(WebElement element);
+  T hover(WebElement element);
 
-  T hoverElement(List<WebElement> elements, int index);
+  T hover(List<WebElement> elements, int index);
 
-  T hoverElement();
+  T hover();
 
-  T hoverElement(int index);
+  T hover(int index);
 }

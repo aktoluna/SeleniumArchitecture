@@ -11,19 +11,19 @@ public class CommonModule {
 
   @Provides
   @Singleton
-  public FileParser provideFileParser(){
-    return new FileHelper();
+  public FileParser provideFileParser() {
+    return FileHelper.getInstance();
   }
 
   @Provides
   @Singleton
-  public FileReader provideFileReader(){
-    return new FileHelper();
+  public FileReader provideFileReader() {
+    return FileHelper.getInstance();
   }
 
   @Provides
   @Singleton
-  public FileWriter provideFileWrite(){
-    return new FileHelper();
+  public FileWriter provideFileWrite() {
+    return FileHelper.getInstance();
   }
 }

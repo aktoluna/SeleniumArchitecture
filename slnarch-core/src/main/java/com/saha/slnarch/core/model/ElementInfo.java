@@ -12,7 +12,9 @@ public class ElementInfo {
   @SerializedName("type")
   @Expose
   private ByType type;
-
+  @SerializedName("value")
+  @Expose
+  private String value;
 
   public ByType getType() {
     return type;
@@ -28,5 +30,13 @@ public class ElementInfo {
 
   public void setKey(String key) {
     this.key = key;
+  }
+
+  public String getValue() {
+    return value;
+  }
+
+  public void setValue(String value) {
+    this.value = value;
   }
 }

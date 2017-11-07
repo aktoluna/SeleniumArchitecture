@@ -1,6 +1,6 @@
-package com.saha.slnarch.common.file;
+package com.saha.slnarch.common.helper;
 
-import com.saha.slnarch.common.file.Prop.PropType;
+import com.saha.slnarch.common.helper.Prop.PropType;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
