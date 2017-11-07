@@ -62,7 +62,7 @@ public abstract class PageTestImpl implements PageTest {
   @Override
   public WebDriverEventListener getEventListener() {
     return new WaitEventListener(
-        new WaitingActionImpl(new WebDriverWait(getDriver(), 10),
+        new WaitingActionImpl(new WebDriverWait(getDriver(), 30),
             new JavaScriptOperationImpl(getDriver())));
   }
 

@@ -36,8 +36,7 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
     ExpectedCondition<Boolean> expectation = driver -> javaScriptOperation
         .executeJS("return document.readyState", true).toString().equals("complete");
     try {
-      waitByMs(SLEEP_MILLIS);
-      driverWait.until(expectation);
+      waitUntil(expectation);
     } catch (Throwable error) {
       log.error("Page Wait Exception");
     }
@@ -50,8 +49,7 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
         "return angular.element(document).injector().get('$http').pendingRequests.length === 0",
         true).toString().equals("true");
     try {
-      waitByMs(SLEEP_MILLIS);
-      driverWait.until(expectation);
+      waitUntil(expectation);
     } catch (Throwable error) {
       log.error("Angular Wait Exception");
     }
@@ -60,21 +58,21 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
 
   @Override
   public WaitingAction waitJQueryComplete() {
+    ExpectedCondition<Boolean> expectation = driver -> javaScriptOperation.executeJS(
+        "return jQuery.active",
+        true).toString().equals("0");
     try {
       javaScriptOperation.executeJS("window.jQuery");
-      if (javaScriptOperation.executeJS("return jQuery.active").toString().equals("0")) {
-        return this;
-      }
-      for (int i = 0; i < 25; i++) {
-        waitByMs(SLEEP_MILLIS);
-        if (javaScriptOperation.executeJS("return jQuery.active").toString().equals("0")) {
-          break;
-        }
-      }
+      waitUntil(expectation);
     } catch (Exception e) {
       log.error("Jquery Wait Exception");
     }
     return this;
+  }
+
+  @Override
+  public void waitUntil(ExpectedCondition expectedCondition) {
+    driverWait.until(expectedCondition);
   }
 
   @Override

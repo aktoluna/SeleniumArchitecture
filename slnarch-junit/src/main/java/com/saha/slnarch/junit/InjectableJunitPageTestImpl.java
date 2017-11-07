@@ -10,7 +10,6 @@ public abstract class InjectableJunitPageTestImpl extends InjectablePageTestImpl
   @Rule
   public SlnTestWatcher slnTestWatcher = new SlnTestWatcher();
 
-
   @After
   public void afterTest() {
     getDriver().quit();

@@ -16,7 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class DriverModule {
 
   private final WebDriver driver;
-  private static final long WAIT_TIME = 10;
+  private static final long WAIT_TIME = 30;
 
   public DriverModule(WebDriver driver) {
     this.driver = driver;

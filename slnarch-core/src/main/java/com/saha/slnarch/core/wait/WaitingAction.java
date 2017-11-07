@@ -1,5 +1,7 @@
 package com.saha.slnarch.core.wait;
 
+import org.openqa.selenium.support.ui.ExpectedCondition;
+
 public interface WaitingAction<T extends WaitingAction> {
 
   T waitAjaxComplete();
@@ -9,6 +11,8 @@ public interface WaitingAction<T extends WaitingAction> {
   T waitForAngularLoad();
 
   T waitJQueryComplete();
+
+  void waitUntil(ExpectedCondition expectedCondition);
 
   void waitAll();
 

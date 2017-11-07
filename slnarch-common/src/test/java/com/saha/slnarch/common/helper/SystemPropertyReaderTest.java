@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class SystemPropertyHelperTest {
+public class SystemPropertyReaderTest {
 
   @Test
   public void getPageLoadTimeOut() throws Exception {

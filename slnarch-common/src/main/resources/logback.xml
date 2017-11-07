@@ -3,22 +3,24 @@
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M\(%line\) - %msg%n</pattern>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M\(%line\) - %msg%n
+      </pattern>
     </encoder>
   </appender>
 
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-    <file>target/karate.log</file>
+    <file>target/slnarch.log</file>
     <encoder>
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M\(%line\) - %msg%n</pattern>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M\(%line\) - %msg%n
+      </pattern>
     </encoder>
   </appender>
 
-  <logger name="com.intuit" level="DEBUG"/>
+  <logger name="com.saha.slnarch" level="DEBUG"/>
 
   <root level="info">
-    <appender-ref ref="STDOUT" />
-    <appender-ref ref="FILE" />
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
   </root>
 
 </configuration>
