@@ -2,8 +2,8 @@ package com.saha.slnarch.core.browser.local;
 
 import com.saha.slnarch.common.helper.SystemPropertyHelper;
 import com.saha.slnarch.core.browser.BaseBrowser;
+import com.saha.slnarch.core.model.Configuration;
 import java.net.MalformedURLException;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -12,14 +12,13 @@ import org.openqa.selenium.remote.CapabilityType;
 public class ChromeBrowser extends BaseBrowser<ChromeDriver, ChromeOptions, ChromeBrowser> {
 
 
+  public ChromeBrowser(Configuration configuration) {
+    super(configuration);
+  }
+
   @Override
   protected ChromeBrowser setDriverPath() {
-    Platform platform = Platform.getCurrent();
-    if (platform == Platform.MAC) {
-      SystemPropertyHelper.setChromeDriverLocationForMac();
-    } else if (platform == Platform.WINDOWS) {
-      SystemPropertyHelper.setChromeDriverLocationForWindows();
-    }
+    SystemPropertyHelper.setChromeDriverLocation(configuration.getDriverPath());
     return this;
   }
 
@@ -47,4 +46,5 @@ public class ChromeBrowser extends BaseBrowser<ChromeDriver, ChromeOptions, Chro
       throws MalformedURLException {
     return setDriverPath().setTimeOut(new ChromeDriver(getOptions(options, proxy)));
   }
+
 }

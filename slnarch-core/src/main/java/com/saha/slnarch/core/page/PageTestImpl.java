@@ -1,10 +1,12 @@
 package com.saha.slnarch.core.page;
 
+import com.saha.slnarch.common.file.PropertyHelper;
 import com.saha.slnarch.core.browser.BrowserFactory;
 import com.saha.slnarch.core.js.JavaScriptOperationImpl;
 import com.saha.slnarch.core.listener.WaitEventListener;
+import com.saha.slnarch.core.model.Configuration;
 import com.saha.slnarch.core.wait.WaitingActionImpl;
-import java.net.MalformedURLException;
+import java.io.IOException;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
@@ -27,10 +29,14 @@ public abstract class PageTestImpl implements PageTest {
   }
 
   private void initWebDriver() {
+    Configuration configuration;
     try {
-      driver = new BrowserFactory().getWebDriver(getCapabilities(), getProxy());
-    } catch (MalformedURLException e) {
-      logger.error("Web Driver Create Error", e);
+      configuration = PropertyHelper
+          .propertiesToClassWithAnnotation(PropertyHelper.readProperties("slnarch.properties"),
+              Configuration.class);
+      driver = new BrowserFactory().getWebDriver(getCapabilities(), getProxy(), configuration);
+    } catch (IllegalAccessException | IOException | InstantiationException e) {
+      e.printStackTrace();
     }
   }
 

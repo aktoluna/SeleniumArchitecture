@@ -1,9 +1,11 @@
 package com.saha.slnarch.core.browser;
 
+import com.saha.slnarch.common.exception.SlnException;
 import com.saha.slnarch.common.helper.StringHelper;
 import com.saha.slnarch.common.helper.SystemPropertyHelper;
 import com.saha.slnarch.core.browser.local.ChromeBrowser;
 import com.saha.slnarch.core.browser.remote.TestiniumBrowser;
+import com.saha.slnarch.core.model.Configuration;
 import java.net.MalformedURLException;
 import javax.annotation.Nullable;
 import org.openqa.selenium.Capabilities;
@@ -12,13 +14,18 @@ import org.openqa.selenium.WebDriver;
 
 public class BrowserFactory {
 
-  public WebDriver getWebDriver(@Nullable Capabilities capabilities, @Nullable Proxy proxy)
+  public WebDriver getWebDriver(@Nullable Capabilities capabilities, @Nullable Proxy proxy,
+      Configuration configuration)
       throws MalformedURLException {
-    Browser browser;
+    Browser browser = null;
     if (!StringHelper.isEmpty(SystemPropertyHelper.getTestiniumKey())) {
-      browser = new TestiniumBrowser();
+      browser = new TestiniumBrowser(configuration);
     } else {
-      browser = new ChromeBrowser();
+      if (configuration.getBrowserType().equals("Chrome")) {
+        browser = new ChromeBrowser(configuration);
+      } else {
+        throw new SlnException("Browser Type Not Found");
+      }
     }
     return browser.buildWebDriver(capabilities, proxy);
   }

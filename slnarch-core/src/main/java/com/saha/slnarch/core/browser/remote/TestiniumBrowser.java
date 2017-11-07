@@ -2,6 +2,7 @@ package com.saha.slnarch.core.browser.remote;
 
 import com.saha.slnarch.common.helper.SystemPropertyHelper;
 import com.saha.slnarch.core.browser.BaseBrowser;
+import com.saha.slnarch.core.model.Configuration;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.openqa.selenium.Proxy;
@@ -15,6 +16,10 @@ public final class TestiniumBrowser extends
 
   //  private final String PROXY_SERVER = "ec2-54-154-66-64.eu-west-1.compute.amazonaws.com:3128";
   private final String TESTINIUM_URL = "http://hub.testinium.io/wd/hub";
+
+  public TestiniumBrowser(Configuration configuration) {
+    super(configuration);
+  }
 
   @Override
   protected TestiniumBrowser setDriverPath() {

@@ -3,7 +3,7 @@ package com.saha.slnarch.demo;
 import com.saha.slnarch.junit.InjectableJunitPageTestImpl;
 import org.junit.Test;
 
-public class HomePageTestImpl extends InjectableJunitPageTestImpl {
+public class HomePageTest extends InjectableJunitPageTestImpl {
 
 
   @Test

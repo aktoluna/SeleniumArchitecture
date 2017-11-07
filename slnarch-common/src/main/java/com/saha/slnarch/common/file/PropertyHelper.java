@@ -28,7 +28,7 @@ public class PropertyHelper {
 
   public static Properties readProperties(String fileName)
       throws IOException {
-    return readProperties(false, fileName);
+    return readProperties(true, fileName);
   }
 
   public static Properties readProperties(boolean classPath, String fileName)
