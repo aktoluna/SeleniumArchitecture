@@ -202,7 +202,6 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp sendKeys(WebElement element, CharSequence... keys) {
-    logger.info("Send Keys ", keys);
     element.sendKeys(keys);
     return this;
   }
@@ -265,6 +264,28 @@ public class ElementImp implements Element<ElementImp> {
   }
 
   @Override
+  public ElementImp scrollTo(WebElement element) {
+    logger.info("Scroll To Element");
+    newAction().moveToElement(element).build().perform();
+    return this;
+  }
+
+  @Override
+  public ElementImp scrollTo(List<WebElement> elements, int index) {
+    return scrollTo(elements.get(index));
+  }
+
+  @Override
+  public ElementImp scrollTo() {
+    return scrollTo(getElement());
+  }
+
+  @Override
+  public ElementImp scrollTo(int index) {
+    return scrollTo(getElements(), index);
+  }
+
+  @Override
   public ElementImp clickWithJs(WebDriver driver, WebElement element) {
     javaScriptOperation.executeJS("arguments[0].click();", element);
     return this;
@@ -307,5 +328,25 @@ public class ElementImp implements Element<ElementImp> {
   public ElementImp scrollToPageEndWithJs() {
     javaScriptOperation.executeJS("window.scrollTo(0, document.body.scrollHeight)", true);
     return this;
+  }
+
+  @Override
+  public ElementImp scrollToJs(WebElement element) {
+    return scrollToWithJs(element.getLocation().getX(), element.getLocation().getY());
+  }
+
+  @Override
+  public ElementImp scrollToJs(List<WebElement> elements, int index) {
+    return scrollToJs(elements.get(index));
+  }
+
+  @Override
+  public ElementImp scrollToJs(int index) {
+    return scrollToJs(getElements(), index);
+  }
+
+  @Override
+  public ElementImp scrollToJs() {
+    return scrollToJs(getElement());
   }
 }

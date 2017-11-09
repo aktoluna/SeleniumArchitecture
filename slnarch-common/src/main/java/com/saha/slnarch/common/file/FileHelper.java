@@ -40,7 +40,7 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
 
   @Override
   public <T> T parseFile(String filePath, Class<T> output) {
-    return parseFile(filePath, output, false);
+    return parseFile(filePath, output, true);
   }
 
   @Override
@@ -90,7 +90,7 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
   }
 
   private InputStream getFileStream(String filePath) throws Exception {
-    return getFileStream(filePath, false);
+    return getFileStream(filePath, true);
   }
 
 

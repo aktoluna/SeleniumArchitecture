@@ -97,6 +97,7 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void beforeClickOn(WebElement webElement, WebDriver webDriver) {
+    javaScriptAction.scrollToJs(webElement);
     javaScriptAction.highlightElementWithJs(webElement);
   }
 
@@ -108,7 +109,7 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
   @Override
   public void beforeChangeValueOf(WebElement webElement, WebDriver webDriver,
       CharSequence[] charSequences) {
-
+    logger.info("Set Value {}", charSequences);
   }
 
   @Override

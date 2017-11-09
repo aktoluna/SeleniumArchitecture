@@ -15,6 +15,7 @@ public abstract class PageTestImpl implements PageTest {
 
   protected final Logger logger = LoggerFactory.getLogger(getClass());
   private WebDriver driver;
+  private Configuration configuration;
 
   protected PageTestImpl() {
     initWebDriver();
@@ -24,9 +25,8 @@ public abstract class PageTestImpl implements PageTest {
   }
 
   private void initWebDriver() {
-    Configuration configuration;
     try {
-      configuration = PropertyHelper
+      this.configuration = PropertyHelper
           .propertiesToClassWithAnnotation(PropertyHelper.readProperties("slnarch.properties"),
               Configuration.class);
       driver = new BrowserFactory().getWebDriver(getCapabilities(), getProxy(), configuration);
@@ -58,6 +58,10 @@ public abstract class PageTestImpl implements PageTest {
   @Override
   public boolean useEventDriver() {
     return true;
+  }
+
+  protected Configuration getConfiguration() {
+    return configuration;
   }
 
 }

@@ -50,4 +50,12 @@ public interface ElementOperation<T extends Element> {
   T hover();
 
   T hover(int index);
+
+  T scrollTo(WebElement element);
+
+  T scrollTo(List<WebElement> elements, int index);
+
+  T scrollTo();
+
+  T scrollTo(int index);
 }

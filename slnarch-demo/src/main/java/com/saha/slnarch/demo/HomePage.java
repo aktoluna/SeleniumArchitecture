@@ -22,7 +22,6 @@ public class HomePage extends InjectablePage {
 
   public void pageTest() {
     CharSequence cs = "ali";
-    driverAction.navigateTo("https://www.google.com.tr");
     elementAction.find("#lst-ib")
         .sendKeys(cs)
         .find("#lst-ib")

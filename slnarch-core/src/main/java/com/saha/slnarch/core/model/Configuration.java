@@ -4,15 +4,18 @@ import com.saha.slnarch.common.helper.Prop;
 import com.saha.slnarch.common.helper.Prop.PropType;
 
 public class Configuration {
+
   @Prop(key = "driverPath")
   private String driverPath;
   @Prop(key = "browserType")
   private String browserType;
-  @Prop(key = "pageTimeOut",type = PropType.INT)
+  @Prop(key = "baseUrl")
+  private String baseUrl;
+  @Prop(key = "pageTimeOut", type = PropType.INT)
   private int pageTimeOut;
-  @Prop(key = "scriptTimeOut",type = PropType.INT)
+  @Prop(key = "scriptTimeOut", type = PropType.INT)
   private int scriptTimeOut;
-  @Prop(key = "implicitlyTimeOut",type = PropType.INT)
+  @Prop(key = "implicitlyTimeOut", type = PropType.INT)
   private int implicitlyTimeOut;
 
 
@@ -54,5 +57,13 @@ public class Configuration {
 
   public void setImplicitlyTimeOut(int implicitlyTimeOut) {
     this.implicitlyTimeOut = implicitlyTimeOut;
+  }
+
+  public String getBaseUrl() {
+    return baseUrl;
+  }
+
+  public void setBaseUrl(String baseUrl) {
+    this.baseUrl = baseUrl;
   }
 }

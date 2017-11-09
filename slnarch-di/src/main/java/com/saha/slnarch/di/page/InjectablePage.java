@@ -13,6 +13,7 @@ public abstract class InjectablePage implements Injectable {
     inject();
   }
 
+
   @Override
   public void inject() {
     logger.info("Inject All Objects");
