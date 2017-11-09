@@ -4,8 +4,10 @@ import com.saha.slnarch.core.driver.DriverAction;
 import com.saha.slnarch.core.driver.DriverActionImpl;
 import com.saha.slnarch.core.element.Element;
 import com.saha.slnarch.core.element.ElementImp;
+import com.saha.slnarch.core.element.JavaScriptAction;
 import com.saha.slnarch.core.js.JavaScriptOperation;
 import com.saha.slnarch.core.js.JavaScriptOperationImpl;
+import com.saha.slnarch.core.listener.WaitEventListener;
 import com.saha.slnarch.core.wait.WaitingAction;
 import com.saha.slnarch.core.wait.WaitingActionImpl;
 import javax.inject.Singleton;
@@ -58,5 +60,19 @@ public class DriverModule {
   public Element provideElement(WebDriver driver,
       JavaScriptOperation javaScriptOperation) {
     return new ElementImp(driver, javaScriptOperation);
+  }
+
+  @Provides
+  @Singleton
+  public JavaScriptAction provideJavaScriptAction(WebDriver driver,
+      JavaScriptOperation javaScriptOperation) {
+    return new ElementImp(driver, javaScriptOperation);
+  }
+
+  @Provides
+  @Singleton
+  public WaitEventListener provideWaitEventListener(WaitingAction waitingAction,
+      JavaScriptAction javaScriptAction) {
+    return new WaitEventListener(waitingAction, javaScriptAction);
   }
 }

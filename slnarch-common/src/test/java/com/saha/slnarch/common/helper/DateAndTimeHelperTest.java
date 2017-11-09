@@ -14,13 +14,6 @@ public class DateAndTimeHelperTest {
   private String nowDateFormat = "dd-MM-yyyy HH:mm:ss";
 
   @Test
-  public void getDateFormat() throws Exception {
-    SimpleDateFormat expected = new SimpleDateFormat(dateFormat);
-    Assert.assertThat(expected.getCalendar().getTimeInMillis(),
-        is(DateAndTimeHelper.getDateFormat(dateFormat).getCalendar().getTimeInMillis()));
-  }
-
-  @Test
   public void formatDate() throws Exception {
     String expected = new SimpleDateFormat(dateFormat).format(Calendar.getInstance().getTime());
     Assert.assertThat(DateAndTimeHelper.formatDate(DateAndTimeHelper.getNowDate(), dateFormat),

@@ -15,6 +15,6 @@ public interface PageTest {
 
   WebDriver createEventDriver();
 
-  WebDriverEventListener getEventListener();
+  void setEventListener();
 
 }

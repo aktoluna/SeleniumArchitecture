@@ -1,5 +1,6 @@
 package com.saha.slnarch.core.listener;
 
+import com.saha.slnarch.core.element.JavaScriptAction;
 import com.saha.slnarch.core.wait.WaitingAction;
 import javax.inject.Inject;
 import org.openqa.selenium.By;
@@ -9,13 +10,18 @@ import org.openqa.selenium.support.events.WebDriverEventListener;
 
 public class WaitEventListener extends BaseListener implements WebDriverEventListener {
 
-  @Inject
+
   private WaitingAction waitingAction;
 
+  private JavaScriptAction javaScriptAction;
 
-  public WaitEventListener(WaitingAction waitingAction) {
+  @Inject
+  public WaitEventListener(WaitingAction waitingAction,
+      JavaScriptAction javaScriptAction) {
     this.waitingAction = waitingAction;
+    this.javaScriptAction = javaScriptAction;
   }
+
 
   @Override
   public void beforeAlertAccept(WebDriver webDriver) {
@@ -74,7 +80,8 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void afterNavigateRefresh(WebDriver webDriver) {
-
+    logger.info("Refresh Page Url={}", webDriver.getCurrentUrl());
+    waitingAction.waitAll();
   }
 
   @Override
@@ -85,12 +92,12 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void afterFindBy(By by, WebElement webElement, WebDriver webDriver) {
-
+    logger.info("Find Element {}", by.toString());
   }
 
   @Override
   public void beforeClickOn(WebElement webElement, WebDriver webDriver) {
-
+    javaScriptAction.highlightElementWithJs(webElement);
   }
 
   @Override

@@ -52,7 +52,6 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp find(By by) {
-    logger.info("Find Element {}", by);
     setElementList(driver.findElement(by));
     return this;
   }
@@ -107,7 +106,6 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp setElementList(WebElement element) {
-    logger.info("Set Element Name={} Tag={}", element.getText(), element.getTagName());
     return clearElementList().addElementList(element);
   }
 
@@ -162,7 +160,6 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp click(WebElement element) {
-    logger.info("Click Element={}", element.getTagName());
     element.click();
     return this;
   }
@@ -184,7 +181,6 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp clear(WebElement element) {
-    logger.info("Clear Element={} Old Text={}", element.getTagName(), element.getText());
     element.clear();
     return this;
   }
@@ -206,7 +202,7 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp sendKeys(WebElement element, CharSequence... keys) {
-    logger.info("Send Keys Element={} Value={}", element.getTagName(), keys);
+    logger.info("Send Keys ", keys);
     element.sendKeys(keys);
     return this;
   }

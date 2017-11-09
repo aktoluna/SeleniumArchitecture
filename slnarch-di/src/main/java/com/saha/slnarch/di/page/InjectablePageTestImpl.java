@@ -1,38 +1,44 @@
 package com.saha.slnarch.di.page;
 
+import com.saha.slnarch.core.listener.WaitEventListener;
 import com.saha.slnarch.core.page.PageTestImpl;
 import com.saha.slnarch.di.helper.InjectionHelper;
 import com.saha.slnarch.di.module.CommonModule;
 import com.saha.slnarch.di.module.DriverModule;
 import org.codejargon.feather.Feather;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-public abstract class InjectablePageTestImpl extends PageTestImpl implements
-    InjectablePageTest {
+public abstract class InjectablePageTestImpl extends PageTestImpl {
 
   protected InjectablePageTestImpl() {
     super();
     initFeather();
+    setEventListener();
   }
 
-  @Override
-  public void initFeather() {
+
+  private void initFeather() {
     logger.info("Init Feather Injections");
     InjectionHelper.getInstance()
         .setFeather(Feather.with(new DriverModule(getDriver()), new CommonModule()));
   }
 
-  @Override
+
   public Feather getFeather() {
     return InjectionHelper.getInstance().getFeather();
   }
 
-  @Override
+
   public void setFeather(Feather feather) {
     InjectionHelper.getInstance().setFeather(feather);
   }
 
   @Override
-  public boolean useEventDriver() {
-    return true;
+  public void setEventListener() {
+    if (useEventDriver()) {
+      WaitEventListener waitEventListener = getFeather().instance(WaitEventListener.class);
+      ((EventFiringWebDriver) getDriver()).register(waitEventListener);
+    }
   }
+
 }
