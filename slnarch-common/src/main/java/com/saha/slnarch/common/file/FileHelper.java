@@ -40,10 +40,15 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
 
   @Override
   public <T> T parseFile(String filePath, Class<T> output) {
+    return parseFile(filePath, output, false);
+  }
+
+  @Override
+  public <S> S parseFile(String filePath, Class<S> output, boolean classPath) {
     Preconditions.checkNotNull(filePath);
-    T t = null;
+    S t = null;
     try {
-      t = getParser(filePath).parseFile(getFileStream(filePath), output);
+      t = getParser(filePath).parseFile(getFileStream(filePath, classPath), output);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -85,13 +90,14 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
   }
 
   private InputStream getFileStream(String filePath) throws Exception {
-    return getFileStream(toFile(filePath));
+    return getFileStream(filePath, false);
   }
 
 
-  private InputStream getFileStream(File file) throws Exception {
+  private InputStream getFileStream(String filePath, boolean classPath) throws Exception {
     try {
-      return new FileInputStream(file);
+      return classPath ? getClass().getClassLoader().getResourceAsStream(filePath)
+          : new FileInputStream(filePath);
     } catch (Exception e) {
       throw new Exception(e);
     }
