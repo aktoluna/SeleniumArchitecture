@@ -17,6 +17,12 @@ public class Configuration {
   private int scriptTimeOut;
   @Prop(key = "implicitlyTimeOut", type = PropType.INT)
   private int implicitlyTimeOut;
+  @Prop(key = "waitPageLoad",type = PropType.BOOL)
+  private boolean waitPageLoad;
+  @Prop(key = "waitAjax",type = PropType.BOOL)
+  private boolean waitAjax;
+  @Prop(key = "waitAngular",type = PropType.BOOL)
+  private boolean waitAngular;
 
 
   public String getDriverPath() {
@@ -65,5 +71,29 @@ public class Configuration {
 
   public void setBaseUrl(String baseUrl) {
     this.baseUrl = baseUrl;
+  }
+
+  public boolean isWaitPageLoad() {
+    return waitPageLoad;
+  }
+
+  public void setWaitPageLoad(boolean waitPageLoad) {
+    this.waitPageLoad = waitPageLoad;
+  }
+
+  public boolean isWaitAjax() {
+    return waitAjax;
+  }
+
+  public void setWaitAjax(boolean waitAjax) {
+    this.waitAjax = waitAjax;
+  }
+
+  public boolean isWaitAngular() {
+    return waitAngular;
+  }
+
+  public void setWaitAngular(boolean waitAngular) {
+    this.waitAngular = waitAngular;
   }
 }

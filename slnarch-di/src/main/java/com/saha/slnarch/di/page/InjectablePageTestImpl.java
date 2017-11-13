@@ -37,6 +37,7 @@ public abstract class InjectablePageTestImpl extends PageTestImpl {
   public void setEventListener() {
     if (useEventDriver()) {
       WaitEventListener waitEventListener = getFeather().instance(WaitEventListener.class);
+      waitEventListener.setConfiguration(getConfiguration());
       ((EventFiringWebDriver) getDriver()).register(waitEventListener);
     }
   }

@@ -1,6 +1,7 @@
 package com.saha.slnarch.core.listener;
 
 import com.saha.slnarch.core.element.JavaScriptAction;
+import com.saha.slnarch.core.model.Configuration;
 import com.saha.slnarch.core.wait.WaitingAction;
 import javax.inject.Inject;
 import org.openqa.selenium.By;
@@ -15,6 +16,8 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   private JavaScriptAction javaScriptAction;
 
+  private Configuration configuration;
+
   @Inject
   public WaitEventListener(WaitingAction waitingAction,
       JavaScriptAction javaScriptAction) {
@@ -22,6 +25,9 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
     this.javaScriptAction = javaScriptAction;
   }
 
+  public void setConfiguration(Configuration configuration) {
+    this.configuration = configuration;
+  }
 
   @Override
   public void beforeAlertAccept(WebDriver webDriver) {
@@ -50,7 +56,8 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void afterNavigateTo(String s, WebDriver webDriver) {
-
+    logger.info("Navigate To Page Url={}", s);
+    waitRequest();
   }
 
   @Override
@@ -81,13 +88,12 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
   @Override
   public void afterNavigateRefresh(WebDriver webDriver) {
     logger.info("Refresh Page Url={}", webDriver.getCurrentUrl());
-    waitingAction.waitAll();
+    waitRequest();
   }
 
   @Override
   public void beforeFindBy(By by, WebElement webElement, WebDriver webDriver) {
-    logger.info("Wait All Request");
-    waitingAction.waitAll();
+    waitRequest();
   }
 
   @Override
@@ -98,7 +104,7 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
   @Override
   public void beforeClickOn(WebElement webElement, WebDriver webDriver) {
     javaScriptAction.scrollToJs(webElement);
-    javaScriptAction.highlightElementWithJs(webElement);
+//    javaScriptAction.highlightElementWithJs(webElement);
   }
 
   @Override
@@ -131,5 +137,20 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
   @Override
   public void onException(Throwable throwable, WebDriver webDriver) {
 
+  }
+
+  private void waitRequest() {
+    if (configuration.isWaitPageLoad()) {
+      logger.info("Wait Page Loading");
+      waitingAction.waitPageLoadComplete();
+    }
+    if (configuration.isWaitAjax()) {
+      logger.info("Wait Ajax Loading");
+      waitingAction.waitAjaxComplete();
+    }
+    if (configuration.isWaitAngular()) {
+      logger.info("Wait Angular Loading");
+      waitingAction.waitForAngularLoad();
+    }
   }
 }
