@@ -2,13 +2,14 @@ package com.saha.slnarch.di.page;
 
 import com.saha.slnarch.core.listener.WaitEventListener;
 import com.saha.slnarch.core.page.PageTestImpl;
+import com.saha.slnarch.di.Injectable;
 import com.saha.slnarch.di.helper.InjectionHelper;
 import com.saha.slnarch.di.module.CommonModule;
 import com.saha.slnarch.di.module.DriverModule;
 import org.codejargon.feather.Feather;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-public abstract class InjectablePageTestImpl extends PageTestImpl {
+public abstract class InjectablePageTestImpl extends PageTestImpl implements Injectable {
 
   protected InjectablePageTestImpl() {
     super();
@@ -24,12 +25,12 @@ public abstract class InjectablePageTestImpl extends PageTestImpl {
   }
 
 
-  public Feather getFeather() {
+  protected Feather getFeather() {
     return InjectionHelper.getInstance().getFeather();
   }
 
 
-  public void setFeather(Feather feather) {
+  protected void setFeather(Feather feather) {
     InjectionHelper.getInstance().setFeather(feather);
   }
 
@@ -42,4 +43,12 @@ public abstract class InjectablePageTestImpl extends PageTestImpl {
     }
   }
 
+  /*
+  Inject only call method
+   */
+  @Override
+  public void inject() {
+    logger.info("Inject All Test Objects");
+    InjectionHelper.getInstance().getFeather().injectFields(this);
+  }
 }

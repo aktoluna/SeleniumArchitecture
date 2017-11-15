@@ -68,4 +68,24 @@ public class StringHelper {
     }
     return result;
   }
+
+  public static String getObjectValueAsString(Object object) {
+    return object.toString();
+  }
+
+  public static int getObjectValueAsInt(Object object) {
+    return Integer.parseInt(object.toString());
+  }
+
+  public static boolean getObjectValueAsBool(Object object) {
+    return Boolean.parseBoolean(object.toString());
+  }
+
+  public static double getObjectValueAsDouble(Object object) {
+    return Double.parseDouble(object.toString());
+  }
+
+  public static float getObjectValueAsFloat(Object object) {
+    return Float.parseFloat(object.toString());
+  }
 }

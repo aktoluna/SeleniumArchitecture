@@ -89,12 +89,12 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
     return null;
   }
 
-  private InputStream getFileStream(String filePath) throws Exception {
+  public InputStream getFileStream(String filePath) throws Exception {
     return getFileStream(filePath, true);
   }
 
 
-  private InputStream getFileStream(String filePath, boolean classPath) throws Exception {
+  public InputStream getFileStream(String filePath, boolean classPath) throws Exception {
     try {
       return classPath ? getClass().getClassLoader().getResourceAsStream(filePath)
           : new FileInputStream(filePath);
