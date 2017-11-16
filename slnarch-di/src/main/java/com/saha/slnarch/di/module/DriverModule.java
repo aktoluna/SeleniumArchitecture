@@ -1,5 +1,6 @@
 package com.saha.slnarch.di.module;
 
+import com.saha.slnarch.common.helper.PropertyHelper;
 import com.saha.slnarch.core.driver.DriverAction;
 import com.saha.slnarch.core.driver.DriverActionImpl;
 import com.saha.slnarch.core.element.Element;
@@ -8,17 +9,19 @@ import com.saha.slnarch.core.element.JavaScriptAction;
 import com.saha.slnarch.core.js.JavaScriptOperation;
 import com.saha.slnarch.core.js.JavaScriptOperationImpl;
 import com.saha.slnarch.core.listener.WaitEventListener;
+import com.saha.slnarch.core.model.Configuration;
 import com.saha.slnarch.core.wait.WaitingAction;
 import com.saha.slnarch.core.wait.WaitingActionImpl;
+import java.io.IOException;
 import javax.inject.Singleton;
 import org.codejargon.feather.Provides;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DriverModule {
 
   private final WebDriver driver;
-  private static final long WAIT_TIME = 30;
 
   public DriverModule(WebDriver driver) {
     this.driver = driver;
@@ -32,8 +35,17 @@ public class DriverModule {
 
   @Provides
   @Singleton
-  public WebDriverWait provideWebDriverWait() {
-    return new WebDriverWait(driver, WAIT_TIME);
+  public WebDriverWait provideWebDriverWait(WebDriver driver)
+      throws IOException, InstantiationException, IllegalAccessException {
+    return new WebDriverWait(driver, PropertyHelper //TODO resources read not correct way
+        .propertiesToClassWithAnnotation(PropertyHelper.readProperties("slnarch.properties"),
+            Configuration.class).getImplicitlyTimeOut());
+  }
+
+  @Provides
+  @Singleton
+  public FluentWait<WebDriver> provideFluentWebDriverWait(WebDriver driver) {
+    return new FluentWait<WebDriver>(driver);
   }
 
   @Provides

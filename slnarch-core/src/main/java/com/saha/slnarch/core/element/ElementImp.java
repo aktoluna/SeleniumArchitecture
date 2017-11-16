@@ -52,7 +52,13 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp find(By by) {
-    setElementList(driver.findElement(by));
+    WebElement element = null;
+    try {
+      element = driver.findElement(by);
+      setElementList(element);
+    } catch (Exception e) {
+      logger.error("Element Not Found By={}", e, by.toString());
+    }
     return this;
   }
 
@@ -73,7 +79,13 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp find(By by, int index) {
-    setElementList(driver.findElements(by).get(index));
+    WebElement element = null;
+    try {
+      element = driver.findElements(by).get(index);
+      setElementList(element);
+    } catch (Exception e) {
+      logger.error("Element Not Found By={}", e, by.toString());
+    }
     return this;
   }
 
@@ -95,7 +107,13 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp finds(By by) {
-    setElementList(driver.findElements(by));
+    List<WebElement> elements = null;
+    try {
+      elements = driver.findElements(by);
+      setElementList(elements);
+    } catch (Exception e) {
+      logger.error("Elements Not Found By={}", e, by.toString());
+    }
     return this;
   }
 
