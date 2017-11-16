@@ -5,6 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +55,25 @@ public class DateAndTimeHelper {
 
   public static String convertDate(String date, String inputFormat, String outputFormat) {
     return formatDate(parseDate(date, inputFormat), outputFormat);
+  }
+
+  public static Date parsePeriod(String period) {
+    return parsePeriod(period, getStandardPeriodFormatter());
+  }
+
+
+  public static Date parsePeriod(String period, PeriodFormatter periodFormatter) {
+    Period p = periodFormatter.parsePeriod(period);
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTimeInMillis(p.getMillis());
+    return calendar.getTime();
+  }
+
+  private static PeriodFormatter getStandardPeriodFormatter() {
+    return new PeriodFormatterBuilder()
+        .appendDays().appendSuffix("d ")
+        .appendHours().appendSuffix("h ")
+        .toFormatter();
   }
 
 

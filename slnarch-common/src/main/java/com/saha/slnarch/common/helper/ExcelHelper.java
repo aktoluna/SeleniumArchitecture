@@ -2,8 +2,9 @@ package com.saha.slnarch.common.helper;
 
 import com.saha.slnarch.common.file.FileHelper;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Date;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -134,12 +135,13 @@ public class ExcelHelper {
     return getCellValueAsDate(getRowCell(row, cellNum));
   }
 
+  @Nonnull
   public static String getCellValueAsString(Cell cell) {
     return isEmptyCell(cell) ? "" : cell.getRichStringCellValue().toString();
   }
 
   public static int getCellValueAsInt(Cell cell) {
-    return isEmptyCell(cell) ? Integer.MIN_VALUE: (int) cell.getNumericCellValue();
+    return isEmptyCell(cell) ? Integer.MIN_VALUE : (int) cell.getNumericCellValue();
   }
 
   public static boolean getCellValueAsBool(Cell cell) {
@@ -154,8 +156,9 @@ public class ExcelHelper {
     return (float) cell.getNumericCellValue();
   }
 
+  @Nullable
   public static Date getCellValueAsDate(Cell cell) {
-    return isEmptyCell(cell) ? Calendar.getInstance().getTime() : cell.getDateCellValue();
+    return cell.getDateCellValue();
   }
 
 }
