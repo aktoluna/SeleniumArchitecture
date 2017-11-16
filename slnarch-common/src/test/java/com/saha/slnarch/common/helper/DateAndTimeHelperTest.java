@@ -10,6 +10,8 @@ import org.junit.Test;
 
 public class DateAndTimeHelperTest {
 
+
+
   private String dateFormat = "MM-dd-YYYY";
   private String nowDateFormat = "dd-MM-yyyy HH:mm:ss";
 
@@ -34,6 +36,16 @@ public class DateAndTimeHelperTest {
     String expected = new SimpleDateFormat(nowDateFormat).format(output);
     Assert
         .assertThat(DateAndTimeHelper.convertDate(input, dateFormat, nowDateFormat), is(expected));
+  }
+
+  @Test
+  public void parsePeriod() throws Exception {
+    String period="5d";
+    Calendar calendar=Calendar.getInstance();
+    Date date=DateAndTimeHelper.parsePeriod(period);
+    Assert.assertTrue("Period Time Not After",date.after(calendar.getTime()));
+
+
   }
 
 }

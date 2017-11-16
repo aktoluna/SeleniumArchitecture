@@ -64,15 +64,16 @@ public class DateAndTimeHelper {
 
   public static Date parsePeriod(String period, PeriodFormatter periodFormatter) {
     Period p = periodFormatter.parsePeriod(period);
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTimeInMillis(p.getMillis());
+    Calendar calendar = getCalendar();
+    calendar.setTimeInMillis(calendar.getTimeInMillis() + p.toStandardDuration().getMillis());
     return calendar.getTime();
   }
 
   private static PeriodFormatter getStandardPeriodFormatter() {
     return new PeriodFormatterBuilder()
-        .appendDays().appendSuffix("d ")
-        .appendHours().appendSuffix("h ")
+        .appendDays().appendSuffix("d")
+        .appendSeparator(" ")
+        .appendHours().appendSuffix("h")
         .toFormatter();
   }
 
