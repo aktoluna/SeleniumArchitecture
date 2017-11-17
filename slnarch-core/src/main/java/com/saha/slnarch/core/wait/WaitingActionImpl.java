@@ -81,7 +81,11 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
   }
 
   @Override
-  public void waitByMs(long millis) throws NullPointerException, InterruptedException {
-    Thread.sleep(millis);
+  public void waitByMs(long millis) {
+    try {
+      Thread.sleep(millis);
+    } catch (InterruptedException e) {
+      log.error("Sleep Exception", e);
+    }
   }
 }

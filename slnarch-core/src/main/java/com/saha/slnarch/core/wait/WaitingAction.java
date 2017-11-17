@@ -16,6 +16,5 @@ public interface WaitingAction<T extends WaitingAction> {
 
   void waitAll();
 
-  void waitByMs(long millis) throws NullPointerException, InterruptedException;
-
+  void waitByMs(long millis);
 }
