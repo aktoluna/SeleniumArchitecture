@@ -71,6 +71,26 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
   }
 
   @Override
+  public WaitingAction waitPageScrollingComplete() {
+    ExpectedCondition<Boolean> expectedCondition = driver -> {
+      long currentPosition = (long) javaScriptOperation
+          .executeJS("var currentPosition=window.pageYOffset;");
+      waitByMs(250);
+      return javaScriptOperation
+          .executeJS(
+              "return Math.abs(arguments[0]-window.pageYOffset) == 0; ", currentPosition)
+          .toString()
+          .equals("true");
+    };
+    try {
+      waitUntil(expectedCondition);
+    } catch (Exception e) {
+      log.error("Page Scroll Complete Exception", e);
+    }
+    return this;
+  }
+
+  @Override
   public void waitUntil(ExpectedCondition expectedCondition) {
     driverWait.until(expectedCondition);
   }

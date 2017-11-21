@@ -12,6 +12,8 @@ public interface WaitingAction<T extends WaitingAction> {
 
   T waitJQueryComplete();
 
+  T waitPageScrollingComplete();
+
   void waitUntil(ExpectedCondition expectedCondition);
 
   void waitAll();

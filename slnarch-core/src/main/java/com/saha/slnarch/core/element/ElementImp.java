@@ -107,19 +107,28 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp finds(By by) {
-    List<WebElement> elements = null;
-    try {
-      elements = driver.findElements(by);
-      setElementList(elements);
-    } catch (Exception e) {
-      logger.error("Elements Not Found By={}", e, by.toString());
-    }
-    return this;
+    return setElementList(findElements(by));
   }
 
   @Override
   public ElementImp finds(String name) {
     return finds(getByCreate().createBy(name));
+  }
+
+  @Override
+  public List<WebElement> findElements(By by) {
+    List<WebElement> elements = null;
+    try {
+      elements = driver.findElements(by);
+    } catch (Exception e) {
+      logger.error("Elements Not Found By={}", e, by.toString());
+    }
+    return elements;
+  }
+
+  @Override
+  public List<WebElement> findElements(String name) {
+    return findElements(getByCreate().createBy(name));
   }
 
   @Override

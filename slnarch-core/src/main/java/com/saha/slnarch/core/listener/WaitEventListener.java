@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class WaitEventListener extends BaseListener implements WebDriverEventListener {
 
@@ -27,6 +28,7 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   public void setConfiguration(Configuration configuration) {
     this.configuration = configuration;
+    logWaitSelected();
   }
 
   @Override
@@ -103,8 +105,8 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void beforeClickOn(WebElement webElement, WebDriver webDriver) {
+//    waitingAction.waitUntil(ExpectedConditions.elementToBeClickable(webElement));
     javaScriptAction.scrollToJs(webElement);
-//    javaScriptAction.highlightElementWithJs(webElement);
   }
 
   @Override
@@ -141,16 +143,20 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   private void waitRequest() {
     if (configuration.isWaitPageLoad()) {
-      logger.info("Wait Page Loading");
       waitingAction.waitPageLoadComplete();
     }
     if (configuration.isWaitAjax()) {
-      logger.info("Wait Ajax Loading");
-      waitingAction.waitAjaxComplete();
+      waitingAction.waitAjaxComplete().waitJQueryComplete();
     }
     if (configuration.isWaitAngular()) {
-      logger.info("Wait Angular Loading");
       waitingAction.waitForAngularLoad();
     }
+  }
+
+  private void logWaitSelected() {
+    logger.info("Wait Configuration\npage load={}\najax load={}\nangular load={}",
+        configuration.isWaitPageLoad(),
+        configuration.isWaitAjax(),
+        configuration.isWaitAngular());
   }
 }
