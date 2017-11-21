@@ -1,6 +1,5 @@
 package com.saha.slnarch.demo;
 
-import com.saha.slnarch.core.driver.DriverAction;
 import com.saha.slnarch.core.element.Element;
 import com.saha.slnarch.core.wait.WaitingAction;
 import com.saha.slnarch.di.page.InjectablePage;
@@ -9,8 +8,6 @@ import org.openqa.selenium.Keys;
 
 public class HomePage extends InjectablePage {
 
-  @Inject
-  DriverAction driverAction;
   @Inject
   Element elementAction;
   @Inject
@@ -26,7 +23,7 @@ public class HomePage extends InjectablePage {
         .sendKeys(cs)
         .find("#lst-ib")
         .sendKeys(Keys.ENTER);
-    waitingAction.waitAll();
+    waitingAction.waitPageLoadComplete();
   }
 
 }

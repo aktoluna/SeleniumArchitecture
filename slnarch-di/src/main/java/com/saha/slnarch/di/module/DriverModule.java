@@ -13,8 +13,10 @@ import com.saha.slnarch.core.model.Configuration;
 import com.saha.slnarch.core.wait.WaitingAction;
 import com.saha.slnarch.core.wait.WaitingActionImpl;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Singleton;
 import org.codejargon.feather.Provides;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -22,6 +24,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class DriverModule {
 
   private final WebDriver driver;
+  private final static int POLLING_TIME = 250;
+  private final static int EXPLICIT_TIME = 10;
 
   public DriverModule(WebDriver driver) {
     this.driver = driver;
@@ -35,17 +39,22 @@ public class DriverModule {
 
   @Provides
   @Singleton
-  public WebDriverWait provideWebDriverWait(WebDriver driver)
+  public WebDriverWait provideWebDriverWait(WebDriver driver, Configuration configuration)
       throws IOException, InstantiationException, IllegalAccessException {
-    return new WebDriverWait(driver, PropertyHelper //TODO resources read not correct way
-        .propertiesToClassWithAnnotation(PropertyHelper.readProperties("slnarch.properties"),
-            Configuration.class).getImplicitlyTimeOut());
+    return new WebDriverWait(driver,
+        configuration.getExplicitTimeOut() < 0 ? EXPLICIT_TIME
+            : configuration.getExplicitTimeOut(),
+        configuration.getPollingTime() < 0 ? POLLING_TIME : configuration.getPollingTime());
   }
 
   @Provides
   @Singleton
-  public FluentWait<WebDriver> provideFluentWebDriverWait(WebDriver driver) {
-    return new FluentWait<WebDriver>(driver);
+  public FluentWait<WebDriver> provideFluentWebDriverWait(WebDriver driver,
+      Configuration configuration) {
+    return new FluentWait<>(driver)
+        .withTimeout(configuration.getExplicitTimeOut(), TimeUnit.SECONDS)
+        .pollingEvery(configuration.getPollingTime(), TimeUnit.MILLISECONDS)
+        .ignoring(NotFoundException.class);
   }
 
   @Provides
@@ -70,15 +79,15 @@ public class DriverModule {
   @Provides
   @Singleton
   public Element provideElement(WebDriver driver,
-      JavaScriptOperation javaScriptOperation) {
-    return new ElementImp(driver, javaScriptOperation);
+      JavaScriptOperation javaScriptOperation, WaitingAction waitingAction) {
+    return new ElementImp(driver, javaScriptOperation, waitingAction);
   }
 
   @Provides
   @Singleton
   public JavaScriptAction provideJavaScriptAction(WebDriver driver,
-      JavaScriptOperation javaScriptOperation) {
-    return new ElementImp(driver, javaScriptOperation);
+      JavaScriptOperation javaScriptOperation, WaitingAction waitingAction) {
+    return new ElementImp(driver, javaScriptOperation, waitingAction);
   }
 
   @Provides
@@ -86,5 +95,14 @@ public class DriverModule {
   public WaitEventListener provideWaitEventListener(WaitingAction waitingAction,
       JavaScriptAction javaScriptAction) {
     return new WaitEventListener(waitingAction, javaScriptAction);
+  }
+
+  @Provides
+  @Singleton
+  public Configuration provideConfiguration()
+      throws IOException, InstantiationException, IllegalAccessException {
+    return PropertyHelper
+        .propertiesToClassWithAnnotation(PropertyHelper.readProperties("slnarch.properties"),
+            Configuration.class);
   }
 }

@@ -38,12 +38,12 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void afterAlertAccept(WebDriver webDriver) {
-
+    logger.info("Alert Popup Accept");
   }
 
   @Override
   public void afterAlertDismiss(WebDriver webDriver) {
-
+    logger.info("Alert Popup Dismiss");
   }
 
   @Override
@@ -69,22 +69,22 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void afterNavigateBack(WebDriver webDriver) {
-
+    logger.info("Navigate Back Page Url={}", webDriver.getCurrentUrl());
   }
 
   @Override
   public void beforeNavigateForward(WebDriver webDriver) {
-
   }
 
   @Override
   public void afterNavigateForward(WebDriver webDriver) {
-
+    logger.info("Navigate Forward Page Url={}", webDriver.getCurrentUrl());
   }
 
   @Override
   public void beforeNavigateRefresh(WebDriver webDriver) {
-
+    logger.info("Refresh Page Url={}", webDriver.getCurrentUrl());
+    waitRequest();
   }
 
   @Override
@@ -105,7 +105,6 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void beforeClickOn(WebElement webElement, WebDriver webDriver) {
-//    waitingAction.waitUntil(ExpectedConditions.elementToBeClickable(webElement));
     javaScriptAction.scrollToJs(webElement);
   }
 
@@ -128,7 +127,7 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void beforeScript(String s, WebDriver webDriver) {
-
+    logger.info("Run script {}", s);
   }
 
   @Override
@@ -138,7 +137,6 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void onException(Throwable throwable, WebDriver webDriver) {
-
   }
 
   private void waitRequest() {

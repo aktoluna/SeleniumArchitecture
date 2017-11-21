@@ -17,11 +17,18 @@ public class Configuration {
   private int scriptTimeOut;
   @Prop(key = "implicitlyTimeOut", type = PropType.INT)
   private int implicitlyTimeOut;
-  @Prop(key = "waitPageLoad",type = PropType.BOOL)
+  @Prop(key = "explicitTimeOut", type = PropType.INT)
+  private int explicitTimeOut;
+
+  /*WebDriverWait Polling Milli Seconds */
+  @Prop(key = "pollingTime", type = PropType.INT)
+  private int pollingTime;
+
+  @Prop(key = "waitPageLoad", type = PropType.BOOL)
   private boolean waitPageLoad;
-  @Prop(key = "waitAjax",type = PropType.BOOL)
+  @Prop(key = "waitAjax", type = PropType.BOOL)
   private boolean waitAjax;
-  @Prop(key = "waitAngular",type = PropType.BOOL)
+  @Prop(key = "waitAngular", type = PropType.BOOL)
   private boolean waitAngular;
 
 
@@ -95,5 +102,21 @@ public class Configuration {
 
   public void setWaitAngular(boolean waitAngular) {
     this.waitAngular = waitAngular;
+  }
+
+  public void setExplicitTimeOut(int explicitTimeOut) {
+    this.explicitTimeOut = explicitTimeOut;
+  }
+
+  public int getExplicitTimeOut() {
+    return explicitTimeOut;
+  }
+
+  public int getPollingTime() {
+    return pollingTime;
+  }
+
+  public void setPollingTime(int pollingTime) {
+    this.pollingTime = pollingTime;
   }
 }

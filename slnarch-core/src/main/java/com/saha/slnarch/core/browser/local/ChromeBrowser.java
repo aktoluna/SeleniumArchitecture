@@ -4,12 +4,10 @@ import com.saha.slnarch.common.helper.SystemPropertyHelper;
 import com.saha.slnarch.core.browser.BaseBrowser;
 import com.saha.slnarch.core.model.Configuration;
 import java.net.MalformedURLException;
-import java.util.logging.Level;
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.logging.LogType;
-import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 
 public class ChromeBrowser extends BaseBrowser<ChromeDriver, ChromeOptions, ChromeBrowser> {

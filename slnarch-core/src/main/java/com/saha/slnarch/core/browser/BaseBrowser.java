@@ -10,9 +10,9 @@ import org.openqa.selenium.WebDriver;
 public abstract class BaseBrowser<S extends WebDriver, T extends Capabilities, V extends BaseBrowser> implements
     Browser<S, T> {
 
-  private final int PAGE_TIME_OUT = 60;
-  private final int SCRIPT_TIME_OUT = 60;
-  private final int IMPLICITLY_WAIT = 30;
+  private final int PAGE_TIME_OUT = 30;
+  private final int SCRIPT_TIME_OUT = 30;
+
   protected Configuration configuration;
 
   public BaseBrowser(Configuration configuration) {
@@ -21,11 +21,10 @@ public abstract class BaseBrowser<S extends WebDriver, T extends Capabilities, V
 
   protected TimeOut getTimeout() {
     return TimeOut.TimeOutBuilder.aTimeOut()
-        .withImplicitly(configuration.getImplicitlyTimeOut() == 0 ? IMPLICITLY_WAIT
-            : configuration.getImplicitlyTimeOut())
-        .withScript(configuration.getScriptTimeOut() == 0 ? SCRIPT_TIME_OUT
+        .withImplicitly(configuration.getImplicitlyTimeOut())
+        .withScript(configuration.getScriptTimeOut() <= 0 ? SCRIPT_TIME_OUT
             : configuration.getScriptTimeOut())
-        .withPageLoad(configuration.getPageTimeOut() == 0 ? PAGE_TIME_OUT
+        .withPageLoad(configuration.getPageTimeOut() <= 0 ? PAGE_TIME_OUT
             : configuration.getPageTimeOut())
         .build();
   }

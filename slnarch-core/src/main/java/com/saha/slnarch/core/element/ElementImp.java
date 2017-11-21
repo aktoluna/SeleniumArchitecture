@@ -5,6 +5,8 @@ import com.saha.slnarch.core.element.by.ByFactory;
 import com.saha.slnarch.core.element.by.ByType;
 import com.saha.slnarch.core.js.JavaScriptOperation;
 import com.saha.slnarch.core.model.ElementInfo;
+import com.saha.slnarch.core.wait.WaitingAction;
+import com.saha.slnarch.core.wait.WaitingActionImpl;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -12,6 +14,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,20 +26,24 @@ public class ElementImp implements Element<ElementImp> {
 
   final WebDriver driver;
   final JavaScriptOperation javaScriptOperation;
+  final WaitingActionImpl waitingAction;
   ByCreate byCreate;
 
   @Inject
   public ElementImp(WebDriver driver, JavaScriptOperation javaScriptOperation,
-      ByCreate byCreate) {
-    this.driver = driver;
-    this.javaScriptOperation = javaScriptOperation;
-    this.byCreate = byCreate;
-    this.elementList = new ArrayList<>();
+      WaitingAction waitingAction) {
+    this(driver, javaScriptOperation, waitingAction, ByFactory.buildBy(ByType.CSS));
   }
 
   @Inject
-  public ElementImp(WebDriver driver, JavaScriptOperation javaScriptOperation) {
-    this(driver, javaScriptOperation, ByFactory.buildBy(ByType.CSS));
+  public ElementImp(WebDriver driver, JavaScriptOperation javaScriptOperation,
+      WaitingAction waitingAction,
+      ByCreate byCreate) {
+    this.driver = driver;
+    this.javaScriptOperation = javaScriptOperation;
+    this.waitingAction = (WaitingActionImpl) waitingAction;
+    this.byCreate = byCreate;
+    this.elementList = new ArrayList<>();
   }
 
   @Override
@@ -52,9 +59,10 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp find(By by) {
-    WebElement element = null;
+    WebElement element;
     try {
-      element = driver.findElement(by);
+      element = waitingAction
+          .waitUntil(ExpectedConditions.presenceOfElementLocated(by));
       setElementList(element);
     } catch (Exception e) {
       logger.error("Element Not Found By={}", e, by.toString());
@@ -81,7 +89,7 @@ public class ElementImp implements Element<ElementImp> {
   public ElementImp find(By by, int index) {
     WebElement element = null;
     try {
-      element = driver.findElements(by).get(index);
+      element = findElements(by).get(index);
       setElementList(element);
     } catch (Exception e) {
       logger.error("Element Not Found By={}", e, by.toString());

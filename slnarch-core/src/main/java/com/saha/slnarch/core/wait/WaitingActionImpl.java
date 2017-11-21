@@ -75,7 +75,7 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
     ExpectedCondition<Boolean> expectedCondition = driver -> {
       long currentPosition = (long) javaScriptOperation
           .executeJS("var currentPosition=window.pageYOffset;");
-      waitByMs(250);
+      waitByMs(150);
       return javaScriptOperation
           .executeJS(
               "return Math.abs(arguments[0]-window.pageYOffset) == 0; ", currentPosition)
@@ -91,8 +91,14 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
   }
 
   @Override
-  public void waitUntil(ExpectedCondition expectedCondition) {
-    driverWait.until(expectedCondition);
+  public WaitingAction stopPageLoad() {
+    javaScriptOperation.executeJS("window.stop();");
+    return this;
+  }
+
+  @Override
+  public <V> V waitUntil(ExpectedCondition expectedCondition) {
+    return (V) driverWait.until(expectedCondition);
   }
 
   @Override

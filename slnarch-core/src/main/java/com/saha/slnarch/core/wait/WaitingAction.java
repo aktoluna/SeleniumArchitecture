@@ -14,7 +14,9 @@ public interface WaitingAction<T extends WaitingAction> {
 
   T waitPageScrollingComplete();
 
-  void waitUntil(ExpectedCondition expectedCondition);
+  T stopPageLoad();
+
+  <V> V waitUntil(ExpectedCondition expectedCondition);
 
   void waitAll();
 
