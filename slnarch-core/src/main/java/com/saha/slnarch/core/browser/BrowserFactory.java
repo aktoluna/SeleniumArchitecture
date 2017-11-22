@@ -4,6 +4,7 @@ import com.saha.slnarch.common.exception.SlnException;
 import com.saha.slnarch.common.helper.StringHelper;
 import com.saha.slnarch.common.helper.SystemPropertyHelper;
 import com.saha.slnarch.core.browser.local.ChromeBrowser;
+import com.saha.slnarch.core.browser.local.FirefoxBrowser;
 import com.saha.slnarch.core.browser.remote.TestiniumBrowser;
 import com.saha.slnarch.core.model.Configuration;
 import java.net.MalformedURLException;
@@ -23,6 +24,8 @@ public class BrowserFactory {
     } else {
       if (configuration.getBrowserType().equals("Chrome")) {
         browser = new ChromeBrowser(configuration);
+      } else if (configuration.getBrowserType().equals("Firefox")) {
+        browser = new FirefoxBrowser(configuration);
       } else {
         throw new SlnException("Browser Type Not Found");
       }

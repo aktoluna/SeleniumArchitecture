@@ -3,6 +3,7 @@ package com.saha.slnarch.common.helper;
 public class SystemPropertyHelper {
 
   private static final String PROP_CHROME_DRIVER = "webdriver.chrome.driver";
+  private static final String PROP_FIREFOX_DRIVER = "webdriver.gecko.driver";
   private static final String PROP_TESTINIUM_KEY = "key";
 //  private static final String PROP_PAGE_TIMEOUT = "page.load.timeout";
 //  private static final String PROP_SCRIPT_TIMEOUT = "script.timeout";
@@ -26,6 +27,10 @@ public class SystemPropertyHelper {
 
   public static void setChromeDriverLocation(String path) {
     setProperty(PROP_CHROME_DRIVER, path);
+  }
+
+  public static void setFirefoxDriverLocation(String path) {
+    setProperty(PROP_FIREFOX_DRIVER, path);
   }
 
 }
