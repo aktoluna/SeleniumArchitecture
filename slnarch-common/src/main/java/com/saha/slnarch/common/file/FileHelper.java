@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.openxml4j.opc.internal.ZipHelper;
 
 public class FileHelper implements FileParser, FileReader, FileWriter {
 
@@ -160,5 +162,35 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
   @Override
   public boolean writeToFile(File file, String data) {
     return false;
+  }
+
+  public static void deleteFile(File file) {
+    file.deleteOnExit();
+  }
+
+  public static void copyFile(File file, File destFile) throws IOException {
+    FileUtils.copyFile(file, destFile);
+  }
+
+  public static void moveFile(File file, File destFile) throws IOException {
+    copyFile(file, destFile);
+    deleteFile(file);
+  }
+
+  public static boolean createDirectory(String path) throws IOException {
+    File file = new File(path);
+    if (!file.exists()) {
+      return true;
+    }
+    return file.mkdir();
+  }
+
+  public static void deleteDirectory(String path) throws IOException {
+    FileUtils.deleteDirectory(new File(path));
+  }
+
+  public static boolean deleteAndCreateDirectory(String path) throws IOException {
+    deleteDirectory(path);
+    return createDirectory(path);
   }
 }

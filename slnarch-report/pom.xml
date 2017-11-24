@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>slnarch-parent</artifactId>
+    <groupId>io.github.aktoluna</groupId>
+    <version>BETA-1.2.8</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>slnarch-report</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.aventstack</groupId>
+      <artifactId>extentreports</artifactId>
+      <version>${extent.report.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.github.aktoluna</groupId>
+      <artifactId>slnarch-junit</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>ch.fortysix</groupId>
+        <artifactId>maven-postman-plugin</artifactId>
+        <version>0.1.6</version>
+        <executions>
+          <execution>
+            <id>send_an_email</id>
+            <phase>test</phase>
+            <goals>
+              <goal>send-mail</goal>
+            </goals>
+            <inherited>false</inherited>
+            <configuration>
+              <mailhost>smtp.gmail.com</mailhost>
+              <mailport>465</mailport>
+              <mailssl>true</mailssl>
+              <mailAltConfig>true</mailAltConfig>
+              <mailuser>ali.aktolun@sahabt.com</mailuser>
+              <mailpassword>161992Oz5</mailpassword>
+              <from>ali.aktolun@sahabt.com</from>
+              <subject>Test Result ${}</subject>
+              <failonerror>true</failonerror>
+              <failonerror>true</failonerror>
+              <receivers>
+                <!--<receiver>nurhan.colakoglu@sahabt.com</receiver>-->
+                <receiver>ali.aktolun@sahabt.com</receiver>
+              </receivers>
+              <fileSets>
+                <fileSet>
+                  <directory>${basedir}/reports</directory>
+                  <includes>
+                    <include>**/*.html</include>
+                  </includes>
+                </fileSet>
+              </fileSets>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
