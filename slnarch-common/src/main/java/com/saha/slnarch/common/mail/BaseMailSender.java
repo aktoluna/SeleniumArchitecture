@@ -94,6 +94,7 @@ public abstract class BaseMailSender implements MailSender {
       throws MessagingException {
     InternetAddress[] addresses = parseAddress(address);
     if (addresses != null) {
+      logger.info("add {} address={}", recipientType.toString(), address);
       mimeMessage.addRecipients(recipientType, addresses);
     }
   }

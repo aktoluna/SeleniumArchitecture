@@ -24,7 +24,7 @@ public class HomePage extends InjectablePage {
         .sendKeys(cs)
         .find("#lst-ib")
         .sendKeys(Keys.ENTER);
-    Assertions.assertThat("1").as("Bunlar Farkli").startsWith("2");
+//    Assertions.assertThat("1").as("Bunlar Farkli").startsWith("2");
     waitingAction.waitPageLoadComplete();
   }
 

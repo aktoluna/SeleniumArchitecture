@@ -13,7 +13,6 @@ import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.FileUtils;
-import org.apache.poi.openxml4j.opc.internal.ZipHelper;
 
 public class FileHelper implements FileParser, FileReader, FileWriter {
 
@@ -106,15 +105,15 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
   }
 
 
-  private File toFile(String path) {
+  public static File toFile(String path) {
     return new File(path);
   }
 
-  private URI toUrI(String path) {
+  public URI toUrI(String path) {
     return toFile(path).getAbsoluteFile().toURI();
   }
 
-  private URI toUrI(File file) {
+  public URI toUrI(File file) {
     return file.getAbsoluteFile().toURI();
   }
 
@@ -179,7 +178,7 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
 
   public static boolean createDirectory(String path) throws IOException {
     File file = new File(path);
-    if (!file.exists()) {
+    if (file.exists()) {
       return true;
     }
     return file.mkdir();
@@ -192,5 +191,9 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
   public static boolean deleteAndCreateDirectory(String path) throws IOException {
     deleteDirectory(path);
     return createDirectory(path);
+  }
+
+  public static boolean isFileExist(String path) {
+    return toFile(path).exists();
   }
 }

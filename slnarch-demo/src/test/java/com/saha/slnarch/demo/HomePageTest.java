@@ -1,6 +1,5 @@
 package com.saha.slnarch.demo;
 
-import com.saha.slnarch.junit.InjectableJunitPageTestImpl;
 import com.saha.slnarch.report.ExtentReportTest;
 import org.junit.Test;
 

@@ -59,6 +59,11 @@ public class PropertyHelper {
     return properties;
   }
 
+  public static <S> S propertiesToClass(String propertyFileName, Class<S> output)
+      throws IllegalAccessException, InstantiationException, IOException {
+    return propertiesToClass(readProperties(propertyFileName), output);
+  }
+
   public static <S> S propertiesToClass(Properties properties, Class<S> output)
       throws IllegalAccessException, InstantiationException {
     S s = output.newInstance();
@@ -74,6 +79,11 @@ public class PropertyHelper {
     return s;
   }
 
+  public static <S> S propertiesToClassWithAnnotation(String propertyFileName, Class<S> output)
+      throws IllegalAccessException, InstantiationException, IOException {
+    return propertiesToClassWithAnnotation(readProperties(propertyFileName), output);
+  }
+
   public static <S> S propertiesToClassWithAnnotation(Properties properties, Class<S> output)
       throws IllegalAccessException, InstantiationException {
     S s = output.newInstance();
@@ -85,14 +95,15 @@ public class PropertyHelper {
       tempProp = field.getAnnotation(Prop.class);
       for (String propKey : properties.stringPropertyNames()) {
         if (tempProp.key().equals(propKey)) {
-          setFieldValueByType(s,field,tempProp.type(),properties.getProperty(propKey));
+          setFieldValueByType(s, field, tempProp.type(), properties.getProperty(propKey));
         }
       }
     }
     return s;
   }
 
-  private static  <S> void setFieldValueByType(S output, Field field, PropType propType, String value)
+  private static <S> void setFieldValueByType(S output, Field field, PropType propType,
+      String value)
       throws IllegalAccessException {
     field.setAccessible(true);
     if (propType == PropType.STRING) {
