@@ -13,8 +13,10 @@ public class ReportConfiguration {
   String screenShotPrefix;
   @Prop(key = "sendEmail", type = PropType.BOOL)
   boolean sendEmail;
-  @Prop(key = "deleteEachTestResult", type = PropType.BOOL)
-  boolean deleteEachTestResult;
+  @Prop(key = "beforeDeleteEachTestResult", type = PropType.BOOL)
+  boolean beforeDeleteEachTestResult;
+  @Prop(key = "afterDeleteEachTestResult", type = PropType.BOOL)
+  boolean afterDeleteEachTestResult;
   @Prop(key = "deleteZipEachTestResult", type = PropType.BOOL)
   boolean deleteZipEachTestResult;
   @Prop(key = "host")
@@ -70,12 +72,20 @@ public class ReportConfiguration {
     this.sendEmail = sendEmail;
   }
 
-  public boolean isDeleteEachTestResult() {
-    return deleteEachTestResult;
+  public boolean isBeforeDeleteEachTestResult() {
+    return beforeDeleteEachTestResult;
   }
 
-  public void setDeleteEachTestResult(boolean deleteEachTestResult) {
-    this.deleteEachTestResult = deleteEachTestResult;
+  public void setBeforeDeleteEachTestResult(boolean beforeDeleteEachTestResult) {
+    this.beforeDeleteEachTestResult = beforeDeleteEachTestResult;
+  }
+
+  public boolean isAfterDeleteEachTestResult() {
+    return afterDeleteEachTestResult;
+  }
+
+  public void setAfterDeleteEachTestResult(boolean afterDeleteEachTestResult) {
+    this.afterDeleteEachTestResult = afterDeleteEachTestResult;
   }
 
   public boolean isDeleteZipEachTestResult() {
@@ -165,4 +175,6 @@ public class ReportConfiguration {
   public void setBcc(String bcc) {
     this.bcc = bcc;
   }
+
+
 }

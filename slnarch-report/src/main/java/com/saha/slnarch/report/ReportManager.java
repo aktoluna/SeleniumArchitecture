@@ -79,7 +79,7 @@ public class ReportManager {
   }
 
   private ExtentHtmlReporter createExtentHtmlReport() throws IOException {
-    createDirectory(reportConfiguration.isDeleteEachTestResult());
+    createDirectory(reportConfiguration.isBeforeDeleteEachTestResult());
     ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(getReportFilePath());
     htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
     htmlReporter.config().setChartVisibilityOnOpen(true);
@@ -90,7 +90,7 @@ public class ReportManager {
     return htmlReporter;
   }
 
-  public void saveReport() throws MessagingException {
+  public void saveReport() throws MessagingException, IOException {
     extentReport.flush();
     if (reportConfiguration.sendEmail) {
       sendEmail();
@@ -190,7 +190,7 @@ public class ReportManager {
   }
 
 
-  public boolean sendEmail() throws MessagingException {
+  public boolean sendEmail() throws MessagingException, IOException {
     File file = createZip();
     boolean result = MailSenderCreator
         .createMailSender(MailSendType.valueOf(reportConfiguration.getMailType()),
@@ -205,6 +205,9 @@ public class ReportManager {
 
     if (reportConfiguration.isDeleteZipEachTestResult()) {
       FileHelper.deleteFile(file);
+    }
+    if(reportConfiguration.isAfterDeleteEachTestResult()){
+      FileHelper.deleteDirectory(getReportDirectory());
     }
     return result;
   }

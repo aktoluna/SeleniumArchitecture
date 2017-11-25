@@ -28,7 +28,7 @@ public abstract class ExtentReportTest extends InjectableJunitPageTestImpl {
   }
 
   @AfterClass
-  public static void afterClass() throws MessagingException {
+  public static void afterClass() throws MessagingException, IOException {
     reportManager.saveReport();
   }
 
