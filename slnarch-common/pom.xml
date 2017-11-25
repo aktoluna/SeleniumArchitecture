@@ -66,20 +66,20 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-io</artifactId>
-      <version>1.3.2</version>
+      <version>${common.io.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.zeroturnaround</groupId>
       <artifactId>zt-zip</artifactId>
-      <version>1.12</version>
+      <version>${zip.version}</version>
       <type>jar</type>
     </dependency>
 
     <dependency>
       <groupId>com.sun.mail</groupId>
       <artifactId>javax.mail</artifactId>
-      <version>1.5.5</version>
+      <version>${mail.version}</version>
     </dependency>
 
   </dependencies>

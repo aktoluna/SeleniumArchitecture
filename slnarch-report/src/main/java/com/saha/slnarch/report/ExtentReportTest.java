@@ -12,7 +12,7 @@ public abstract class ExtentReportTest extends InjectableJunitPageTestImpl {
   @Rule
   public ExtentJunitListener extentJunitListener = new ExtentJunitListener(getDriver());
 
-  protected static ReportManager reportManager;
+  private static ReportManager reportManager;
 
   @BeforeClass
   public static void setUpClass()
@@ -21,10 +21,13 @@ public abstract class ExtentReportTest extends InjectableJunitPageTestImpl {
     reportManager.createExtentReport();
   }
 
+  public static ReportManager getReportManager() {
+    return reportManager;
+  }
 
   @Override
   public void afterTest() {
-
+    //Disable after driver quit
   }
 
   @AfterClass
