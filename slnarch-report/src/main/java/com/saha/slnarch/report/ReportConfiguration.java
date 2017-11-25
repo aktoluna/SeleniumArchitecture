@@ -6,39 +6,60 @@ import com.saha.slnarch.common.helper.Prop.PropType;
 public class ReportConfiguration {
 
   @Prop(key = "reportDirectory")
+  private
   String reportDirectory;
   @Prop(key = "reportFileName")
+  private
   String reportFileName;
   @Prop(key = "screenShotPrefix")
+  private
   String screenShotPrefix;
   @Prop(key = "sendEmail", type = PropType.BOOL)
+  private
   boolean sendEmail;
   @Prop(key = "beforeDeleteEachTestResult", type = PropType.BOOL)
+  private
   boolean beforeDeleteEachTestResult;
   @Prop(key = "afterDeleteEachTestResult", type = PropType.BOOL)
+  private
   boolean afterDeleteEachTestResult;
   @Prop(key = "deleteZipEachTestResult", type = PropType.BOOL)
+  private
   boolean deleteZipEachTestResult;
+  @Prop(key = "appendExistingReport",type = PropType.BOOL)
+  private
+  boolean appendExistingReport;
   @Prop(key = "host")
+  private
   String host;
   @Prop(key = "port", type = PropType.INT)
+  private
   int port;
   @Prop(key = "username")
+  private
   String username;
   @Prop(key = "password")
+  private
   String password;
   @Prop(key = "auth", type = PropType.BOOL)
+  private
   boolean auth;
   @Prop(key = "mailType")
+  private
   String mailType;
   @Prop(key = "from")
+  private
   String from;
   @Prop(key = "to")
+  private
   String to;
   @Prop(key = "cc")
+  private
   String cc;
   @Prop(key = "bcc")
+  private
   String bcc;
+
 
   public String getReportDirectory() {
     return reportDirectory;
@@ -94,6 +115,14 @@ public class ReportConfiguration {
 
   public void setDeleteZipEachTestResult(boolean deleteZipEachTestResult) {
     this.deleteZipEachTestResult = deleteZipEachTestResult;
+  }
+
+  public boolean isAppendExistingReport() {
+    return appendExistingReport;
+  }
+
+  public void setAppendExistingReport(boolean appendExistingReport) {
+    this.appendExistingReport = appendExistingReport;
   }
 
   public String getHost() {
@@ -175,6 +204,4 @@ public class ReportConfiguration {
   public void setBcc(String bcc) {
     this.bcc = bcc;
   }
-
-
 }

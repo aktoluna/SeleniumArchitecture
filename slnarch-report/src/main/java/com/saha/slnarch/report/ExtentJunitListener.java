@@ -55,6 +55,8 @@ public class ExtentJunitListener extends TestWatcher {
     reportManager.createNewExtentTest(description.getMethodName());
     reportManager.getExtentTest()
         .info(String.format("Starting Test=%s", description.getMethodName()));
+    reportManager.setAuthor(description);
+    reportManager.setCategory(description);
   }
 
   @Override
@@ -73,4 +75,6 @@ public class ExtentJunitListener extends TestWatcher {
       e.printStackTrace();
     }
   }
+
+
 }

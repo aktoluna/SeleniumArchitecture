@@ -12,10 +12,15 @@ import com.saha.slnarch.common.mail.MailSendType;
 import com.saha.slnarch.common.mail.MailSenderCreator;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import javax.mail.MessagingException;
+import org.junit.runner.Description;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ReportManager {
 
+  private Logger logger = LoggerFactory.getLogger(getClass());
   private static ReportManager instance;
   private String reportDirectory = "reports";
   private String reportFileName = "slnarchReport.html";
@@ -28,7 +33,7 @@ public class ReportManager {
       this.reportConfiguration = PropertyHelper
           .propertiesToClassWithAnnotation("report.properties", ReportConfiguration.class);
     } catch (IllegalAccessException | InstantiationException | IOException e) {
-      e.printStackTrace();
+      logger.warn("Report Properties Error", e);
     }
   }
 
@@ -81,6 +86,7 @@ public class ReportManager {
   private ExtentHtmlReporter createExtentHtmlReport() throws IOException {
     createDirectory(reportConfiguration.isBeforeDeleteEachTestResult());
     ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(getReportFilePath());
+    htmlReporter.setAppendExisting(reportConfiguration.isAppendExistingReport());
     htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
     htmlReporter.config().setChartVisibilityOnOpen(true);
     htmlReporter.config().setTheme(Theme.STANDARD);
@@ -92,7 +98,7 @@ public class ReportManager {
 
   public void saveReport() throws MessagingException, IOException {
     extentReport.flush();
-    if (reportConfiguration.sendEmail) {
+    if (reportConfiguration.isSendEmail()) {
       sendEmail();
     }
   }
@@ -206,10 +212,115 @@ public class ReportManager {
     if (reportConfiguration.isDeleteZipEachTestResult()) {
       FileHelper.deleteFile(file);
     }
-    if(reportConfiguration.isAfterDeleteEachTestResult()){
+    if (reportConfiguration.isAfterDeleteEachTestResult()) {
       FileHelper.deleteDirectory(getReportDirectory());
     }
     return result;
+  }
+
+  public void setAuthor(Description description) {
+    setAuthor(extentTest, description);
+  }
+
+  public void setAuthor(ExtentTest extentTest, Description description) {
+    if (!setAuthorByMethod(extentTest, description)) {
+      setAuthorByClass(extentTest, description);
+    }
+  }
+
+  public boolean setAuthorByMethod(Description description) {
+    return setAuthorByMethod(extentTest, description);
+  }
+
+  public boolean setAuthorByMethod(ExtentTest extentTest, Description description) {
+    boolean success = false;
+    try {
+      TestAuthor testAuthor = Arrays.stream(description.getTestClass().getMethods())
+          .filter(method -> description.getMethodName().startsWith(method.getName()))
+          .filter(method -> method.isAnnotationPresent(TestAuthor.class))
+          .map(method -> method.getAnnotation(TestAuthor.class))
+          .findFirst()
+          .get();
+      setAuthor(extentTest, testAuthor);
+      logger.info("Author Set By Method");
+      success = true;
+    } catch (Exception e) {
+      logger.warn("Author Annotation Method Not Found");
+    }
+    return success;
+  }
+
+  public void setAuthorByClass(Description description) {
+    setAuthorByClass(extentTest, description);
+  }
+
+  public void setAuthorByClass(ExtentTest extentTest, Description description) {
+    TestAuthor testAuthor;
+    if (description.getTestClass().isAnnotationPresent(TestAuthor.class)) {
+      testAuthor = description.getTestClass()
+          .getAnnotation(TestAuthor.class);
+      setAuthor(extentTest, testAuthor);
+      logger.info("Author Set By Class");
+    }
+  }
+
+  private void setAuthor(ExtentTest extentTest, TestAuthor testAuthor) {
+    extentTest.assignAuthor(testAuthor.authors());
+  }
+
+
+  public void setCategory(Description description) {
+    setCategory(extentTest, description);
+  }
+
+  public void setCategory(ExtentTest extentTest, Description description) {
+    if (!setCategoryByMethod(extentTest, description)) {
+      setCategoryByClass(extentTest, description);
+    }
+  }
+
+  public boolean setCategoryByMethod(Description description) {
+    return setCategoryByMethod(extentTest, description);
+  }
+
+  public boolean setCategoryByMethod(ExtentTest extentTest, Description description) {
+    boolean success = false;
+//    int index = description.getMethodName().indexOf('[');
+//    String methodName = index > -1 ? description.getMethodName().substring(0, index)
+//        : description.getMethodName();
+//    logger.info("Category Method Name={}", methodName);
+    try {
+      TestCategory testCategory = Arrays.stream(description.getTestClass().getMethods())
+//          .filter(method1 -> method1.getName().equals(methodName))
+          .filter(method -> description.getMethodName().startsWith(method.getName()))
+          .filter(method1 -> method1.isAnnotationPresent(TestCategory.class))
+          .map(method1 -> method1.getAnnotation(TestCategory.class))
+          .findFirst()
+          .get();
+      setCategory(extentTest, testCategory);
+      logger.info("Category Set By Method");
+      success = true;
+    } catch (Exception e) {
+      logger.warn("Category Annotation Method Not Found");
+    }
+    return success;
+  }
+
+  public void setCategoryByClass(Description description) {
+    setCategoryByClass(extentTest, description);
+  }
+
+  public void setCategoryByClass(ExtentTest extentTest, Description description) {
+    TestCategory testCategory;
+    if (description.getTestClass().isAnnotationPresent(TestCategory.class)) {
+      testCategory = description.getTestClass().getAnnotation(TestCategory.class);
+      setCategory(extentTest, testCategory);
+      logger.info("Category Set By Class");
+    }
+  }
+
+  private void setCategory(ExtentTest extentTest, TestCategory testCategory) {
+    extentTest.assignCategory(testCategory.categories());
   }
 
 
