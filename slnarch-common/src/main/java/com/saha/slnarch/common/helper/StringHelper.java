@@ -1,6 +1,10 @@
 package com.saha.slnarch.common.helper;
 
 import com.google.common.base.Strings;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,5 +118,23 @@ public class StringHelper {
 
   public static float getObjectValueAsFloat(Object object) {
     return Float.parseFloat(object.toString());
+  }
+
+  public static double parsePrice(final String amount) {
+    return parsePrice(amount, Locale.US);
+  }
+
+  public static double parsePrice(final String amount, final Locale locale) {
+    double value = 0;
+    try {
+      final NumberFormat format = NumberFormat.getNumberInstance(locale);
+      if (format instanceof DecimalFormat) {
+        ((DecimalFormat) format).setParseBigDecimal(true);
+      }
+      value = format.parse(amount.replaceAll("[^\\d.,]", "")).doubleValue();
+    } catch (ParseException e) {
+      logger.error("Price Parse Error", e);
+    }
+    return value;
   }
 }
