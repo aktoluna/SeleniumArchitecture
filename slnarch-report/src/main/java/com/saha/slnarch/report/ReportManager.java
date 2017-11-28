@@ -2,6 +2,8 @@ package com.saha.slnarch.report;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
@@ -25,8 +27,10 @@ public class ReportManager {
   private String reportDirectory = "reports";
   private String reportFileName = "slnarchReport.html";
   private ExtentReports extentReport;
+  //  private ExtentXReporter extentXReporter;
   private ExtentTest extentTest;
   private ReportConfiguration reportConfiguration;
+
 
   private ReportManager() {
     try {
@@ -71,6 +75,7 @@ public class ReportManager {
   public ExtentReports createExtentReport() throws IOException {
     extentReport = new ExtentReports();
     extentReport.attachReporter(createExtentHtmlReport());
+//    extentReport.attachReporter(createExtentXReporter());
     return extentReport;
   }
 
@@ -95,6 +100,18 @@ public class ReportManager {
     htmlReporter.config().setReportName(getReportFileName());
     return htmlReporter;
   }
+
+//  private ExtentXReporter createExtentXReporter() {
+//    MongoClientURI mongoClientURI = new MongoClientURI(
+//        "mongodb://aktoluna:161992Oz55**@cluster0-shard-00-00-pwz0h.mongodb.net:27017,cluster0-shard-00-01-pwz0h.mongodb.net:27017,cluster0-shard-00-02-pwz0h.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin");
+//    extentXReporter = new ExtentXReporter(mongoClientURI);
+//    extentXReporter.config().setProjectName("FlyPgs Web");
+//    extentXReporter.config().setReportObjectId("1");
+//    extentXReporter.config().setReportName("FlyPgs Web Test Report");
+////    extentXReporter.config().setServerUrl("");
+//    return extentXReporter;
+//  }
+
 
   public void saveReport() throws MessagingException, IOException {
     extentReport.flush();
@@ -149,6 +166,23 @@ public class ReportManager {
     extentTest.info(message);
   }
 
+  public void fail(String message, File file) {
+    fail(extentTest, message, file, null);
+  }
+
+  public void fail(String message, File file, String title) {
+    extentTest.fail(message, createMediaEntity(file, title));
+  }
+
+  public void fail(ExtentTest extentTest, String message, File file) {
+    fail(extentTest, message, file, null);
+  }
+
+  public void fail(ExtentTest extentTest, String message, File file, String title) {
+    extentTest.fail(message, createMediaEntity(file, title));
+  }
+
+
   public void addScreenShot(File file) throws IOException {
     addScreenShot(file, "");
   }
@@ -184,6 +218,35 @@ public class ReportManager {
   public void addScreenShot(ExtentTest extentTest, String imagePath, String title)
       throws IOException {
     extentTest.addScreenCaptureFromPath(imagePath, title);
+  }
+
+  public MediaEntityModelProvider createMediaEntity(File file, String title) {
+    return createMediaEntity(file.getPath(), title);
+  }
+
+  public MediaEntityModelProvider createMediaEntity(File file) {
+    String filePath = String.format("%s/%s", reportDirectory, file.getName());
+    try {
+      FileHelper.copyFile(file, new File(filePath));
+    } catch (IOException e) {
+      logger.error("File Copy", e);
+    }
+    return createMediaEntity(file.getName(), null);
+  }
+
+  public MediaEntityModelProvider createMediaEntity(String filePath) {
+    return createMediaEntity(filePath, null);
+  }
+
+  public MediaEntityModelProvider createMediaEntity(String filePath, String title) {
+    MediaEntityModelProvider mediaEntityModelProvider = null;
+    try {
+      mediaEntityModelProvider = MediaEntityBuilder.createScreenCaptureFromPath(filePath, title)
+          .build();
+    } catch (IOException e) {
+      logger.error("Media Entity Read File Exception", e);
+    }
+    return mediaEntityModelProvider;
   }
 
   public String getZipFilePath() {

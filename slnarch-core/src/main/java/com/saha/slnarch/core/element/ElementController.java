@@ -5,12 +5,20 @@ import org.openqa.selenium.WebElement;
 
 public interface ElementController<T extends Element> {
 
-  T text(WebElement element);
+  String text(WebElement element);
 
-  T text(List<WebElement> elements, int index);
+  String text(List<WebElement> elements, int index);
 
-  T text();
+  String text();
 
-  T text(int index);
+  String text(int index);
+
+  String value(WebElement element);
+
+  String value(List<WebElement> elements, int index);
+
+  String value();
+
+  String value(int index);
 
 }

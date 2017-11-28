@@ -23,7 +23,19 @@ public class StringHelper {
       try {
         converted = Integer.parseInt(value);
       } catch (Exception e) {
-        logger.error("String is not number", e);
+        logger.error("String is not int", e);
+      }
+    }
+    return converted;
+  }
+
+  public static double convertStringToDouble(String value) {
+    double converted = 0;
+    if (!isEmpty(value)) {
+      try {
+        converted = Double.parseDouble(value);
+      } catch (Exception e) {
+        logger.error("String is not double", e);
       }
     }
     return converted;
@@ -38,6 +50,7 @@ public class StringHelper {
     }
     return converted;
   }
+
 
   public static boolean isNumeric(String text) {
     boolean result = false;
@@ -67,6 +80,20 @@ public class StringHelper {
       logger.error("Is Contains Error", e);
     }
     return result;
+  }
+
+  public static String removeStringInText(String text, String removeText) {
+    String value = "";
+    try {
+      value = text.replace(removeText, "");
+    } catch (Exception e) {
+      logger.error("Remove Text ", e);
+    }
+    return value;
+  }
+
+  public static String trimString(String text) {
+    return text.trim();
   }
 
   public static String getObjectValueAsString(Object object) {

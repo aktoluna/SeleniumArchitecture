@@ -19,11 +19,9 @@ public class Configuration {
   private int implicitlyTimeOut;
   @Prop(key = "explicitTimeOut", type = PropType.INT)
   private int explicitTimeOut;
-
   /*WebDriverWait Polling Milli Seconds */
   @Prop(key = "pollingTime", type = PropType.INT)
   private int pollingTime;
-
   @Prop(key = "waitPageLoad", type = PropType.BOOL)
   private boolean waitPageLoad;
   @Prop(key = "waitAjax", type = PropType.BOOL)

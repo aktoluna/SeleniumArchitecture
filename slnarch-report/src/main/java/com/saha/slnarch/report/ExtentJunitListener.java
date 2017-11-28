@@ -1,7 +1,7 @@
 package com.saha.slnarch.report;
 
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import java.io.File;
-import java.io.IOException;
 import org.junit.AssumptionViolatedException;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
@@ -37,16 +37,18 @@ public class ExtentJunitListener extends TestWatcher {
   protected void failed(Throwable e, Description description) {
     super.failed(e, description);
     reportManager.getExtentTest()
-        .fail(String.format("Fail Test=%s clause=%s", description.getMethodName(), e.getMessage()));
-    addScreenShoot();
+        .fail(MarkupHelper.createCodeBlock(e.getMessage()))
+        .fail(String.format("Fail Test=%s clause=%s", description.getMethodName(), e.getMessage()),
+            reportManager.createMediaEntity(takeScreenShotWithSave()));
   }
 
   @Override
   protected void skipped(AssumptionViolatedException e, Description description) {
     super.skipped(e, description);
     reportManager.getExtentTest()
-        .skip(String.format("Skip Test=%s clause=%s", description.getMethodName(), e.getMessage()));
-    addScreenShoot();
+        .skip(MarkupHelper.createCodeBlock(e.getMessage()))
+        .skip(String.format("Skip Test=%s cause=%s", description.getMethodName(), e.getMessage()),
+            reportManager.createMediaEntity(takeScreenShotWithSave()));
   }
 
   @Override
@@ -67,13 +69,8 @@ public class ExtentJunitListener extends TestWatcher {
         .info(String.format("Finished Test=%s", description.getMethodName()));
   }
 
-  private void addScreenShoot() {
-    File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-    try {
-      reportManager.addScreenShot(scrFile);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  private File takeScreenShotWithSave() {
+    return ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
   }
 
 

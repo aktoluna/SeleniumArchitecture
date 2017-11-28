@@ -384,4 +384,44 @@ public class ElementImp implements Element<ElementImp> {
   public ElementImp scrollToJs() {
     return scrollToJs(getElement());
   }
+
+  @Override
+  public String text(WebElement element) {
+    return element.getText();
+  }
+
+  @Override
+  public String text(List<WebElement> elements, int index) {
+    return text(elements.get(index));
+  }
+
+  @Override
+  public String text() {
+    return text(getElement());
+  }
+
+  @Override
+  public String text(int index) {
+    return text(getElement(index));
+  }
+
+  @Override
+  public String value(WebElement element) {
+    return element.getAttribute("value");
+  }
+
+  @Override
+  public String value(List<WebElement> elements, int index) {
+    return value(elements.get(index));
+  }
+
+  @Override
+  public String value() {
+    return value(getElement());
+  }
+
+  @Override
+  public String value(int index) {
+    return value(getElements(), index);
+  }
 }
