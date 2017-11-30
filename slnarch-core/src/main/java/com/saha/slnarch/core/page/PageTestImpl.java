@@ -1,6 +1,8 @@
 package com.saha.slnarch.core.page;
 
 import com.saha.slnarch.common.helper.PropertyHelper;
+import com.saha.slnarch.common.helper.StringHelper;
+import com.saha.slnarch.common.helper.SystemPropertyHelper;
 import com.saha.slnarch.core.browser.BrowserFactory;
 import com.saha.slnarch.core.model.Configuration;
 import java.io.IOException;
@@ -26,12 +28,29 @@ public abstract class PageTestImpl implements PageTest {
 
   private void initWebDriver() {
     try {
-      this.configuration = PropertyHelper
+      configuration = PropertyHelper
           .propertiesToClassWithAnnotation(PropertyHelper.readProperties("slnarch.properties"),
               Configuration.class);
+      setBaseUrl();
       driver = new BrowserFactory().getWebDriver(getCapabilities(), getProxy(), configuration);
     } catch (IllegalAccessException | IOException | InstantiationException e) {
       e.printStackTrace();
+    }
+  }
+
+  private void setBaseUrl() {
+    String env = SystemPropertyHelper.getEnvKey();
+    if (!StringHelper.isEmpty(env)) {
+      if (env.equals("test")) {
+        configuration.setBaseUrl(configuration.getTestUrl());
+      } else if (env.equals("prep")) {
+        configuration.setBaseUrl(configuration.getPrepUrl());
+      } else if (env.equals("live")) {
+        configuration.setBaseUrl(configuration.getLiveUrl());
+      }
+    } else {
+      logger.warn("Env System Property Not Found Default Use Test Url");
+      configuration.setBaseUrl(configuration.getTestUrl());
     }
   }
 

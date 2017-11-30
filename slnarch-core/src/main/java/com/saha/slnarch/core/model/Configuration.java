@@ -9,6 +9,12 @@ public class Configuration {
   private String driverPath;
   @Prop(key = "browserType")
   private String browserType;
+  @Prop(key = "testUrl")
+  private String testUrl;
+  @Prop(key = "prepUrl")
+  private String prepUrl;
+  @Prop(key = "liveUrl")
+  private String liveUrl;
   @Prop(key = "baseUrl")
   private String baseUrl;
   @Prop(key = "pageTimeOut", type = PropType.INT)
@@ -116,5 +122,29 @@ public class Configuration {
 
   public void setPollingTime(int pollingTime) {
     this.pollingTime = pollingTime;
+  }
+
+  public String getLiveUrl() {
+    return liveUrl;
+  }
+
+  public void setLiveUrl(String liveUrl) {
+    this.liveUrl = liveUrl;
+  }
+
+  public String getPrepUrl() {
+    return prepUrl;
+  }
+
+  public void setPrepUrl(String prepUrl) {
+    this.prepUrl = prepUrl;
+  }
+
+  public String getTestUrl() {
+    return testUrl;
+  }
+
+  public void setTestUrl(String testUrl) {
+    this.testUrl = testUrl;
   }
 }
