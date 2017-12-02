@@ -1,24 +1,23 @@
 package com.saha.slnarch.report;
 
 import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.saha.slnarch.core.driver.DriverAction;
+import com.saha.slnarch.core.driver.DriverActionImpl;
 import java.io.File;
 import org.junit.AssumptionViolatedException;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class ExtentJunitListener extends TestWatcher {
 
   ReportManager reportManager = ReportManager.getInstance();
 
-
-  WebDriver driver;
+  DriverAction driverAction;
 
   public ExtentJunitListener(WebDriver driver) {
-    this.driver = driver;
+    this.driverAction = new DriverActionImpl(driver);
   }
 
   @Override
@@ -64,13 +63,13 @@ public class ExtentJunitListener extends TestWatcher {
   @Override
   protected void finished(Description description) {
     super.finished(description);
-    driver.quit();
+    driverAction.quit();
     reportManager.getExtentTest()
         .info(String.format("Finished Test=%s", description.getMethodName()));
   }
 
   private File takeScreenShotWithSave() {
-    return ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+    return driverAction.takeScreenShot();
   }
 
 

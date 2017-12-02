@@ -28,8 +28,43 @@
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>${aspectj.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjtools</artifactId>
+      <version>${aspectj.version}</version>
+    </dependency>
   </dependencies>
 
-
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>aspectj-maven-plugin</artifactId>
+        <version>${maven.aspectj.version}</version>
+        <configuration>
+          <showWeaveInfo>true</showWeaveInfo>
+          <complianceLevel>${java.version}</complianceLevel>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <Xlint>ignore</Xlint>
+          <encoding>UTF-8</encoding>
+          <verbose>true</verbose>
+          <proc>none</proc>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>test-compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

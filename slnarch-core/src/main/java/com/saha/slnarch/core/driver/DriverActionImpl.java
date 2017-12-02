@@ -1,11 +1,14 @@
 package com.saha.slnarch.core.driver;
 
 
+import java.io.File;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 
@@ -108,4 +111,15 @@ public final class DriverActionImpl implements DriverAction {
   public String getTitle() {
     return driver.getTitle();
   }
+
+  @Override
+  public File takeScreenShot() {
+    return ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+  }
+
+  @Override
+  public Object takeScreenShotByType(OutputType outputType) {
+    return ((TakesScreenshot) driver).getScreenshotAs(outputType);
+  }
+
 }

@@ -1,6 +1,8 @@
 package com.saha.slnarch.core.driver;
 
+import java.io.File;
 import java.util.Date;
+import org.openqa.selenium.OutputType;
 
 public interface DriverAction<T extends DriverAction> {
 
@@ -33,4 +35,8 @@ public interface DriverAction<T extends DriverAction> {
   String getPageSource();
 
   String getTitle();
+
+  File takeScreenShot();
+
+  <X> X takeScreenShotByType(OutputType<X> outputType);
 }
