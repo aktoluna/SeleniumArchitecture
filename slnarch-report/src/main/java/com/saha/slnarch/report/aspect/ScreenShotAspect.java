@@ -1,10 +1,11 @@
-package com.saha.slnarch.report.screenshot;
+package com.saha.slnarch.report.aspect;
 
 import com.saha.slnarch.common.helper.StringHelper;
 import com.saha.slnarch.core.driver.DriverAction;
 import com.saha.slnarch.di.Injectable;
 import com.saha.slnarch.di.helper.InjectionHelper;
 import com.saha.slnarch.report.ReportManager;
+import com.saha.slnarch.report.annotation.ScreenShot;
 import java.io.File;
 import javax.inject.Inject;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -15,38 +16,38 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Aspect
-public class TakeScreenShotAspect implements Injectable {
+public class ScreenShotAspect implements Injectable {
 
   Logger logger = LoggerFactory.getLogger(getClass());
 
   @Inject
   DriverAction driverAction;
 
-  public TakeScreenShotAspect() {
+  public ScreenShotAspect() {
     inject();
   }
 
-  @Pointcut("@annotation(takeScreenShot)")
-  public void annotationPointCutDefinition(TakeScreenShot takeScreenShot) {
+  @Pointcut("@annotation(screenShot)")
+  public void annotationPointCutDefinition(ScreenShot screenShot) {
   }
 
   @Pointcut("execution(* *(..))")
   public void atExecution() {
   }
 
-  @Around("annotationPointCutDefinition(takeScreenShot) && atExecution()")
+  @Around("annotationPointCutDefinition(screenShot) && atExecution()")
   public Object aroundAdvice(ProceedingJoinPoint joinPoint,
-      TakeScreenShot takeScreenShot) throws Throwable {
+      ScreenShot screenShot) throws Throwable {
     Object returnObject = null;
     logger.info("Test");
     logger.info("test");
     try {
-      addScreenShotBefore(takeScreenShot.logMessage(), takeScreenShot.before());
+      addScreenShotBefore(screenShot.message(), screenShot.before());
       returnObject = joinPoint.proceed();
     } catch (Throwable throwable) {
       throw throwable;
     } finally {
-      addScreenShotBefore(takeScreenShot.logMessage(), takeScreenShot.after());
+      addScreenShotBefore(screenShot.message(), screenShot.after());
     }
     return returnObject;
   }
@@ -66,7 +67,8 @@ public class TakeScreenShotAspect implements Injectable {
     try {
       File file = driverAction.takeScreenShot();
       if (StringHelper.isEmpty(message)) {
-        ReportManager.getInstance().addScreenShot(file);
+        ReportManager.getInstance().getExtentTest().info(message,
+            ReportManager.getInstance().createMediaEntity(file));
       } else {
         ReportManager.getInstance().getExtentTest().info(message,
             ReportManager.getInstance().createMediaEntity(file));

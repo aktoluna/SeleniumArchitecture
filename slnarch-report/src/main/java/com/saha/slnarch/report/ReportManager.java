@@ -12,6 +12,8 @@ import com.saha.slnarch.common.helper.PropertyHelper;
 import com.saha.slnarch.common.helper.ZipHelper;
 import com.saha.slnarch.common.mail.MailSendType;
 import com.saha.slnarch.common.mail.MailSenderCreator;
+import com.saha.slnarch.report.annotation.TestAuthor;
+import com.saha.slnarch.report.annotation.TestCategory;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;

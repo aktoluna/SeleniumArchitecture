@@ -1,4 +1,4 @@
-package com.saha.slnarch.report;
+package com.saha.slnarch.report.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
