@@ -64,7 +64,6 @@ public class DriverModule {
   }
 
   @Provides
-  @Singleton
   public DriverAction provideDriverAction(WebDriver driver) {
     return new DriverActionImpl(driver);
   }

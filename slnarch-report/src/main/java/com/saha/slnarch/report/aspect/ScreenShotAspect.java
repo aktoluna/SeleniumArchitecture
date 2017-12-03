@@ -24,7 +24,6 @@ public class ScreenShotAspect implements Injectable {
   DriverAction driverAction;
 
   public ScreenShotAspect() {
-    inject();
   }
 
   @Pointcut("@annotation(screenShot)")
@@ -39,8 +38,6 @@ public class ScreenShotAspect implements Injectable {
   public Object aroundAdvice(ProceedingJoinPoint joinPoint,
       ScreenShot screenShot) throws Throwable {
     Object returnObject = null;
-    logger.info("Test");
-    logger.info("test");
     try {
       addScreenShotBefore(screenShot.message(), screenShot.before());
       returnObject = joinPoint.proceed();
@@ -64,6 +61,7 @@ public class ScreenShotAspect implements Injectable {
     if (!takePhoto) {
       return;
     }
+    inject();
     try {
       File file = driverAction.takeScreenShot();
       if (StringHelper.isEmpty(message)) {

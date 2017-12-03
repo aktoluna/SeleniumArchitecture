@@ -24,7 +24,6 @@ public abstract class InjectablePageTestImpl extends PageTestImpl implements Inj
         .setFeather(Feather.with(new DriverModule(getDriver()), new CommonModule()));
   }
 
-
   protected Feather getFeather() {
     return InjectionHelper.getInstance().getFeather();
   }
