@@ -18,6 +18,7 @@ public class HomePage extends InjectablePage {
     super();
   }
 
+  @SuppressWarnings("unchecked")
   @ScreenShot(before = true)
   public void pageTest() {
     CharSequence cs = "ali";
@@ -25,7 +26,6 @@ public class HomePage extends InjectablePage {
         .sendKeys(cs)
         .find("#lst-ib")
         .sendKeys(Keys.ENTER);
-//    Assertions.assertThat("1").as("Bunlar Farkli").startsWith("2");
     waitingAction.waitPageLoadComplete();
   }
 

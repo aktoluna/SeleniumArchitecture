@@ -24,10 +24,10 @@ public class ElementImp implements Element<ElementImp> {
   private Logger logger = LoggerFactory.getLogger(ElementImp.class);
   private List<WebElement> elementList;
 
-  final WebDriver driver;
-  final JavaScriptOperation javaScriptOperation;
-  final WaitingActionImpl waitingAction;
-  ByCreate byCreate;
+  private final WebDriver driver;
+  private final JavaScriptOperation javaScriptOperation;
+  private final WaitingActionImpl waitingAction;
+  private ByCreate byCreate;
 
   @Inject
   public ElementImp(WebDriver driver, JavaScriptOperation javaScriptOperation,

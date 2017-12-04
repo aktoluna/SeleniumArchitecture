@@ -8,7 +8,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class WaitEventListener extends BaseListener implements WebDriverEventListener {
 
@@ -127,7 +126,6 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void beforeScript(String s, WebDriver webDriver) {
-    logger.info("Run script {}", s);
   }
 
   @Override
