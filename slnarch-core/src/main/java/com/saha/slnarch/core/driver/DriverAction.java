@@ -2,6 +2,7 @@ package com.saha.slnarch.core.driver;
 
 import java.io.File;
 import java.util.Date;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.OutputType;
 
 public interface DriverAction<T extends DriverAction> {
@@ -25,6 +26,12 @@ public interface DriverAction<T extends DriverAction> {
   T setScriptTimeOut(long time);
 
   T alertPopup(boolean accept);
+
+  T alertPopup(boolean accept, boolean exist);
+
+  T alertPopupHandle(Alert alert,boolean accept);
+
+  Alert getAlertIsPresent();
 
   void close();
 

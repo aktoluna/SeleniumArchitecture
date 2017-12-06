@@ -7,6 +7,7 @@ import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.saha.slnarch.common.drive.DriveHelper;
 import com.saha.slnarch.common.file.FileHelper;
 import com.saha.slnarch.common.helper.PropertyHelper;
 import com.saha.slnarch.common.helper.ZipHelper;
@@ -119,6 +120,9 @@ public class ReportManager {
     extentReport.flush();
     if (reportConfiguration.isSendEmail()) {
       sendEmail();
+    }
+    if (reportConfiguration.isUploadDrive()) {
+      uploadDrive();
     }
   }
 
@@ -283,6 +287,20 @@ public class ReportManager {
     return result;
   }
 
+  public void uploadDrive() throws MessagingException, IOException {
+    File file = createZip();
+    DriveHelper driveHelper = new DriveHelper();
+    driveHelper.createDriver();
+    com.google.api.services.drive.model.File uploadFile = driveHelper.uploadFile(file);
+    driveHelper.shareFile(uploadFile, reportConfiguration.getTo());
+    if (reportConfiguration.isDeleteZipEachTestResult()) {
+      FileHelper.deleteFile(file);
+    }
+    if (reportConfiguration.isAfterDeleteEachTestResult()) {
+      FileHelper.deleteDirectory(getReportDirectory());
+    }
+  }
+
   public void setAuthor(Description description) {
     setAuthor(extentTest, description);
   }
@@ -350,13 +368,8 @@ public class ReportManager {
 
   public boolean setCategoryByMethod(ExtentTest extentTest, Description description) {
     boolean success = false;
-//    int index = description.getMethodName().indexOf('[');
-//    String methodName = index > -1 ? description.getMethodName().substring(0, index)
-//        : description.getMethodName();
-//    logger.info("Category Method Name={}", methodName);
     try {
       TestCategory testCategory = Arrays.stream(description.getTestClass().getMethods())
-//          .filter(method1 -> method1.getName().equals(methodName))
           .filter(method -> description.getMethodName().startsWith(method.getName()))
           .filter(method1 -> method1.isAnnotationPresent(TestCategory.class))
           .map(method1 -> method1.getAnnotation(TestCategory.class))

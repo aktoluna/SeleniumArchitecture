@@ -26,7 +26,7 @@ public class ReportConfiguration {
   @Prop(key = "deleteZipEachTestResult", type = PropType.BOOL)
   private
   boolean deleteZipEachTestResult;
-  @Prop(key = "appendExistingReport",type = PropType.BOOL)
+  @Prop(key = "appendExistingReport", type = PropType.BOOL)
   private
   boolean appendExistingReport;
   @Prop(key = "host")
@@ -59,6 +59,8 @@ public class ReportConfiguration {
   @Prop(key = "bcc")
   private
   String bcc;
+  @Prop(key = "uploadDrive",type = PropType.BOOL)
+  private boolean uploadDrive;
 
 
   public String getReportDirectory() {
@@ -203,5 +205,9 @@ public class ReportConfiguration {
 
   public void setBcc(String bcc) {
     this.bcc = bcc;
+  }
+
+  public boolean isUploadDrive() {
+    return uploadDrive;
   }
 }

@@ -10,6 +10,7 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 
 public final class DriverActionImpl implements DriverAction {
@@ -78,13 +79,36 @@ public final class DriverActionImpl implements DriverAction {
 
   @Override
   public DriverAction alertPopup(boolean accept) {
-    Alert alert = driver.switchTo().alert();
+    return alertPopup(accept, false);
+  }
+
+  @Override
+  public DriverAction alertPopup(boolean accept, boolean exist) {
+    Alert alert = getAlertIsPresent();
+    if (exist) {
+      if (alert != null) {
+        alertPopupHandle(alert, accept);
+      }
+    } else {
+      alertPopupHandle(alert, accept);
+    }
+    return this;
+  }
+
+  @Override
+  public DriverAction alertPopupHandle(Alert alert, boolean accept) {
     if (accept) {
       alert.accept();
     } else {
       alert.dismiss();
     }
     return this;
+  }
+
+
+  @Override
+  public Alert getAlertIsPresent() {
+    return ExpectedConditions.alertIsPresent().apply(driver);
   }
 
   @Override
