@@ -43,7 +43,7 @@ public class DriveHelper {
 
   public Credential authorize() throws IOException {
     GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-        new InputStreamReader(DriveHelper.class.getResourceAsStream("/client_secrets.json")));
+        new InputStreamReader(DriveHelper.class.getResourceAsStream("/client-secrets.json")));
     if (clientSecrets.getDetails().getClientId().startsWith("Enter")
         || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
       logger.error(
@@ -56,10 +56,14 @@ public class DriveHelper {
         HTTP_TRANSPORT, JSON_FACTORY, clientSecrets,
         Collections.singleton(DriveScopes.DRIVE_FILE))
         .setDataStoreFactory(DATA_STORE_FACTORY)
+        .setAccessType("offline")
         .build();
+//    return GoogleCredential
+//        .fromStream(new FileInputStream("client-secrets.json"))
+//        .createScoped(Collections.singleton(DriveScopes.DRIVE_FILE));
 
     return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver())
-        .authorize("user");
+        .authorize("me");
   }
 
   public void createDriver() throws IOException {
