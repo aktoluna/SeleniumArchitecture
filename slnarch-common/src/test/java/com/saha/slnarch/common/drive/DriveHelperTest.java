@@ -6,13 +6,13 @@ import org.junit.Test;
 
 public class DriveHelperTest {
 
-  @Test
-  public void uploadFile() throws IOException {
-    DriveHelper driveHelper = new DriveHelper();
-    driveHelper.createDriver();
-    com.google.api.services.drive.model.File file = driveHelper
-        .uploadFile(new File("src/test/resources/welcome.json"));
-    driveHelper.shareFile(file, "ali.aktolun@sahabt.com");
-
-  }
+//  @Test
+//  public void uploadFile() throws IOException {
+//    DriveHelper driveHelper = new DriveHelper();
+//    driveHelper.createDriver();
+//    com.google.api.services.drive.model.File file = driveHelper
+//        .uploadFile(new File("src/test/resources/welcome.json"));
+//    driveHelper.shareFile(file, "ali.aktolun@sahabt.com");
+//
+//  }
 }

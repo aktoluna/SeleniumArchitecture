@@ -58,10 +58,6 @@ public class DriveHelper {
         .setDataStoreFactory(DATA_STORE_FACTORY)
         .setAccessType("offline")
         .build();
-//    return GoogleCredential
-//        .fromStream(new FileInputStream("client-secrets.json"))
-//        .createScoped(Collections.singleton(DriveScopes.DRIVE_FILE));
-
     return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver())
         .authorize("me");
   }
@@ -80,12 +76,12 @@ public class DriveHelper {
 
   public File uploadFile(java.io.File file) throws IOException {
     File fileMetadata = new File();
-    fileMetadata.setName(file.getName());
+    fileMetadata.setTitle(file.getName());
 
     FileContent mediaContent = new FileContent("*/*", file);
-    Drive.Files.Create insert = drive.files().create(fileMetadata, mediaContent);
+    Drive.Files.Insert insert = drive.files().insert(fileMetadata, mediaContent);
     MediaHttpUploader uploader = insert.getMediaHttpUploader();
-    uploader.setDirectUploadEnabled(true);
+    uploader.setDirectUploadEnabled(false);
     uploader.setProgressListener(new FileUploadListener());
     return insert.execute();
   }
@@ -96,19 +92,21 @@ public class DriveHelper {
     Permission userPermission = new Permission()
         .setType("user")
         .setRole("writer")
-        .setEmailAddress(to);
-    drive.permissions().create(file.getId(), userPermission)
-        .setSendNotificationEmail(true)
+        .setValue(to);
+    drive.permissions().insert(file.getId(), userPermission)
+        .setSendNotificationEmails(true)
         .setFields("id")
         .queue(batch, callback);
     batch.execute();
+
+
   }
 
   JsonBatchCallback<Permission> callback = new JsonBatchCallback<Permission>() {
     @Override
     public void onFailure(GoogleJsonError e,
         HttpHeaders responseHeaders) {
-      logger.error("Shared File Failed", e);
+      logger.warn("Share Link Fail {}", e);
     }
 
     @Override

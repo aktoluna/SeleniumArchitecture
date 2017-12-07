@@ -292,13 +292,27 @@ public class ReportManager {
     DriveHelper driveHelper = new DriveHelper();
     driveHelper.createDriver();
     com.google.api.services.drive.model.File uploadFile = driveHelper.uploadFile(file);
-    driveHelper.shareFile(uploadFile, reportConfiguration.getTo());
+    for (String s : reportConfiguration.getTo().split(",")) {
+      driveHelper.shareFile(uploadFile, reportConfiguration.getTo());
+    }
     if (reportConfiguration.isDeleteZipEachTestResult()) {
       FileHelper.deleteFile(file);
     }
     if (reportConfiguration.isAfterDeleteEachTestResult()) {
       FileHelper.deleteDirectory(getReportDirectory());
     }
+    logger.info("Web View link {}", uploadFile.getWebViewLink());
+    logger.info("Web Content link {}", uploadFile.getWebContentLink());
+    boolean result = MailSenderCreator
+        .createMailSender(MailSendType.valueOf(reportConfiguration.getMailType()),
+            reportConfiguration.getHost(), reportConfiguration.getPort(),
+            reportConfiguration.getUsername(),
+            reportConfiguration.getPassword(), reportConfiguration.isAuth())
+        .createMail(reportConfiguration.getFrom(), reportConfiguration.getTo(), "Test Result",
+            reportConfiguration.getCc(), reportConfiguration.getBcc())
+        .setMessage(uploadFile.getWebContentLink())
+        .send();
+    logger.info("Mail send {}", result);
   }
 
   public void setAuthor(Description description) {
