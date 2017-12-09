@@ -5,7 +5,7 @@
   <parent>
     <artifactId>slnarch-parent</artifactId>
     <groupId>io.github.aktoluna</groupId>
-    <version>BETA-1.4.0</version>
+    <version>BETA-1.4.3</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>slnarch-common</artifactId>
@@ -99,6 +99,13 @@
       <artifactId>google-api-client</artifactId>
       <version>1.23.0</version>
     </dependency>
+
+    <dependency>
+      <groupId>net.coobird</groupId>
+      <artifactId>thumbnailator</artifactId>
+      <version>0.4.8</version>
+    </dependency>
+
   </dependencies>
 
   <build>

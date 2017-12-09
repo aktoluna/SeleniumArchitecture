@@ -69,7 +69,7 @@ public class ExtentJunitListener extends TestWatcher {
   }
 
   private File takeScreenShotWithSave() {
-    return driverAction.takeScreenShot();
+    return driverAction.takeScreenShotAndCompress();
   }
 
 

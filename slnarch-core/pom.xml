@@ -5,7 +5,7 @@
   <parent>
     <artifactId>slnarch-parent</artifactId>
     <groupId>io.github.aktoluna</groupId>
-    <version>BETA-1.4.0</version>
+    <version>BETA-1.4.3</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>slnarch-core</artifactId>

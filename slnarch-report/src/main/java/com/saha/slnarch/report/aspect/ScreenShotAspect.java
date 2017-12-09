@@ -63,7 +63,7 @@ public class ScreenShotAspect implements Injectable {
     }
     inject();
     try {
-      File file = driverAction.takeScreenShot();
+      File file = driverAction.takeScreenShotAndCompress();
       if (StringHelper.isEmpty(message)) {
         ReportManager.getInstance().getExtentTest().info(message,
             ReportManager.getInstance().createMediaEntity(file));

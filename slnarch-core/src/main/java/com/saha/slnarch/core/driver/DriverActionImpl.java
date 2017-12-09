@@ -1,7 +1,9 @@
 package com.saha.slnarch.core.driver;
 
 
+import com.saha.slnarch.common.ImageHelper;
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
@@ -139,6 +141,17 @@ public final class DriverActionImpl implements DriverAction {
   @Override
   public File takeScreenShot() {
     return ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+  }
+
+  @Override
+  public File takeScreenShotAndCompress() {
+    File file = takeScreenShot();
+    try {
+      file = ImageHelper.resizeWithThumbnails(file, 1200, 600);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return file;
   }
 
   @Override

@@ -2,10 +2,7 @@ package com.saha.slnarch.common.drive;
 
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.batch.BatchRequest;
 import com.google.api.client.googleapis.batch.json.JsonBatchCallback;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -22,7 +19,6 @@ import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import org.slf4j.Logger;
@@ -42,24 +38,28 @@ public class DriveHelper {
 
 
   public Credential authorize() throws IOException {
-    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-        new InputStreamReader(DriveHelper.class.getResourceAsStream("/client-secrets.json")));
-    if (clientSecrets.getDetails().getClientId().startsWith("Enter")
-        || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-      logger.error(
-          "Enter Client ID and Secret from https://code.google.com/apis/console/?api=drive "
-              + "into drive-cmdline-sample/src/main/resources/client_secrets.json");
-      throw new IllegalArgumentException();
-    }
+//    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+//        new InputStreamReader(DriveHelper.class.getResourceAsStream("/client-secrets.json")));
+//    if (clientSecrets.getDetails().getClientId().startsWith("Enter")
+//        || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
+//      logger.error(
+//          "Enter Client ID and Secret from https://code.google.com/apis/console/?api=drive "
+//              + "into drive-cmdline-sample/src/main/resources/client_secrets.json");
+//      throw new IllegalArgumentException();
+//    }
 
-    GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets,
-        Collections.singleton(DriveScopes.DRIVE_FILE))
-        .setDataStoreFactory(DATA_STORE_FACTORY)
-        .setAccessType("offline")
-        .build();
-    return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver())
-        .authorize("me");
+//    GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+//        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets,
+//        Collections.singleton(DriveScopes.DRIVE_FILE))
+//        .setDataStoreFactory(DATA_STORE_FACTORY)
+//        .setAccessType("offline")
+//        .build();
+//    return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver())
+//        .authorize("me");
+
+    return GoogleCredential
+        .fromStream(DriveHelper.class.getResourceAsStream("/client-secrets.json"))
+        .createScoped(Collections.singleton(DriveScopes.DRIVE));
   }
 
   public void createDriver() throws IOException {

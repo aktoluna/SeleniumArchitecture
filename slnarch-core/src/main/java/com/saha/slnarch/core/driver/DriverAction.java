@@ -29,7 +29,7 @@ public interface DriverAction<T extends DriverAction> {
 
   T alertPopup(boolean accept, boolean exist);
 
-  T alertPopupHandle(Alert alert,boolean accept);
+  T alertPopupHandle(Alert alert, boolean accept);
 
   Alert getAlertIsPresent();
 
@@ -45,5 +45,8 @@ public interface DriverAction<T extends DriverAction> {
 
   File takeScreenShot();
 
+  File takeScreenShotAndCompress();
+
   <X> X takeScreenShotByType(OutputType<X> outputType);
+
 }
