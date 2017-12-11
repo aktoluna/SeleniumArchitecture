@@ -36,7 +36,7 @@ public class JenkinsBrowser extends
         .setCapability(CapabilityType.TAKES_SCREENSHOT,
             StringHelper.convertStringToBoolean(SystemPropertyHelper.getTakeScreenShot()));
     capabilities.setCapability("recordsVideo",
-        StringHelper.convertStringToBoolean(SystemPropertyHelper.getRecordsVideo()));
+        StringHelper.convertStringToBoolean(SystemPropertyHelper.getRecordVideo()));
     capabilities.setCapability("screenResolution", SystemPropertyHelper.getScreenResolution());
     if (proxy != null) {
       capabilities.setCapability(CapabilityType.PROXY, proxy);

@@ -5,7 +5,7 @@
 
   <groupId>io.github.aktoluna</groupId>
   <artifactId>slnarch-parent</artifactId>
-  <version>BETA-1.4.4</version>
+  <version>BETA-1.4.5</version>
   <packaging>pom</packaging>
 
   <name>${project.artifactId}</name>

@@ -10,9 +10,9 @@ public class SystemPropertyHelper {
   private static final String PROP_PLATFORM = "platform";
   private static final String PROP_BROWSER_NAME = "browserName";
   private static final String PROP_BROWSER_VERSION = "browserVersion";
-  private static final String PROP_RECORDS_VIDEO = "recordsVideo";
+  private static final String PROP_RECORDS_VIDEO = "recordVideo";
   private static final String PROP_SCREEN_RESOLUTION = "screenResolution";
-  private static final String PROP_TAKE_SCREEN_SHOT = "takeScreenSho";
+  private static final String PROP_TAKE_SCREEN_SHOT = "takeScreenShot";
 
 
   private SystemPropertyHelper() {
@@ -47,7 +47,7 @@ public class SystemPropertyHelper {
     return getProperty(PROP_BROWSER_VERSION);
   }
 
-  public static String getRecordsVideo() {
+  public static String getRecordVideo() {
     return getProperty(PROP_RECORDS_VIDEO);
   }
 
