@@ -5,6 +5,7 @@ import com.saha.slnarch.common.helper.StringHelper;
 import com.saha.slnarch.common.helper.SystemPropertyHelper;
 import com.saha.slnarch.core.browser.local.ChromeBrowser;
 import com.saha.slnarch.core.browser.local.FirefoxBrowser;
+import com.saha.slnarch.core.browser.remote.JenkinsBrowser;
 import com.saha.slnarch.core.browser.remote.TestiniumBrowser;
 import com.saha.slnarch.core.model.Configuration;
 import java.net.MalformedURLException;
@@ -21,6 +22,8 @@ public class BrowserFactory {
     Browser browser = null;
     if (!StringHelper.isEmpty(SystemPropertyHelper.getTestiniumKey())) {
       browser = new TestiniumBrowser(configuration);
+    } else if (!StringHelper.isEmpty(SystemPropertyHelper.getJenkinsTestiniumKey())) {
+      browser=new JenkinsBrowser(configuration);
     } else {
       if (configuration.getBrowserType().equals("Chrome")) {
         browser = new ChromeBrowser(configuration);

@@ -45,6 +45,18 @@ public class StringHelper {
     return converted;
   }
 
+  public static boolean convertStringToBoolean(String value) {
+    boolean converted = false;
+    if (!isEmpty(value)) {
+      try {
+        converted = Boolean.parseBoolean(value);
+      } catch (Exception e) {
+        logger.error("String is not boolean", e);
+      }
+    }
+    return converted;
+  }
+
   public static String convertIntToString(int value) {
     String converted = "";
     try {

@@ -5,7 +5,15 @@ public class SystemPropertyHelper {
   private static final String PROP_CHROME_DRIVER = "webdriver.chrome.driver";
   private static final String PROP_FIREFOX_DRIVER = "webdriver.gecko.driver";
   private static final String PROP_TESTINIUM_KEY = "key";
+  private static final String PROP_JENKINS_KEY = "jenkinsKey";
   private static final String PROP_ENV = "env";
+  private static final String PROP_PLATFORM = "platform";
+  private static final String PROP_BROWSER_NAME = "browserName";
+  private static final String PROP_BROWSER_VERSION = "browserVersion";
+  private static final String PROP_RECORDS_VIDEO = "recordsVideo";
+  private static final String PROP_SCREEN_RESOLUTION = "screenResolution";
+  private static final String PROP_TAKE_SCREEN_SHOT = "takeScreenSho";
+
 
   private SystemPropertyHelper() {
 
@@ -21,6 +29,34 @@ public class SystemPropertyHelper {
 
   public static String getTestiniumKey() {
     return getProperty(PROP_TESTINIUM_KEY);
+  }
+
+  public static String getJenkinsTestiniumKey() {
+    return getProperty(PROP_JENKINS_KEY);
+  }
+
+  public static String getPlatform() {
+    return getProperty(PROP_PLATFORM);
+  }
+
+  public static String getBrowserName() {
+    return getProperty(PROP_BROWSER_NAME);
+  }
+
+  public static String getBrowserVersion() {
+    return getProperty(PROP_BROWSER_VERSION);
+  }
+
+  public static String getRecordsVideo() {
+    return getProperty(PROP_RECORDS_VIDEO);
+  }
+
+  public static String getTakeScreenShot() {
+    return getProperty(PROP_TAKE_SCREEN_SHOT);
+  }
+
+  public static String getScreenResolution() {
+    return getProperty(PROP_SCREEN_RESOLUTION);
   }
 
   public static String getEnvKey() {
