@@ -59,7 +59,7 @@ public class ReportConfiguration {
   @Prop(key = "bcc")
   private
   String bcc;
-  @Prop(key = "uploadDrive",type = PropType.BOOL)
+  @Prop(key = "uploadDrive", type = PropType.BOOL)
   private boolean uploadDrive;
 
 

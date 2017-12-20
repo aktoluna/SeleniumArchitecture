@@ -1,5 +1,6 @@
 package com.saha.slnarch.report;
 
+import ch.qos.logback.classic.PatternLayout;
 import com.saha.slnarch.junit.InjectableJunitPageTestImpl;
 import java.io.IOException;
 import javax.mail.MessagingException;

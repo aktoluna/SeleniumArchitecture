@@ -39,6 +39,8 @@ public class ReportManager {
     try {
       this.reportConfiguration = PropertyHelper
           .propertiesToClassWithAnnotation("report.properties", ReportConfiguration.class);
+      setReportDirectory(ReportPattern.parse(reportConfiguration.getReportDirectory()));
+      setReportFileName(ReportPattern.parse(reportConfiguration.getReportFileName()));
     } catch (IllegalAccessException | InstantiationException | IOException e) {
       logger.warn("Report Properties Error", e);
     }
@@ -63,6 +65,9 @@ public class ReportManager {
   }
 
   public void setReportFileName(String reportFileName) {
+    if (!reportFileName.endsWith(".html")) {
+      reportFileName = String.format("%s.html", reportFileName);
+    }
     this.reportFileName = reportFileName;
   }
 
@@ -293,7 +298,8 @@ public class ReportManager {
     driveHelper.createDriver();
     com.google.api.services.drive.model.File uploadFile = driveHelper.uploadFile(file);
     for (String s : reportConfiguration.getTo().split(",")) {
-      driveHelper.shareFile(uploadFile, reportConfiguration.getTo());
+      logger.debug("Share File To {}", s);
+      driveHelper.shareFile(uploadFile, s);
     }
     if (reportConfiguration.isDeleteZipEachTestResult()) {
       FileHelper.deleteFile(file);
