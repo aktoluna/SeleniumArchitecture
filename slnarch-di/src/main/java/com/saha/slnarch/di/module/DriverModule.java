@@ -14,6 +14,7 @@ import com.saha.slnarch.core.wait.WaitingAction;
 import com.saha.slnarch.core.wait.WaitingActionImpl;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import javax.inject.Named;
 import javax.inject.Singleton;
 import org.codejargon.feather.Provides;
 import org.openqa.selenium.NotFoundException;
@@ -39,11 +40,22 @@ public class DriverModule {
 
   @Provides
   @Singleton
+  @Named("default")
   public WebDriverWait provideWebDriverWait(WebDriver driver, Configuration configuration)
       throws IOException, InstantiationException, IllegalAccessException {
     return new WebDriverWait(driver,
         configuration.getExplicitTimeOut() < 0 ? EXPLICIT_TIME
             : configuration.getExplicitTimeOut(),
+        configuration.getPollingTime() < 0 ? POLLING_TIME : configuration.getPollingTime());
+  }
+
+  @Provides
+  @Singleton
+  @Named("frameWait")
+  public WebDriverWait provideWebDriverWaitByFrame(WebDriver driver, Configuration configuration)
+      throws IOException, InstantiationException, IllegalAccessException {
+    return new WebDriverWait(driver,
+        configuration.getPageTimeOut(),
         configuration.getPollingTime() < 0 ? POLLING_TIME : configuration.getPollingTime());
   }
 
@@ -70,9 +82,10 @@ public class DriverModule {
 
   @Provides
   @Singleton
-  public WaitingAction provideWaitingAction(WebDriverWait wait,
+  public WaitingAction provideWaitingAction(@Named("default") WebDriverWait wait,
+      @Named("frameWait") WebDriverWait frameWait,
       JavaScriptOperation javaScriptOperation) {
-    return new WaitingActionImpl(wait, javaScriptOperation);
+    return new WaitingActionImpl(wait, frameWait, javaScriptOperation);
   }
 
   @Provides

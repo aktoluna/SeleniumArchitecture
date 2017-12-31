@@ -2,7 +2,10 @@ package com.saha.slnarch.core.wait;
 
 import com.saha.slnarch.core.js.JavaScriptOperation;
 import javax.inject.Inject;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +17,14 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
 
   JavaScriptOperation javaScriptOperation;
   WebDriverWait driverWait;
+  WebDriverWait frameWait;
 
   @Inject
-  public WaitingActionImpl(WebDriverWait driverWait, JavaScriptOperation javaScriptOperation) {
+  public WaitingActionImpl(WebDriverWait driverWait, WebDriverWait frameWait,
+      JavaScriptOperation javaScriptOperation) {
     this.javaScriptOperation = javaScriptOperation;
     this.driverWait = driverWait;
+    this.frameWait = frameWait;
   }
 
 
@@ -97,8 +103,31 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
   }
 
   @Override
+  public WaitingAction switchToFrame(String frameName) {
+    waitUntilByFrame(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameName));
+    return this;
+  }
+
+  @Override
+  public WaitingAction switchToFrameElement(By byFrameName) {
+    waitUntilByFrame(ExpectedConditions.frameToBeAvailableAndSwitchToIt(byFrameName));
+    return this;
+  }
+
+  @Override
+  public WaitingAction switchToFrameElement(WebElement element) {
+    waitUntilByFrame(ExpectedConditions.frameToBeAvailableAndSwitchToIt(element));
+    return this;
+  }
+
+  @Override
   public <V> V waitUntil(ExpectedCondition expectedCondition) {
     return (V) driverWait.until(expectedCondition);
+  }
+
+  @Override
+  public <V> V waitUntilByFrame(ExpectedCondition expectedCondition) {
+    return (V) frameWait.until(expectedCondition);
   }
 
   @Override

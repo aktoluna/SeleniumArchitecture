@@ -3,7 +3,9 @@ package com.saha.slnarch.core.driver;
 import java.io.File;
 import java.util.Date;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebElement;
 
 public interface DriverAction<T extends DriverAction> {
 
@@ -32,6 +34,14 @@ public interface DriverAction<T extends DriverAction> {
   T alertPopupHandle(Alert alert, boolean accept);
 
   Alert getAlertIsPresent();
+
+  T switchToMain();
+
+  T switchToFrame(String frameName);
+
+  T switchToFrame(By byFrameName);
+
+  T switchToFrameElement(WebElement element);
 
   void close();
 

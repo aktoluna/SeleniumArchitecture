@@ -8,10 +8,12 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 
@@ -111,6 +113,30 @@ public final class DriverActionImpl implements DriverAction {
   @Override
   public Alert getAlertIsPresent() {
     return ExpectedConditions.alertIsPresent().apply(driver);
+  }
+
+  @Override
+  public DriverAction switchToMain() {
+    driver.switchTo().defaultContent();
+    return this;
+  }
+
+  @Override
+  public DriverAction switchToFrame(String frameName) {
+    driver.switchTo().frame(frameName);
+    return this;
+  }
+
+  @Override
+  public DriverAction switchToFrame(By byFrameName) {
+    driver.switchTo().frame(driver.findElement(byFrameName));
+    return this;
+  }
+
+  @Override
+  public DriverAction switchToFrameElement(WebElement element) {
+    driver.switchTo().frame(element);
+    return this;
   }
 
   @Override

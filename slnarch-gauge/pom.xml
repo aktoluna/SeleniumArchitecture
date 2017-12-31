@@ -9,14 +9,25 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>slnarch-demo</artifactId>
+  <artifactId>slnarch-gauge</artifactId>
   <packaging>jar</packaging>
+
   <dependencies>
     <dependency>
+      <groupId>com.thoughtworks.gauge</groupId>
+      <artifactId>gauge-java</artifactId>
+      <version>${gauge.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
       <groupId>io.github.aktoluna</groupId>
-      <artifactId>slnarch-report</artifactId>
-      <version>${project.version}</version>
+      <artifactId>slnarch-di</artifactId>
+      <version>BETA-1.4.9</version>
     </dependency>
   </dependencies>
-
 </project>
