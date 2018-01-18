@@ -52,7 +52,7 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
   @Override
   public WaitingAction waitForAngularLoad() {
     ExpectedCondition<Boolean> expectation = driver -> javaScriptOperation.executeJS(
-        "return angular.element(document).injector().getElement('$http').pendingRequests.length === 0",
+        "return angular.element(document).injector().get('$http').pendingRequests.length === 0",
         true).toString().equals("true");
     try {
       waitUntil(expectation);
