@@ -33,6 +33,14 @@ public interface ElementFind<T extends Element,S extends WebElement> {
 
   T finds(String name);
 
+//  T finds(By by,String searchText);
+//
+//  T finds(String name,String searchText);
+//
+//  T find(By by,String searchText);
+//
+//  T find(String name,String searchText);
+
   List<WebElement> findElements(By by);
 
   List<WebElement> findElements(String name);

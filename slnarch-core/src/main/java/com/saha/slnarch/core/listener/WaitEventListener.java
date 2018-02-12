@@ -94,12 +94,12 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void beforeFindBy(By by, WebElement webElement, WebDriver webDriver) {
+    logger.info("Search Element {}", by.toString());
     waitRequest();
   }
 
   @Override
   public void afterFindBy(By by, WebElement webElement, WebDriver webDriver) {
-    logger.info("Find Element {}", by.toString());
   }
 
   @Override
@@ -109,23 +109,26 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void afterClickOn(WebElement webElement, WebDriver webDriver) {
-
+    waitRequest();
   }
 
   @Override
   public void beforeChangeValueOf(WebElement webElement, WebDriver webDriver,
       CharSequence[] charSequences) {
+    javaScriptAction.scrollToJs(webElement);
+    waitingAction.waitByMs(150);
     logger.info("Set Value {}", charSequences);
   }
 
   @Override
   public void afterChangeValueOf(WebElement webElement, WebDriver webDriver,
       CharSequence[] charSequences) {
-
+    waitRequest();
   }
 
   @Override
   public void beforeScript(String s, WebDriver webDriver) {
+//    logger.info("Script run = {}", s);
   }
 
   @Override

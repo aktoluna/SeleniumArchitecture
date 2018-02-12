@@ -17,7 +17,8 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import org.codejargon.feather.Provides;
-import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -41,32 +42,40 @@ public class DriverModule {
   @Provides
   @Singleton
   @Named("default")
-  public WebDriverWait provideWebDriverWait(WebDriver driver, Configuration configuration)
-      throws IOException, InstantiationException, IllegalAccessException {
-    return new WebDriverWait(driver,
+  public WebDriverWait provideWebDriverWait(WebDriver driver, Configuration configuration) {
+    WebDriverWait webDriverWait = new WebDriverWait(driver,
         configuration.getExplicitTimeOut() < 0 ? EXPLICIT_TIME
             : configuration.getExplicitTimeOut(),
         configuration.getPollingTime() < 0 ? POLLING_TIME : configuration.getPollingTime());
+    webDriverWait
+        .ignoring(NoSuchElementException.class,StaleElementReferenceException.class);
+    return webDriverWait;
   }
 
   @Provides
   @Singleton
   @Named("frameWait")
-  public WebDriverWait provideWebDriverWaitByFrame(WebDriver driver, Configuration configuration)
-      throws IOException, InstantiationException, IllegalAccessException {
-    return new WebDriverWait(driver,
+  public WebDriverWait provideWebDriverWaitByFrame(WebDriver driver, Configuration configuration) {
+    WebDriverWait webDriverWait = new WebDriverWait(driver,
         configuration.getPageTimeOut(),
         configuration.getPollingTime() < 0 ? POLLING_TIME : configuration.getPollingTime());
+    webDriverWait
+        .ignoring(NoSuchElementException.class,StaleElementReferenceException.class);
+    return webDriverWait;
   }
 
   @Provides
   @Singleton
+  @Named("defaultFluent")
   public FluentWait<WebDriver> provideFluentWebDriverWait(WebDriver driver,
       Configuration configuration) {
     return new FluentWait<>(driver)
-        .withTimeout(configuration.getExplicitTimeOut(), TimeUnit.SECONDS)
-        .pollingEvery(configuration.getPollingTime(), TimeUnit.MILLISECONDS)
-        .ignoring(NotFoundException.class);
+        .withTimeout(configuration.getExplicitTimeOut() <= 0 ? EXPLICIT_TIME
+            : configuration.getExplicitTimeOut(), TimeUnit.SECONDS)
+        .pollingEvery(
+            configuration.getPollingTime() <= 0 ? POLLING_TIME : configuration.getPollingTime(),
+            TimeUnit.MILLISECONDS)
+        .ignoring(NoSuchElementException.class,StaleElementReferenceException.class);
   }
 
   @Provides
@@ -82,7 +91,7 @@ public class DriverModule {
 
   @Provides
   @Singleton
-  public WaitingAction provideWaitingAction(@Named("default") WebDriverWait wait,
+  public WaitingAction provideWaitingAction(@Named("defaultFluent") FluentWait<WebDriver> wait,
       @Named("frameWait") WebDriverWait frameWait,
       JavaScriptOperation javaScriptOperation) {
     return new WaitingActionImpl(wait, frameWait, javaScriptOperation);

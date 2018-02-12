@@ -13,25 +13,13 @@ public final class JavaScriptOperationImpl implements JavaScriptOperation {
     this.driver = driver;
   }
 
-
   @Override
   public JavascriptExecutor getJSExecutor() {
     return (JavascriptExecutor) driver;
   }
 
   @Override
-  public Object executeJS(String jsStmt, boolean wait) {
-    return wait ? executeJS(jsStmt) : executeJSAsync(jsStmt);
-  }
-
-  @Override
-  public Object executeJS(String jsStmt, boolean wait, Object... obj) {
-    return wait ? executeJS(jsStmt, obj) : executeJSAsync(jsStmt, obj);
-  }
-
-  @Override
   public Object executeJS(String jsStmt) {
-
     return getJSExecutor().executeScript(jsStmt);
   }
 
@@ -41,13 +29,13 @@ public final class JavaScriptOperationImpl implements JavaScriptOperation {
   }
 
   @Override
-  public Object executeJSAsync(String jsStmt) {
-    return getJSExecutor().executeAsyncScript(jsStmt);
+  public Object executeAsyncJS(String jsStmt) {
+    return getJSExecutor().executeScript(jsStmt);
   }
 
   @Override
-  public Object executeJSAsync(String script, Object... obj) {
-    return getJSExecutor().executeAsyncScript(script, obj);
+  public Object executeAsyncJS(String jsStmt, Object... obj) {
+    return getJSExecutor().executeScript(jsStmt, obj);
   }
 
   @Override
