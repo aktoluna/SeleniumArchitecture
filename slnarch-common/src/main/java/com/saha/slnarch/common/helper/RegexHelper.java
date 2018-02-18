@@ -7,10 +7,9 @@ import java.util.regex.Pattern;
 
 public class RegexHelper {
 
-  public static final String ONLY_NUMBER = "\\d+";
+  private static final String ONLY_NUMBER = "\\d+";
 
   private RegexHelper() {
-
   }
 
   public static int getStringInOnlyNumber(String text) {

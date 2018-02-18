@@ -1,5 +1,6 @@
 package com.saha.slnarch.core.page;
 
+import com.saha.slnarch.common.log.LogHelper;
 import com.saha.slnarch.core.browser.BrowserFactory;
 import com.saha.slnarch.core.helper.ConfigurationHelper;
 import com.saha.slnarch.core.model.Configuration;
@@ -9,11 +10,10 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class PageTestImpl implements PageTest {
 
-  protected final Logger logger = LoggerFactory.getLogger(getClass());
+  protected final Logger logger = LogHelper.getSlnLogger();
   private WebDriver driver;
   private Configuration configuration;
 

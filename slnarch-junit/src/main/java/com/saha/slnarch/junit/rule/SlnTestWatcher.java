@@ -1,16 +1,16 @@
 package com.saha.slnarch.junit.rule;
 
 import com.google.common.base.Stopwatch;
+import com.saha.slnarch.common.log.LogHelper;
 import java.util.concurrent.TimeUnit;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SlnTestWatcher extends TestWatcher {
 
   private Stopwatch stopwatch = Stopwatch.createUnstarted();
-  private Logger logger = LoggerFactory.getLogger(SlnTestWatcher.class);
+  private Logger logger = LogHelper.getSlnLogger();
 
 
   @Override

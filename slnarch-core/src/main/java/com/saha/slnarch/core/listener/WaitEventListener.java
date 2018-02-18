@@ -94,34 +94,42 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void beforeFindBy(By by, WebElement webElement, WebDriver webDriver) {
+    logger.info("Searching Element  {}", by.toString());
     waitRequest();
   }
 
   @Override
   public void afterFindBy(By by, WebElement webElement, WebDriver webDriver) {
-    logger.info("Find Element {}", by.toString());
+    if (webElement != null) {
+      logger
+          .info("Find Element Success ByName={} TagName={}", by.toString(),
+              webElement.getTagName());
+      scroll(webElement);
+    }
   }
 
   @Override
   public void beforeClickOn(WebElement webElement, WebDriver webDriver) {
-    javaScriptAction.scrollToJs(webElement);
+    scroll(webElement);
   }
 
   @Override
   public void afterClickOn(WebElement webElement, WebDriver webDriver) {
-
+    waitRequest();
   }
 
   @Override
   public void beforeChangeValueOf(WebElement webElement, WebDriver webDriver,
       CharSequence[] charSequences) {
-    logger.info("Set Value {}", charSequences);
+    scroll(webElement);
+    waitingAction.waitByMs(150);
+    logger.info("Set Value {}", charSequences.toString());
   }
 
   @Override
   public void afterChangeValueOf(WebElement webElement, WebDriver webDriver,
       CharSequence[] charSequences) {
-
+    waitRequest();
   }
 
   @Override
@@ -130,7 +138,6 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void afterScript(String s, WebDriver webDriver) {
-
   }
 
   @Override
@@ -142,7 +149,7 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
       waitingAction.waitPageLoadComplete();
     }
     if (configuration.isWaitAjax()) {
-      waitingAction.waitAjaxComplete().waitJQueryComplete();
+      waitingAction.waitJQueryComplete();
     }
     if (configuration.isWaitAngular()) {
       waitingAction.waitForAngularLoad();
@@ -154,5 +161,13 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
         configuration.isWaitPageLoad(),
         configuration.isWaitAjax(),
         configuration.isWaitAngular());
+  }
+
+  private void scroll(WebElement element) {
+    try {
+      javaScriptAction.scrollToJs(element);
+    } catch (Exception e) {
+      logger.warn("Scroll Failed ", e);
+    }
   }
 }

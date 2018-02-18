@@ -6,17 +6,13 @@ public interface JavaScriptOperation {
 
   JavascriptExecutor getJSExecutor();
 
-  Object executeJS(String jsStmt, boolean wait);
-
-  Object executeJS(String jsStmt, boolean wait, Object... obj);
-
   Object executeJS(String jsStmt);
 
-  Object executeJS(String script, Object... obj);
+  Object executeJS(String jsStmt, Object... obj);
 
-  Object executeJSAsync(String jsStmt);
+  Object executeAsyncJS(String jsStmt);
 
-  Object executeJSAsync(String script, Object... obj);
+  Object executeAsyncJS(String jsStmt, Object... obj);
 
   boolean executeBoolJS(String jsStmt);
 

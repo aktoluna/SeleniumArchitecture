@@ -9,8 +9,9 @@ import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.saha.slnarch.common.drive.DriveHelper;
 import com.saha.slnarch.common.file.FileHelper;
-import com.saha.slnarch.common.helper.PropertyHelper;
-import com.saha.slnarch.common.helper.ZipHelper;
+import com.saha.slnarch.common.file.PropertyHelper;
+import com.saha.slnarch.common.file.ZipHelper;
+import com.saha.slnarch.common.log.LogHelper;
 import com.saha.slnarch.common.mail.MailSendType;
 import com.saha.slnarch.common.mail.MailSenderCreator;
 import com.saha.slnarch.report.annotation.TestAuthor;
@@ -21,16 +22,14 @@ import java.util.Arrays;
 import javax.mail.MessagingException;
 import org.junit.runner.Description;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ReportManager {
 
-  private Logger logger = LoggerFactory.getLogger(getClass());
+  private Logger logger = LogHelper.getSlnLogger();
   private static ReportManager instance;
   private String reportDirectory = "reports";
   private String reportFileName = "slnarchReport.html";
   private ExtentReports extentReport;
-  //  private ExtentXReporter extentXReporter;
   private ExtentTest extentTest;
   private ReportConfiguration reportConfiguration;
 
@@ -83,7 +82,6 @@ public class ReportManager {
   public ExtentReports createExtentReport() throws IOException {
     extentReport = new ExtentReports();
     extentReport.attachReporter(createExtentHtmlReport());
-//    extentReport.attachReporter(createExtentXReporter());
     return extentReport;
   }
 
@@ -108,18 +106,6 @@ public class ReportManager {
     htmlReporter.config().setReportName(getReportFileName());
     return htmlReporter;
   }
-
-//  private ExtentXReporter createExtentXReporter() {
-//    MongoClientURI mongoClientURI = new MongoClientURI(
-//        "mongodb://aktoluna:161992Oz55**@cluster0-shard-00-00-pwz0h.mongodb.net:27017,cluster0-shard-00-01-pwz0h.mongodb.net:27017,cluster0-shard-00-02-pwz0h.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin");
-//    extentXReporter = new ExtentXReporter(mongoClientURI);
-//    extentXReporter.config().setProjectName("FlyPgs Web");
-//    extentXReporter.config().setReportObjectId("1");
-//    extentXReporter.config().setReportName("FlyPgs Web Test Report");
-////    extentXReporter.config().setServerUrl("");
-//    return extentXReporter;
-//  }
-
 
   public void saveReport() throws MessagingException, IOException {
     extentReport.flush();

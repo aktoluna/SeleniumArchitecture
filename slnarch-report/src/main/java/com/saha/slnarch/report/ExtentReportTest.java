@@ -1,6 +1,5 @@
 package com.saha.slnarch.report;
 
-import ch.qos.logback.classic.PatternLayout;
 import com.saha.slnarch.junit.InjectableJunitPageTestImpl;
 import java.io.IOException;
 import javax.mail.MessagingException;
@@ -17,7 +16,7 @@ public abstract class ExtentReportTest extends InjectableJunitPageTestImpl {
 
   @BeforeClass
   public static void setUpClass()
-      throws IllegalAccessException, IOException, InstantiationException {
+      throws IOException {
     reportManager = ReportManager.getInstance();
     reportManager.createExtentReport();
   }

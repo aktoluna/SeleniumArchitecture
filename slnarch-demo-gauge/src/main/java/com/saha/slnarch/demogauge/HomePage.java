@@ -2,7 +2,7 @@ package com.saha.slnarch.demogauge;
 
 import com.saha.slnarch.core.element.Element;
 import com.saha.slnarch.core.wait.WaitingAction;
-import com.saha.slnarch.di.page.InjectablePage;
+import com.saha.slnarch.core.di.page.InjectablePage;
 import javax.inject.Inject;
 import org.openqa.selenium.Keys;
 

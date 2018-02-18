@@ -5,7 +5,7 @@
   <parent>
     <artifactId>slnarch-parent</artifactId>
     <groupId>io.github.aktoluna</groupId>
-    <version>BETA-1.5.0</version>
+    <version>BETA-1.5.3</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>slnarch-common</artifactId>
@@ -74,6 +74,12 @@
       <artifactId>zt-zip</artifactId>
       <version>${zip.version}</version>
       <type>jar</type>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>

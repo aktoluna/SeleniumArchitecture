@@ -18,15 +18,15 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
+import com.saha.slnarch.common.log.LogHelper;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DriveHelper {
 
-  private Logger logger = LoggerFactory.getLogger(getClass());
+  private Logger logger = LogHelper.getSlnLogger();
   private String APPLICATION_NAME = "FlyPgsWeb";
   private HttpTransport HTTP_TRANSPORT;
   private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -38,25 +38,6 @@ public class DriveHelper {
 
 
   public Credential authorize() throws IOException {
-//    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-//        new InputStreamReader(DriveHelper.class.getResourceAsStream("/client-secrets.json")));
-//    if (clientSecrets.getDetails().getClientId().startsWith("Enter")
-//        || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-//      logger.error(
-//          "Enter Client ID and Secret from https://code.google.com/apis/console/?api=drive "
-//              + "into drive-cmdline-sample/src/main/resources/client_secrets.json");
-//      throw new IllegalArgumentException();
-//    }
-
-//    GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-//        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets,
-//        Collections.singleton(DriveScopes.DRIVE_FILE))
-//        .setDataStoreFactory(DATA_STORE_FACTORY)
-//        .setAccessType("offline")
-//        .build();
-//    return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver())
-//        .authorize("me");
-
     return GoogleCredential
         .fromStream(DriveHelper.class.getResourceAsStream("/client-secrets.json"))
         .createScoped(Collections.singleton(DriveScopes.DRIVE));

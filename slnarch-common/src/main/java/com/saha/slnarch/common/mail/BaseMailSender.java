@@ -1,7 +1,8 @@
 package com.saha.slnarch.common.mail;
 
-import com.saha.slnarch.common.helper.DateAndTimeHelper;
+import com.saha.slnarch.common.date.DateAndTimeHelper;
 import com.saha.slnarch.common.helper.StringHelper;
+import com.saha.slnarch.common.log.LogHelper;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -20,11 +21,10 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class BaseMailSender implements MailSender {
 
-  protected Logger logger = LoggerFactory.getLogger(getClass());
+  protected Logger logger = LogHelper.getSlnLogger();
   protected final String CHARSET_UTF8 = "UTF-8";
   protected String host;
   protected String userName;

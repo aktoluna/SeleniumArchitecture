@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
 
-public interface DriverAction<T extends DriverAction> {
+public interface DriverAction<T extends DriverAction> extends DriverExpectedConditions<T> {
 
   T addCookie(String name, String value, String domain, String path, Date expiry);
 

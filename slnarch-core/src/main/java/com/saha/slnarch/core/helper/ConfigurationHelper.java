@@ -1,17 +1,17 @@
 package com.saha.slnarch.core.helper;
 
-import com.saha.slnarch.common.helper.PropertyHelper;
+import com.saha.slnarch.common.file.PropertyHelper;
 import com.saha.slnarch.common.helper.StringHelper;
 import com.saha.slnarch.common.helper.SystemPropertyHelper;
+import com.saha.slnarch.common.log.LogHelper;
 import com.saha.slnarch.core.model.Configuration;
 import java.io.IOException;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public enum ConfigurationHelper {
   INSTANCE;
 
-  Logger logger = LoggerFactory.getLogger(getClass());
+  Logger logger = LogHelper.getSlnLogger();
 
 
   Configuration configuration;
