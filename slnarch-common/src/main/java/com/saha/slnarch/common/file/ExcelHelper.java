@@ -1,5 +1,6 @@
 package com.saha.slnarch.common.file;
 
+import com.saha.slnarch.common.log.LogHelper;
 import java.io.IOException;
 import java.util.Date;
 import javax.annotation.Nonnull;
@@ -15,9 +16,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
 
 public class ExcelHelper {
-
+  private static Logger logger= LogHelper.getSlnLogger();
   private ExcelHelper() {
 
   }
@@ -36,7 +38,7 @@ public class ExcelHelper {
       workbook = xlsx ? new XSSFWorkbook(FileHelper.getInstance().getFileStream(path, classPath))
           : new HSSFWorkbook(FileHelper.getInstance().getFileStream(path, classPath));
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error("Create Driver Error", e);
     }
     return workbook;
   }

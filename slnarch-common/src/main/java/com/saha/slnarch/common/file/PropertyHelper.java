@@ -1,14 +1,18 @@
 package com.saha.slnarch.common.file;
 
 import com.saha.slnarch.common.file.Prop.PropType;
+import com.saha.slnarch.common.log.LogHelper;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.Properties;
+import org.slf4j.Logger;
 
 public class PropertyHelper {
+
+  static Logger logger = LogHelper.getSlnLogger();
 
   public static Properties readProperties(String fileName)
       throws IOException {
@@ -36,7 +40,7 @@ public class PropertyHelper {
     try {
       properties.load(inputStream);
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error("Read Properties Error", e);
     } finally {
       inputStream.close();
     }

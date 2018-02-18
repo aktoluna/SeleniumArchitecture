@@ -2,6 +2,7 @@ package com.saha.slnarch.core.driver;
 
 
 import com.saha.slnarch.common.image.ImageHelper;
+import com.saha.slnarch.common.log.LogHelper;
 import com.saha.slnarch.core.wait.WaitingAction;
 import java.io.File;
 import java.io.IOException;
@@ -178,7 +179,7 @@ public final class DriverActionImpl implements DriverAction {
     try {
       file = ImageHelper.resizeWithThumbnails(file, 1200, 600);
     } catch (IOException e) {
-      e.printStackTrace();
+      LogHelper.getSlnLogger().error("Image Resize Error", e);
     }
     return file;
   }

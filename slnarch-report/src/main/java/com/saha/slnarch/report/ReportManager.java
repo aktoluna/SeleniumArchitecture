@@ -19,6 +19,7 @@ import com.saha.slnarch.report.annotation.TestCategory;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Optional;
 import javax.mail.MessagingException;
 import org.junit.runner.Description;
 import org.slf4j.Logger;
@@ -324,15 +325,19 @@ public class ReportManager {
   public boolean setAuthorByMethod(ExtentTest extentTest, Description description) {
     boolean success = false;
     try {
-      TestAuthor testAuthor = Arrays.stream(description.getTestClass().getMethods())
+      Optional<TestAuthor> optionalTestAuthortestAuthor = Arrays
+          .stream(description.getTestClass().getMethods())
           .filter(method -> description.getMethodName().startsWith(method.getName()))
           .filter(method -> method.isAnnotationPresent(TestAuthor.class))
           .map(method -> method.getAnnotation(TestAuthor.class))
-          .findFirst()
-          .get();
-      setAuthor(extentTest, testAuthor);
-      logger.info("Author Set By Method");
-      success = true;
+          .findFirst();
+
+      if (optionalTestAuthortestAuthor.isPresent()) {
+        TestAuthor testAuthor = optionalTestAuthortestAuthor.get();
+        setAuthor(extentTest, testAuthor);
+        logger.info("Author Set By Method");
+        success = true;
+      }
     } catch (Exception e) {
       logger.warn("Author Annotation Method Not Found");
     }
@@ -375,15 +380,18 @@ public class ReportManager {
   public boolean setCategoryByMethod(ExtentTest extentTest, Description description) {
     boolean success = false;
     try {
-      TestCategory testCategory = Arrays.stream(description.getTestClass().getMethods())
+      Optional<TestCategory> optionalTestCategory = Arrays
+          .stream(description.getTestClass().getMethods())
           .filter(method -> description.getMethodName().startsWith(method.getName()))
           .filter(method1 -> method1.isAnnotationPresent(TestCategory.class))
           .map(method1 -> method1.getAnnotation(TestCategory.class))
-          .findFirst()
-          .get();
-      setCategory(extentTest, testCategory);
-      logger.info("Category Set By Method");
-      success = true;
+          .findFirst();
+
+      if (optionalTestCategory.isPresent()) {
+        setCategory(extentTest, optionalTestCategory.get());
+        logger.info("Category Set By Method");
+        success = true;
+      }
     } catch (Exception e) {
       logger.warn("Category Annotation Method Not Found");
     }

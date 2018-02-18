@@ -47,7 +47,7 @@ public class DriveHelper {
     try {
       HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
     } catch (GeneralSecurityException e) {
-      e.printStackTrace();
+      logger.error("Create Driver Error", e);
     }
     DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
     Credential credential = authorize();

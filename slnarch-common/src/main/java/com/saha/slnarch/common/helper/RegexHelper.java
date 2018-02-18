@@ -1,11 +1,14 @@
 package com.saha.slnarch.common.helper;
 
+import com.saha.slnarch.common.log.LogHelper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.slf4j.Logger;
 
 public class RegexHelper {
+  private static Logger logger= LogHelper.getSlnLogger();
 
   private static final String ONLY_NUMBER = "\\d+";
 
@@ -30,7 +33,7 @@ public class RegexHelper {
         }
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error("Regex Error", e);
     }
     return numbers;
   }

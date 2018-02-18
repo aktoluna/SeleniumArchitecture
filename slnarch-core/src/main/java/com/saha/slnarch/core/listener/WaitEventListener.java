@@ -123,7 +123,7 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
       CharSequence[] charSequences) {
     scroll(webElement);
     waitingAction.waitByMs(150);
-    logger.info("Set Value {}", charSequences.toString());
+    logger.info("Set Value {}", charSequences);
   }
 
   @Override

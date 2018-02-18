@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.saha.slnarch.common.file.parser.JsonParser;
 import com.saha.slnarch.common.file.parser.Parser;
 import com.saha.slnarch.common.file.parser.YamlParser;
+import com.saha.slnarch.common.log.LogHelper;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,9 +14,11 @@ import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
 
 public class FileHelper implements FileParser, FileReader, FileWriter {
 
+  private static Logger logger = LogHelper.getSlnLogger();
   private static FileHelper instance;
   private static Object lock = new Object();
 
@@ -51,7 +54,7 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
     try {
       t = getParser(filePath).parseFile(getFileStream(filePath, classPath), output);
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error("Parse File Error", e);
     }
     return t;
   }
@@ -75,7 +78,7 @@ public class FileHelper implements FileParser, FileReader, FileWriter {
     try {
       inputStream = getFileStream(filePath);
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error("Read File Error", e);
     }
     return toString(inputStream);
   }
