@@ -16,7 +16,7 @@
 
     <dependency>
       <groupId>io.github.aktoluna</groupId>
-      <artifactId>slnarch-di</artifactId>
+      <artifactId>slnarch-core</artifactId>
       <version>${project.version}</version>
     </dependency>
 

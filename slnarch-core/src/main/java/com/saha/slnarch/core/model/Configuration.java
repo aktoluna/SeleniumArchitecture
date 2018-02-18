@@ -1,7 +1,7 @@
 package com.saha.slnarch.core.model;
 
-import com.saha.slnarch.common.helper.Prop;
-import com.saha.slnarch.common.helper.Prop.PropType;
+import com.saha.slnarch.common.file.Prop;
+import com.saha.slnarch.common.file.Prop.PropType;
 
 public class Configuration {
 

@@ -1,6 +1,6 @@
-package com.saha.slnarch.di.module;
+package com.saha.slnarch.core.di.module;
 
-import com.saha.slnarch.common.helper.PropertyHelper;
+import com.saha.slnarch.common.file.PropertyHelper;
 import com.saha.slnarch.core.driver.DriverAction;
 import com.saha.slnarch.core.driver.DriverActionImpl;
 import com.saha.slnarch.core.element.Element;
@@ -48,7 +48,7 @@ public class DriverModule {
             : configuration.getExplicitTimeOut(),
         configuration.getPollingTime() < 0 ? POLLING_TIME : configuration.getPollingTime());
     webDriverWait
-        .ignoring(NoSuchElementException.class,StaleElementReferenceException.class);
+        .ignoring(NoSuchElementException.class, StaleElementReferenceException.class);
     return webDriverWait;
   }
 
@@ -60,7 +60,7 @@ public class DriverModule {
         configuration.getPageTimeOut(),
         configuration.getPollingTime() < 0 ? POLLING_TIME : configuration.getPollingTime());
     webDriverWait
-        .ignoring(NoSuchElementException.class,StaleElementReferenceException.class);
+        .ignoring(NoSuchElementException.class, StaleElementReferenceException.class);
     return webDriverWait;
   }
 
@@ -75,7 +75,7 @@ public class DriverModule {
         .pollingEvery(
             configuration.getPollingTime() <= 0 ? POLLING_TIME : configuration.getPollingTime(),
             TimeUnit.MILLISECONDS)
-        .ignoring(NoSuchElementException.class,StaleElementReferenceException.class);
+        .ignoring(NoSuchElementException.class, StaleElementReferenceException.class);
   }
 
   @Provides
@@ -85,8 +85,9 @@ public class DriverModule {
   }
 
   @Provides
-  public DriverAction provideDriverAction(WebDriver driver) {
-    return new DriverActionImpl(driver);
+  public DriverAction provideDriverAction(WebDriver driver,
+      WaitingAction waitingAction) {
+    return new DriverActionImpl(driver, waitingAction);
   }
 
   @Provides

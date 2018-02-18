@@ -1,6 +1,10 @@
 package com.saha.slnarch.core.wait;
 
+import com.saha.slnarch.common.log.LogHelper;
 import com.saha.slnarch.core.js.JavaScriptOperation;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -11,11 +15,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
 
-  private final Logger log = LoggerFactory.getLogger(WaitingActionImpl.class);
+  private final Logger log = LogHelper.getSlnLogger();
   private static final long SLEEP_MILLIS = 250;
 
   JavaScriptOperation javaScriptOperation;
@@ -33,39 +36,16 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
 
   @Override
   public WaitingAction waitAjaxComplete() {
-//    Boolean existXhr = (Boolean) javaScriptOperation
-//        .executeJS("return (typeof(xhr) != 'undefined');");
-//    if (!existXhr) {
-//      javaScriptOperation
-//          .executeJS("var xhr = new XMLHttpRequest();");
-//    }
-//    try {
-//      driverWait.until(driver -> ((Boolean) ((JavascriptExecutor) driver).executeScript(
-//          "xhr.readyState == 4")));
-//    } catch (Throwable error) {
-//      log.error("Ajax Wait Exception", error);
-//    }
     javaScriptOperation.executeJS("var callback = arguments[arguments.length - 1];"
         + "var xhr = new XMLHttpRequest();" + "xhr.open('GET', '/Ajax_call', true);"
         + "xhr.onreadystatechange = function() {" + "  if (xhr.readyState == 4) {"
         + "    callback(xhr.responseText);" + "  }" + "};" + "xhr.send();");
     return this;
-
-//    try {
-//      driverWait.until(driver -> ((JavascriptExecutor) driver).executeScript(
-//          "return angular.element(document).injector().get('$http').pendingRequests.length === 0")
-//          .toString().equals("true"));
-//    } catch (Throwable error) {
-//      log.error("Angular Wait Exceptio", error);
-//    }
-//    return this;
   }
 
 
   @Override
   public WaitingAction waitPageLoadComplete() {
-//    ExpectedCondition<Boolean> expectation = driver -> javaScriptOperation
-//        .executeJS("return document.readyState", true).toString().equals("complete");
     try {
       driverWait.until(
           driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState")
@@ -173,5 +153,72 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
     } catch (InterruptedException e) {
       log.error("Sleep Exception", e);
     }
+  }
+
+  @Override
+  public <S, V> S expected(ExpectedCondition<V> expectedCondition) {
+    S s = null;
+    try {
+      log.debug("{}", expectedCondition.toString());
+      s = waitUntil(expectedCondition);
+    } catch (Exception e) {
+      log.error("Expected Condition={}", expectedCondition.toString(), e);
+    }
+    return s;
+  }
+
+  @Override
+  public <S, V> S expected(ExpectedCondition<V>... expectedConditions) {
+    S result = null;
+    try {
+      for (ExpectedCondition<V> expectedCondition : expectedConditions) {
+        result = expected(expectedCondition);
+      }
+    } catch (Exception e) {
+      log.error("Expected Conditions={}",
+          Arrays.stream(expectedConditions).map(Object::toString).collect(
+              Collectors.toList()), e);
+    }
+    return result;
+  }
+
+  @Override
+  public <S, V> List<S> expects(ExpectedCondition<List<V>> expectedCondition) {
+    List<S> sList = null;
+    try {
+      log.debug("{}", expectedCondition.toString());
+      sList = waitUntil(expectedCondition);
+    } catch (Exception e) {
+      log.error("Expected Conditions={}", expectedCondition.toString(), e);
+    }
+    return sList;
+  }
+
+  @Override
+  public <S, V> List<S> expects(ExpectedCondition<List<V>>... expectedConditions) {
+    List<S> sList = null;
+    try {
+      for (ExpectedCondition<List<V>> expectedCondition : expectedConditions) {
+        sList = expects(expectedCondition);
+      }
+    } catch (Exception e) {
+      log.error("Expected Conditions={}",
+          Arrays.stream(expectedConditions).map(Object::toString).collect(
+              Collectors.toList()), e);
+    }
+
+    return sList;
+  }
+
+  @Override
+  public <S> boolean expectedByBoolean(ExpectedCondition<S> expectedCondition) {
+    boolean result = false;
+    try {
+      log.debug("{}", expectedCondition.toString());
+      result = waitUntil(expectedCondition);
+    } catch (Exception e) {
+      log.error("Expected Not Success Conditions={}", expectedCondition.toString(), e);
+    }
+    return result;
   }
 }

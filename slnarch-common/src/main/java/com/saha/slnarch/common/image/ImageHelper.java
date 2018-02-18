@@ -1,4 +1,4 @@
-package com.saha.slnarch.common;
+package com.saha.slnarch.common.image;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
@@ -22,6 +22,10 @@ import javax.imageio.stream.ImageOutputStream;
 import net.coobird.thumbnailator.Thumbnails;
 
 public class ImageHelper {
+
+  private ImageHelper() {
+
+  }
 
   public static File resizeImageAndConvert(File file, int width, int height, String outputType,
       String outputPath, float compressLevel) throws IOException {
@@ -118,6 +122,6 @@ public class ImageHelper {
   }
 
   private static String getOutputFilePath(File inputFile) {
-    return inputFile.getAbsolutePath().replace(".png",".jpg");
+    return inputFile.getAbsolutePath().replace(".png", ".jpg");
   }
 }

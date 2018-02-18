@@ -3,6 +3,7 @@ package com.saha.slnarch.report;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.saha.slnarch.core.driver.DriverAction;
 import com.saha.slnarch.core.driver.DriverActionImpl;
+import com.saha.slnarch.core.wait.WaitingAction;
 import java.io.File;
 import org.junit.AssumptionViolatedException;
 import org.junit.rules.TestWatcher;
@@ -15,9 +16,10 @@ public class ExtentJunitListener extends TestWatcher {
   ReportManager reportManager = ReportManager.getInstance();
 
   DriverAction driverAction;
+  WaitingAction waitingAction;
 
   public ExtentJunitListener(WebDriver driver) {
-    this.driverAction = new DriverActionImpl(driver);
+    this.driverAction = new DriverActionImpl(driver, waitingAction);
   }
 
   @Override

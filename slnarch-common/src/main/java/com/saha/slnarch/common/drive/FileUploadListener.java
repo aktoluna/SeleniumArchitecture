@@ -2,14 +2,14 @@ package com.saha.slnarch.common.drive;
 
 import com.google.api.client.googleapis.media.MediaHttpUploader;
 import com.google.api.client.googleapis.media.MediaHttpUploaderProgressListener;
+import com.saha.slnarch.common.log.LogHelper;
 import java.io.IOException;
 import java.text.NumberFormat;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FileUploadListener implements MediaHttpUploaderProgressListener {
 
-  Logger logger = LoggerFactory.getLogger(getClass());
+  Logger logger = LogHelper.getSlnLogger();
 
   @Override
   public void progressChanged(MediaHttpUploader mediaHttpUploader) throws IOException {

@@ -18,8 +18,6 @@ public interface ElementFindExpectedConditions<T extends Element, S extends WebE
 
   T findsByExpects(ExpectedCondition<List<S>>... expectedConditions);
 
-  boolean elementByExpected(ExpectedCondition<Boolean> expectedCondition);
-
   T findByPresence(By by);
 
   T findByPresence(String name);

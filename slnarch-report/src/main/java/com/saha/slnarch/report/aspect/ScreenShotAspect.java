@@ -1,9 +1,9 @@
 package com.saha.slnarch.report.aspect;
 
 import com.saha.slnarch.common.helper.StringHelper;
+import com.saha.slnarch.common.log.LogHelper;
+import com.saha.slnarch.core.di.Injectable;
 import com.saha.slnarch.core.driver.DriverAction;
-import com.saha.slnarch.di.Injectable;
-import com.saha.slnarch.di.helper.InjectionHelper;
 import com.saha.slnarch.report.ReportManager;
 import com.saha.slnarch.report.annotation.ScreenShot;
 import java.io.File;
@@ -13,12 +13,11 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Aspect
 public class ScreenShotAspect implements Injectable {
 
-  Logger logger = LoggerFactory.getLogger(getClass());
+  Logger logger = LogHelper.getSlnLogger();
 
   @Inject
   DriverAction driverAction;
@@ -37,7 +36,7 @@ public class ScreenShotAspect implements Injectable {
   @Around("annotationPointCutDefinition(screenShot) && atExecution()")
   public Object aroundAdvice(ProceedingJoinPoint joinPoint,
       ScreenShot screenShot) throws Throwable {
-    Object returnObject = null;
+    Object returnObject;
     try {
       addScreenShotBefore(screenShot.message(), screenShot.before());
       returnObject = joinPoint.proceed();
@@ -76,8 +75,4 @@ public class ScreenShotAspect implements Injectable {
     }
   }
 
-  @Override
-  public void inject() {
-    InjectionHelper.getInstance().getFeather().injectFields(this);
-  }
 }

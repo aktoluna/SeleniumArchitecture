@@ -1,7 +1,8 @@
-package com.saha.slnarch.common.helper;
+package com.saha.slnarch.common.date;
 
 import static org.hamcrest.Matchers.is;
 
+import com.saha.slnarch.common.date.DateAndTimeHelper;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

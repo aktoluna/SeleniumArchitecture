@@ -1,4 +1,4 @@
-package com.saha.slnarch.di.helper;
+package com.saha.slnarch.core.di;
 
 import org.codejargon.feather.Feather;
 

@@ -1,4 +1,4 @@
-package com.saha.slnarch.common;
+package com.saha.slnarch.common.image;
 
 public class ImageHelperTest {
 

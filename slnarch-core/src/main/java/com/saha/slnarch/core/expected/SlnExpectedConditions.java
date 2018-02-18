@@ -1,6 +1,9 @@
 package com.saha.slnarch.core.expected;
 
+import com.saha.slnarch.common.log.LogHelper;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -9,11 +12,10 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SlnExpectedConditions {
 
-  private static Logger logger = LoggerFactory.getLogger(SlnExpectedConditions.class.getName());
+  private static Logger logger = LogHelper.getSlnLogger();
 
   private SlnExpectedConditions() {
 
@@ -261,6 +263,117 @@ public class SlnExpectedConditions {
       logger.warn(String.format("WebDriverException thrown by findElements(%s)", by), e);
       throw e;
     }
+  }
+
+
+  public static ExpectedCondition<Boolean> titleMatches(final String regex) {
+    return new ExpectedCondition<Boolean>() {
+      private String currentTitle;
+      private Pattern pattern;
+      private Matcher matcher;
+
+      @Override
+      public Boolean apply(WebDriver driver) {
+        currentTitle = driver.getTitle();
+        pattern = Pattern.compile(regex);
+        matcher = pattern.matcher(currentTitle);
+        return matcher.find();
+      }
+
+      @Override
+      public String toString() {
+        return String
+            .format("title to match the regex \"%s\". Current title: \"%s\"", regex, currentTitle);
+      }
+    };
+  }
+
+  public static ExpectedCondition<Boolean> pageSourcesMatches(final String regex) {
+    return new ExpectedCondition<Boolean>() {
+      private String currentPageSource;
+      private Pattern pattern;
+      private Matcher matcher;
+
+      @Override
+      public Boolean apply(WebDriver driver) {
+        currentPageSource = driver.getPageSource();
+        pattern = Pattern.compile(regex);
+        matcher = pattern.matcher(currentPageSource);
+        return matcher.find();
+      }
+
+      @Override
+      public String toString() {
+        return String
+            .format("page source to match the regex \"%s\". Current page source: \"%s\"", regex,
+                currentPageSource);
+      }
+    };
+  }
+
+  public static ExpectedCondition<Boolean> pageSourcesContains(final String searchText) {
+    return new ExpectedCondition<Boolean>() {
+      private String currentPageSource;
+
+      @Override
+      public Boolean apply(WebDriver driver) {
+        currentPageSource = driver.getPageSource();
+        return currentPageSource.contains(searchText);
+      }
+
+      @Override
+      public String toString() {
+        return String
+            .format("page source to contains \"%s\". Current page source: \"%s\"", searchText,
+                currentPageSource);
+      }
+    };
+  }
+
+  public static ExpectedCondition<String> getPageSources() {
+    return new ExpectedCondition<String>() {
+      private String currentPageSource;
+
+      @Override
+      public String apply(WebDriver driver) {
+        currentPageSource = driver.getPageSource();
+        if (currentPageSource != null) {
+          return currentPageSource;
+        } else {
+          throw new WebDriverException(); //TODO change exception
+        }
+      }
+
+      @Override
+      public String toString() {
+        return String
+            .format("page source : \"%s\"",
+                currentPageSource);
+      }
+    };
+  }
+
+  public static ExpectedCondition<String> getTitle() {
+    return new ExpectedCondition<String>() {
+      String title;
+
+      @Override
+      public String apply(WebDriver driver) {
+        title = driver.getTitle();
+        if (title != null) {
+          return title;
+        } else {
+          throw new WebDriverException(); //TODO change exception
+        }
+      }
+
+      @Override
+      public String toString() {
+        return String
+            .format("title : \"%s\"",
+                title);
+      }
+    };
   }
 
 }

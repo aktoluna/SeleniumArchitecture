@@ -1,11 +1,13 @@
-package com.saha.slnarch.di.page;
+package com.saha.slnarch.core.di.page;
 
+import com.saha.slnarch.core.di.Injectable;
+import com.saha.slnarch.core.di.InjectionHelper;
+import com.saha.slnarch.core.di.module.CommonModule;
+import com.saha.slnarch.core.di.module.DriverModule;
 import com.saha.slnarch.core.listener.WaitEventListener;
 import com.saha.slnarch.core.page.PageTestImpl;
-import com.saha.slnarch.di.Injectable;
-import com.saha.slnarch.di.helper.InjectionHelper;
-import com.saha.slnarch.di.module.CommonModule;
-import com.saha.slnarch.di.module.DriverModule;
+import java.util.ArrayList;
+import java.util.List;
 import org.codejargon.feather.Feather;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
@@ -20,8 +22,15 @@ public abstract class InjectablePageTestImpl extends PageTestImpl implements Inj
 
   private void initFeather() {
     logger.info("Init Feather Injections");
+    List<Object> moduleList = getModule() == null ? new ArrayList<>() : getModule();
+    moduleList.add(new DriverModule(getDriver()));
+    moduleList.add(new CommonModule());
     InjectionHelper.getInstance()
-        .setFeather(Feather.with(new DriverModule(getDriver()), new CommonModule()));
+        .setFeather(Feather.with(moduleList));
+  }
+
+  protected List<Object> getModule() {
+    return new ArrayList<>();
   }
 
   protected Feather getFeather() {
@@ -42,12 +51,4 @@ public abstract class InjectablePageTestImpl extends PageTestImpl implements Inj
     }
   }
 
-  /*
-  Inject only call method
-   */
-  @Override
-  public void inject() {
-    logger.info("Inject All Test Objects");
-    InjectionHelper.getInstance().getFeather().injectFields(this);
-  }
 }

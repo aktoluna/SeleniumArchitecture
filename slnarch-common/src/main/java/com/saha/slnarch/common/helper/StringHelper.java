@@ -1,20 +1,19 @@
 package com.saha.slnarch.common.helper;
 
 import com.google.common.base.Strings;
+import com.saha.slnarch.common.log.LogHelper;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class StringHelper {
 
-  private static Logger logger = LoggerFactory.getLogger(StringHelper.class);
+  private static Logger logger = LogHelper.getSlnLogger();
 
   private StringHelper() {
-
   }
 
   public static boolean isEmpty(String value) {

@@ -1,4 +1,4 @@
-package com.saha.slnarch.common;
+package com.saha.slnarch.common.script;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,7 +10,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
 
-public enum ScriptUtil {
+public enum ScriptHelper {
   INSTANCE;
 
   private final String SCRIPT_ENGINE_NASHORN = "nashorn";
@@ -24,19 +24,19 @@ public enum ScriptUtil {
   }
 
   public Object runScript(String script)
-      throws ScriptException, NoSuchMethodException {
+      throws ScriptException {
     return getDefaultScriptEngine().eval(script);
   }
 
   public Object runScript(String script, String key, Object value)
-      throws ScriptException, NoSuchMethodException {
+      throws ScriptException {
     Bindings bindings = new SimpleBindings();
     bindings.put(key, value);
     return getDefaultScriptEngine().eval(script, bindings);
   }
 
   public Object runScript(String script, HashMap<String, Object> bindingsMap)
-      throws ScriptException, NoSuchMethodException {
+      throws ScriptException {
     return getDefaultScriptEngine().eval(script, getBindingsByHashMap(bindingsMap));
   }
 
@@ -47,7 +47,7 @@ public enum ScriptUtil {
   }
 
   public Object runScript(String script, Bindings bindings)
-      throws ScriptException, NoSuchMethodException {
+      throws ScriptException {
     return getDefaultScriptEngine().eval(script, bindings);
   }
 

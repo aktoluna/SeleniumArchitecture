@@ -1,11 +1,12 @@
-package com.saha.slnarch.common;
+package com.saha.slnarch.common.script;
 
+import com.saha.slnarch.common.script.ScriptHelper;
 import javax.script.Bindings;
 import javax.script.SimpleBindings;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-public class ScriptUtilTest {
+public class ScriptHelperTest {
 
   @Test
   public void runScript() throws Exception {
@@ -14,7 +15,7 @@ public class ScriptUtilTest {
   @Test
   public void runFunctionByString() throws Exception {
     String script = "function sum(a, b) { return a + b; } sum(1,2);";
-    Object result = ScriptUtil.INSTANCE.runScript(script);
+    Object result = ScriptHelper.INSTANCE.runScript(script);
     System.out.println(result.toString());
   }
 
@@ -23,7 +24,7 @@ public class ScriptUtilTest {
     String script = "a < 5 ;";
     Bindings bindings = new SimpleBindings();
     bindings.put("a", 7);
-    boolean result = (boolean) ScriptUtil.INSTANCE.runScript(script, bindings);
+    boolean result = (boolean) ScriptHelper.INSTANCE.runScript(script, bindings);
     Assertions.assertThat(result).isFalse();
   }
 

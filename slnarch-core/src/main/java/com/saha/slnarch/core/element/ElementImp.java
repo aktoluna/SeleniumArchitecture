@@ -1,5 +1,6 @@
 package com.saha.slnarch.core.element;
 
+import com.saha.slnarch.common.log.LogHelper;
 import com.saha.slnarch.core.element.by.ByCreate;
 import com.saha.slnarch.core.element.by.ByFactory;
 import com.saha.slnarch.core.element.by.ByType;
@@ -8,10 +9,8 @@ import com.saha.slnarch.core.model.ElementInfo;
 import com.saha.slnarch.core.wait.WaitingAction;
 import com.saha.slnarch.core.wait.WaitingActionImpl;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -22,11 +21,10 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ElementImp implements Element<ElementImp> {
 
-  private static Logger logger = LoggerFactory.getLogger(ElementImp.class);
+  private static Logger logger = LogHelper.getSlnLogger();
   private List<WebElement> elementList;
 
   private final WebDriver driver;
@@ -689,14 +687,8 @@ public class ElementImp implements Element<ElementImp> {
   public ElementImp findByExpected(ExpectedCondition<WebElement> expectedCondition) {
     clearElementList();
     WebElement element;
-    try {
-      logger.debug("{}", expectedCondition.toString());
-      element = waitingAction
-          .waitUntil(expectedCondition);
-      setElementList(element);
-    } catch (Exception e) {
-      logger.error("Element Not Found Conditions={}", expectedCondition.toString(), e);
-    }
+    element = waitingAction.expected(expectedCondition);
+    setElementList(element);
     return this;
   }
 
@@ -704,19 +696,9 @@ public class ElementImp implements Element<ElementImp> {
   @Override
   public final ElementImp findByExpects(ExpectedCondition<WebElement>... expectedConditions) {
     clearElementList();
-    WebElement element = null;
-    try {
-      for (ExpectedCondition<WebElement> expectedCondition : expectedConditions) {
-        logger.debug("{}", expectedCondition.toString());
-        element = waitingAction
-            .waitUntil(expectedCondition);
-      }
-      setElementList(element);
-    } catch (Exception e) {
-      logger.error("Element Not Found Conditions={}",
-          Arrays.stream(expectedConditions).map(Object::toString).collect(
-              Collectors.toList()), e);
-    }
+    WebElement element;
+    element = waitingAction.expected(expectedConditions);
+    setElementList(element);
     return this;
   }
 
@@ -724,48 +706,20 @@ public class ElementImp implements Element<ElementImp> {
   public ElementImp findsByExpected(ExpectedCondition<List<WebElement>> expectedCondition) {
     clearElementList();
     List<WebElement> elements;
-    try {
-      logger.debug("{}", expectedCondition.toString());
-      elements = waitingAction
-          .waitUntil(expectedCondition);
-      setElementList(elements);
-    } catch (Exception e) {
-      logger.error("Elements Not Found Conditions={}", expectedCondition.toString(), e);
-    }
+    elements = waitingAction
+        .expects(expectedCondition);
+    setElementList(elements);
     return this;
   }
 
   @Override
   public ElementImp findsByExpects(ExpectedCondition<List<WebElement>>... expectedConditions) {
     clearElementList();
-    List<WebElement> elements = null;
-    try {
-      for (ExpectedCondition<List<WebElement>> expectedCondition : expectedConditions) {
-        logger.debug("{}", expectedCondition.toString());
-        elements = waitingAction
-            .waitUntil(expectedCondition);
-      }
-      setElementList(elements);
-    } catch (Exception e) {
-      logger.error("Element Not Found Conditions={}",
-          Arrays.stream(expectedConditions).map(Object::toString).collect(
-              Collectors.toList()), e);
-    }
+    List<WebElement> elements;
+    elements = waitingAction
+        .expects(expectedConditions);
+    setElementList(elements);
     return this;
-  }
-
-  @Override
-  public boolean elementByExpected(ExpectedCondition<Boolean> expectedCondition) {
-    boolean result = false;
-    try {
-      logger.debug("{}", expectedCondition.toString());
-      result = waitingAction
-          .waitUntil(expectedCondition);
-    } catch (Exception e) {
-      logger
-          .error("Expected Not Success Conditions={}", expectedCondition.toString(), e);
-    }
-    return result;
   }
 
 
@@ -837,7 +791,7 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public ElementImp findByClickableAndUrlChange(WebElement webElement, String url) {
-    elementByExpected(CLICK_AND_URL_CONTAINS(webElement, url));
+    waitingAction.expectedByBoolean(CLICK_AND_URL_CONTAINS(webElement, url));
     return this;
   }
 
@@ -895,7 +849,7 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public boolean elementIsInvisibility(By by) {
-    return elementByExpected(INVISIBLE(by));
+    return waitingAction.expectedByBoolean(INVISIBLE(by));
   }
 
   @Override
@@ -916,12 +870,12 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public boolean elementIsInvisibility(WebElement webElement) {
-    return elementByExpected(INVISIBLE(webElement));
+    return waitingAction.expectedByBoolean(INVISIBLE(webElement));
   }
 
   @Override
   public boolean elementsIsInvisibility(By by) {
-    return elementByExpected(INVISIBLE_ALL(by));
+    return waitingAction.expectedByBoolean(INVISIBLE_ALL(by));
   }
 
   @Override
@@ -942,12 +896,12 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public boolean elementsIsInvisibility(List<WebElement> webElement) {
-    return elementByExpected(INVISIBLE_ALL(webElement));
+    return waitingAction.expectedByBoolean(INVISIBLE_ALL(webElement));
   }
 
   @Override
   public boolean elementIsSelectable(By by) {
-    return elementByExpected(SELECTED(by));
+    return waitingAction.expectedByBoolean(SELECTED(by));
   }
 
   @Override
@@ -968,12 +922,12 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public boolean elementIsSelectable(WebElement webElement) {
-    return elementByExpected(SELECTED(webElement));
+    return waitingAction.expectedByBoolean(SELECTED(webElement));
   }
 
   @Override
   public boolean elementIsSelectableState(By by, boolean state) {
-    return elementByExpected(SELECTED_STATE(by, state));
+    return waitingAction.expectedByBoolean(SELECTED_STATE(by, state));
   }
 
   @Override
@@ -994,12 +948,12 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public boolean elementIsSelectableState(WebElement webElement, boolean state) {
-    return elementByExpected(SELECTED_STATE(webElement, state));
+    return waitingAction.expectedByBoolean(SELECTED_STATE(webElement, state));
   }
 
   @Override
   public boolean elementIsContainsText(By by, String text) {
-    return elementByExpected(CONTAIN_TEXT(by, text));
+    return waitingAction.expectedByBoolean(CONTAIN_TEXT(by, text));
   }
 
   @Override
@@ -1020,7 +974,7 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public boolean elementIsContainsText(WebElement element, String text) {
-    return elementByExpected(CONTAIN_TEXT(element, text));
+    return waitingAction.expectedByBoolean(CONTAIN_TEXT(element, text));
   }
 
   @Override
@@ -1051,7 +1005,7 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public boolean elementIsEqualsText(By by, String text) {
-    return elementByExpected(EQUALS_TEXT(by, text));
+    return waitingAction.expectedByBoolean(EQUALS_TEXT(by, text));
   }
 
   @Override
@@ -1072,7 +1026,7 @@ public class ElementImp implements Element<ElementImp> {
 
   @Override
   public boolean elementIsEqualsText(WebElement element, String text) {
-    return elementByExpected(EQUALS_TEXT(element, text));
+    return waitingAction.expectedByBoolean(EQUALS_TEXT(element, text));
   }
 
   @Override

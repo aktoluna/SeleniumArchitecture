@@ -1,4 +1,4 @@
-package com.saha.slnarch.common;
+package com.saha.slnarch.common.helper;
 
 import static org.junit.Assert.assertEquals;
 

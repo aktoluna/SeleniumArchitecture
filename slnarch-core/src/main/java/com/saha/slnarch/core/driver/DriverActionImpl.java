@@ -1,7 +1,8 @@
 package com.saha.slnarch.core.driver;
 
 
-import com.saha.slnarch.common.ImageHelper;
+import com.saha.slnarch.common.image.ImageHelper;
+import com.saha.slnarch.core.wait.WaitingAction;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -20,10 +21,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public final class DriverActionImpl implements DriverAction {
 
   private final WebDriver driver;
+  private final WaitingAction waitingAction;
 
   @Inject
-  public DriverActionImpl(WebDriver driver) {
+  public DriverActionImpl(WebDriver driver, WaitingAction waitingAction) {
     this.driver = driver;
+    this.waitingAction = waitingAction;
   }
 
   @Override
@@ -185,4 +188,72 @@ public final class DriverActionImpl implements DriverAction {
     return ((TakesScreenshot) driver).getScreenshotAs(outputType);
   }
 
+  @Override
+  public boolean urlEquals(String url) {
+    return waitingAction.expectedByBoolean(URL_TO_BE(url));
+  }
+
+  @Override
+  public boolean urlContains(String url) {
+    return waitingAction.expectedByBoolean(URL_CONTAINS(url));
+  }
+
+  @Override
+  public boolean urlPatternMatches(String url) {
+    return waitingAction.expectedByBoolean(URL_MATCHES(url));
+  }
+
+  @Override
+  public boolean titleEquals(String url) {
+    return waitingAction.expectedByBoolean(TITLE_EQUALS(url));
+  }
+
+  @Override
+  public boolean titleContains(String url) {
+    return waitingAction.expectedByBoolean(TITLE_CONTAINS(url));
+  }
+
+  @Override
+  public boolean titlePatternMatches(String url) {
+    return waitingAction.expectedByBoolean(TITLE_MATCHES(url));
+  }
+
+  @Override
+  public boolean pageSourceContains(String url) {
+    return waitingAction.expectedByBoolean(PAGE_SOURCE_CONTAINS(url));
+  }
+
+  @Override
+  public boolean pageSourceContainsPatternMatches(String url) {
+    return waitingAction.expectedByBoolean(PAGE_SOURCE_MATCHES(url));
+  }
+
+  @Override
+  public boolean isAlertPresent() {
+    return waitingAction.expectedByBoolean(ALERT_PRESENT());
+  }
+
+  @Override
+  public DriverAction frameAvailableSwitchTo(By by) {
+    waitingAction.expected(FRAME_AVAILABLE(by));
+    return this;
+  }
+
+  @Override
+  public DriverAction frameAvailableSwitchTo(WebElement webElement) {
+    waitingAction.expected(FRAME_AVAILABLE(webElement));
+    return this;
+  }
+
+  @Override
+  public DriverAction frameAvailableSwitchTo(String frameLocator) {
+    waitingAction.expected(FRAME_AVAILABLE(frameLocator));
+    return this;
+  }
+
+  @Override
+  public DriverAction frameAvailableSwitchTo(int frameLocator) {
+    waitingAction.expected(FRAME_AVAILABLE(frameLocator));
+    return this;
+  }
 }
