@@ -9,6 +9,8 @@ public class Configuration {
   private String driverPath;
   @Prop(key = "browserType")
   private String browserType;
+  @Prop(key = "hubUrl")
+  private String hubUrl;
   @Prop(key = "testUrl")
   private String testUrl;
   @Prop(key = "prepUrl")
@@ -146,5 +148,13 @@ public class Configuration {
 
   public void setTestUrl(String testUrl) {
     this.testUrl = testUrl;
+  }
+
+  public String getHubUrl() {
+    return hubUrl;
+  }
+
+  public void setHubUrl(String hubUrl) {
+    this.hubUrl = hubUrl;
   }
 }

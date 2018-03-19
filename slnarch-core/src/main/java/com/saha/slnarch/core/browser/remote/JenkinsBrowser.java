@@ -52,6 +52,6 @@ public class JenkinsBrowser extends
   @Override
   public RemoteWebDriver buildWebDriver(DesiredCapabilities options, Proxy proxy)
       throws MalformedURLException {
-    return setTimeOut(new RemoteWebDriver(new URL(TESTINIUM_URL), getOptions(options, proxy)));
+    return setTimeOut(new RemoteWebDriver(new URL(StringHelper.isEmpty(configuration.getHubUrl()) ? TESTINIUM_URL : configuration.getHubUrl()), getOptions(options, proxy)));
   }
 }

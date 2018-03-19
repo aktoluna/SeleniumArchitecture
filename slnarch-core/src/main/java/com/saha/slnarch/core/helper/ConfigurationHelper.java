@@ -13,7 +13,6 @@ public enum ConfigurationHelper {
 
   Logger logger = LogHelper.getSlnLogger();
 
-
   Configuration configuration;
 
   ConfigurationHelper() {

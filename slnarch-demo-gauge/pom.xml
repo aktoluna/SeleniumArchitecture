@@ -5,7 +5,7 @@
   <parent>
     <artifactId>slnarch-parent</artifactId>
     <groupId>io.github.aktoluna</groupId>
-    <version>BETA-1.5.3</version>
+    <version>BETA-1.5.4</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -15,7 +15,7 @@
     <dependency>
       <groupId>io.github.aktoluna</groupId>
       <artifactId>slnarch-gauge</artifactId>
-      <version>BETA-1.5.3</version>
+      <version>BETA-1.5.4</version>
     </dependency>
   </dependencies>
 
@@ -25,17 +25,6 @@
         <groupId>com.thoughtworks.gauge.maven</groupId>
         <artifactId>gauge-maven-plugin</artifactId>
         <version>${gauge.plugin.version}</version>
-        <executions>
-          <execution>
-            <phase>test</phase>
-            <configuration>
-              <specsDir>specs</specsDir>
-            </configuration>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>

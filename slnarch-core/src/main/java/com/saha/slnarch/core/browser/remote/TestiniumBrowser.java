@@ -1,5 +1,6 @@
 package com.saha.slnarch.core.browser.remote;
 
+import com.saha.slnarch.common.helper.StringHelper;
 import com.saha.slnarch.common.helper.SystemPropertyHelper;
 import com.saha.slnarch.core.browser.BaseBrowser;
 import com.saha.slnarch.core.model.Configuration;
@@ -44,6 +45,6 @@ public final class TestiniumBrowser extends
   @Override
   public RemoteWebDriver buildWebDriver(DesiredCapabilities options, Proxy proxy)
       throws MalformedURLException {
-    return setTimeOut(new RemoteWebDriver(new URL(TESTINIUM_URL), getOptions(options, proxy)));
+    return setTimeOut(new RemoteWebDriver(new URL(StringHelper.isEmpty(configuration.getHubUrl()) ? TESTINIUM_URL : configuration.getHubUrl()), getOptions(options, proxy)));
   }
 }
