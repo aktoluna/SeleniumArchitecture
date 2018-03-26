@@ -33,6 +33,8 @@ public interface WaitingAction<T extends WaitingAction> {
 
   void waitByMs(long millis);
 
+  void waitBySecond(long second);
+
   <S, V> S expected(ExpectedCondition<V> expectedCondition);
 
   <S, V> S expected(ExpectedCondition<V>... expectedConditions);

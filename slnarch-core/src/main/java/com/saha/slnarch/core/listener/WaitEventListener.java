@@ -1,5 +1,6 @@
 package com.saha.slnarch.core.listener;
 
+import com.saha.slnarch.common.log.LogHelper;
 import com.saha.slnarch.core.element.JavaScriptAction;
 import com.saha.slnarch.core.model.Configuration;
 import com.saha.slnarch.core.wait.WaitingAction;
@@ -8,10 +9,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.slf4j.Logger;
 
-public class WaitEventListener extends BaseListener implements WebDriverEventListener {
+public class WaitEventListener implements WebDriverEventListener {
 
-
+  protected Logger logger = LogHelper.getSlnLogger();
+  
   private WaitingAction waitingAction;
 
   private JavaScriptAction javaScriptAction;

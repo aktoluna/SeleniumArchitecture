@@ -21,11 +21,16 @@ public class HomePage extends InjectablePage {
   @SuppressWarnings("unchecked")
   @ScreenShot(before = true)
   public void pageTest() {
-    CharSequence cs = "ali";
-    elementAction.find("#lst-ib")
-        .sendKeys(cs)
-        .find("#lst-ib")
-        .sendKeys(Keys.ENTER);
+//    CharSequence cs = "ali";
+    elementAction.find(".btn-padre")
+        .click()
+        .findByClickable(".btn-hijo>ul>li:nth-of-type(3)>a")
+        .click();
+    try {
+      Thread.sleep(10000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
     waitingAction.waitPageLoadComplete();
   }
 

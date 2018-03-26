@@ -2,7 +2,6 @@ package com.saha.slnarch.common.date;
 
 import static org.hamcrest.Matchers.is;
 
-import com.saha.slnarch.common.date.DateAndTimeHelper;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,7 +9,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class DateAndTimeHelperTest {
-
 
 
   private String dateFormat = "MM-dd-YYYY";
@@ -40,11 +38,21 @@ public class DateAndTimeHelperTest {
   }
 
   @Test
+  public void convertDateFull() throws Exception {
+    String input = "2018-03-15T08:52:49Z";
+    Date output = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(input);
+    String expected = new SimpleDateFormat(nowDateFormat).format(output);
+    Assert
+        .assertThat(DateAndTimeHelper.convertDate(input, "yyyy-MM-dd'T'HH:mm:ss'Z'", nowDateFormat),
+            is(expected));
+  }
+
+  @Test
   public void parsePeriod() throws Exception {
-    String period="5d";
-    Calendar calendar=Calendar.getInstance();
-    Date date=DateAndTimeHelper.parsePeriod(period);
-    Assert.assertTrue("Period Time Not After",date.after(calendar.getTime()));
+    String period = "5d";
+    Calendar calendar = Calendar.getInstance();
+    Date date = DateAndTimeHelper.parsePeriod(period);
+    Assert.assertTrue("Period Time Not After", date.after(calendar.getTime()));
 
 
   }

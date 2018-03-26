@@ -156,6 +156,11 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
   }
 
   @Override
+  public void waitBySecond(long second) {
+    waitByMs(second * 1000);
+  }
+
+  @Override
   public <S, V> S expected(ExpectedCondition<V> expectedCondition) {
     S s = null;
     try {
