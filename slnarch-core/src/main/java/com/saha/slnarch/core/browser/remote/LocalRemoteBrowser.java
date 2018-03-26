@@ -28,7 +28,6 @@ public class LocalRemoteBrowser extends
   @Override
   protected DesiredCapabilities getDefaultOptions(Proxy proxy) {
     DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-    capabilities.setCapability("key", SystemPropertyHelper.getTestiniumKey());
     if (proxy != null) {
       capabilities.setCapability(CapabilityType.PROXY, proxy);
     }
