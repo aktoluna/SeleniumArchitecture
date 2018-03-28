@@ -86,14 +86,10 @@
   </properties>
 
   <modules>
-    <module>slnarch-common</module>
-    <module>slnarch-core</module>
-    <module>slnarch-junit</module>
-    <module>slnarch-testng</module>
-    <module>slnarch-demo</module>
-    <module>slnarch-report</module>
-    <module>slnarch-gauge</module>
-    <module>slnarch-demo-gauge</module>
+    <module>common</module>
+    <module>web</module>
+    <module>mobile</module>
+    <module>di</module>
   </modules>
 
   <build>
