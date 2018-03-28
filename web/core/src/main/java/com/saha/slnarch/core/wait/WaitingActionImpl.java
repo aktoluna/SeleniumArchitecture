@@ -4,6 +4,7 @@ import com.saha.slnarch.common.log.LogHelper;
 import com.saha.slnarch.core.js.JavaScriptOperation;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.openqa.selenium.By;

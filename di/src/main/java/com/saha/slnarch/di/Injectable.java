@@ -6,6 +6,6 @@ public interface Injectable {
 
   default void inject() {
     LogHelper.getSlnLogger().info("Inject Starting...");
-    InjectionHelper.getInstance().getFeather().injectFields(this);
+    InjectionHelper.getInstance().injectFields(this);
   }
 }

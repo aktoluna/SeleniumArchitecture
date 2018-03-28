@@ -1,16 +1,11 @@
-package com.saha.slnarch.gauge.hook;
+package com.saha.slnarch.core.gauge.hook;
 
-import com.saha.slnarch.core.di.page.InjectablePageTestImpl;
 import com.saha.slnarch.core.helper.ConfigurationHelper;
+import com.saha.slnarch.core.page.PageTestImpl;
 import com.thoughtworks.gauge.AfterScenario;
 import com.thoughtworks.gauge.BeforeScenario;
 
-public class ScenarioHook extends InjectablePageTestImpl {
-
-  public ScenarioHook() {
-    super();
-    inject();
-  }
+public class ScenarioHook extends PageTestImpl {
 
   @BeforeScenario
   public void beforeScenario() {

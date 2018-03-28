@@ -29,4 +29,11 @@ public class InjectionHelper {
     this.feather = feather;
   }
 
+  public void injectFields(Object target) {
+    getFeather().injectFields(target);
+  }
+
+  public <T> T instance(Class<T> clazz) {
+    return getFeather().instance(clazz);
+  }
 }

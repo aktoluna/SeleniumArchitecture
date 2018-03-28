@@ -7,7 +7,6 @@ import com.saha.slnarch.core.model.Configuration;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.openqa.selenium.Proxy;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -30,15 +29,8 @@ public final class TestiniumBrowser extends
   protected DesiredCapabilities getDefaultOptions(Proxy proxy) {
     DesiredCapabilities capabilities = DesiredCapabilities.chrome();
     capabilities.setCapability("key", SystemPropertyHelper.getTestiniumKey());
-    if (proxy != null) {
-      capabilities.setCapability(CapabilityType.PROXY, proxy);
-    }
+    capabilitiesAddProxy(capabilities, proxy);
     return capabilities;
-  }
-
-  @Override
-  protected DesiredCapabilities getOptions(DesiredCapabilities options, Proxy proxy) {
-    return options != null ? options : getDefaultOptions(proxy);
   }
 
   @Override

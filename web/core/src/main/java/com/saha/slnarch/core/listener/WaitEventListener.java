@@ -4,6 +4,8 @@ import com.saha.slnarch.common.log.LogHelper;
 import com.saha.slnarch.core.element.JavaScriptAction;
 import com.saha.slnarch.core.model.Configuration;
 import com.saha.slnarch.core.wait.WaitingAction;
+import com.saha.slnarch.driver.event.EventListener;
+import java.util.List;
 import javax.inject.Inject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.slf4j.Logger;
 
-public class WaitEventListener implements WebDriverEventListener {
+public class WaitEventListener implements EventListener {
 
   protected Logger logger = LogHelper.getSlnLogger();
   
@@ -144,7 +146,49 @@ public class WaitEventListener implements WebDriverEventListener {
   }
 
   @Override
+  public void beforeSwitchToWindow(String s, WebDriver webDriver) {
+
+  }
+
+  @Override
+  public void afterSwitchToWindow(String s, WebDriver webDriver) {
+
+  }
+
+  @Override
   public void onException(Throwable throwable, WebDriver webDriver) {
+  }
+
+  @Override
+  public void beforeFindsBy(By by, WebDriver driver) {
+
+  }
+
+  @Override
+  public void afterFindsBy(By by, List<WebElement> element, WebDriver driver) {
+
+  }
+
+  @Override
+  public void beforeFindByInElement(By by, WebElement element, WebDriver driver) {
+
+  }
+
+  @Override
+  public void afterFindByInElement(By by, WebElement element, WebElement innerElement,
+      WebDriver driver) {
+
+  }
+
+  @Override
+  public void beforeFindsByInElement(By by, WebElement element, WebDriver driver) {
+
+  }
+
+  @Override
+  public void afterFindsByInElement(By by, WebElement element, List<WebElement> innerElements,
+      WebDriver driver) {
+
   }
 
   private void waitRequest() {
@@ -173,4 +217,6 @@ public class WaitEventListener implements WebDriverEventListener {
       logger.warn("Scroll Failed ", e);
     }
   }
+
+
 }

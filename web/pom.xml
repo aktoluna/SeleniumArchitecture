@@ -8,17 +8,33 @@
     <version>1.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-
+  <packaging>pom</packaging>
   <artifactId>web</artifactId>
+  <name>${project.artifactId}</name>
+  <description>Selenium Web Project</description>
+  <inceptionYear>2018</inceptionYear>
 
   <modules>
     <module>core</module>
     <module>junit</module>
     <module>demo</module>
     <module>report</module>
-    <module>gauge</module>
     <module>demo-gauge</module>
     <module>driver</module>
   </modules>
+
+  <properties>
+    <selenium.version>3.11.0</selenium.version>
+    <extent.report.version>3.1.1</extent.report.version>
+    <aspectj.version>1.8.9</aspectj.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.github.aktoluna</groupId>
+      <artifactId>di</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 
 </project>

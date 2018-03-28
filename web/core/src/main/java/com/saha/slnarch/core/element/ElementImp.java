@@ -1,5 +1,20 @@
 package com.saha.slnarch.core.element;
 
+import static com.saha.slnarch.core.expected.ElementExpectedType.CLICK;
+import static com.saha.slnarch.core.expected.ElementExpectedType.CLICK_AND_URL_CONTAINS;
+import static com.saha.slnarch.core.expected.ElementExpectedType.CONTAIN_TEXT;
+import static com.saha.slnarch.core.expected.ElementExpectedType.CONTAIN_TEXT_ANY;
+import static com.saha.slnarch.core.expected.ElementExpectedType.EQUALS_TEXT;
+import static com.saha.slnarch.core.expected.ElementExpectedType.EQUALS_TEXT_ANY;
+import static com.saha.slnarch.core.expected.ElementExpectedType.INVISIBLE;
+import static com.saha.slnarch.core.expected.ElementExpectedType.INVISIBLE_ALL;
+import static com.saha.slnarch.core.expected.ElementExpectedType.PRESENCE;
+import static com.saha.slnarch.core.expected.ElementExpectedType.PRESENCES;
+import static com.saha.slnarch.core.expected.ElementExpectedType.SELECTED;
+import static com.saha.slnarch.core.expected.ElementExpectedType.SELECTED_STATE;
+import static com.saha.slnarch.core.expected.ElementExpectedType.VISIBLE;
+import static com.saha.slnarch.core.expected.ElementExpectedType.VISIBLE_ALL;
+
 import com.saha.slnarch.common.log.LogHelper;
 import com.saha.slnarch.core.element.by.ByCreate;
 import com.saha.slnarch.core.element.by.ByFactory;
@@ -8,10 +23,12 @@ import com.saha.slnarch.core.js.JavaScriptOperation;
 import com.saha.slnarch.core.model.ElementInfo;
 import com.saha.slnarch.core.wait.WaitingAction;
 import com.saha.slnarch.core.wait.WaitingActionImpl;
+import com.thoughtworks.gauge.Step;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.inject.Inject;
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -65,9 +82,8 @@ public class ElementImp implements Element<ElementImp> {
     clearElementList();
     WebElement element;
     try {
-//      element = waitingAction
-//          .waitUntil(ExpectedConditions.presenceOfElementLocated(by));
       element = driver.findElement(by);
+      Assertions.assertThat(element).isNotNull();
       setElementList(element);
     } catch (Exception e) {
       logger.error("Element Not Found By={}", by.toString(), e);
@@ -75,6 +91,7 @@ public class ElementImp implements Element<ElementImp> {
     return this;
   }
 
+  @Step("Element find <name>")
   @Override
   public ElementImp find(String name) {
     return find(getByCreate().createBy(name));
@@ -749,6 +766,7 @@ public class ElementImp implements Element<ElementImp> {
     return findsByExpected(PRESENCES(by));
   }
 
+  @Step("Element find by visible <name>")
   @Override
   public ElementImp findsByPresence(String name) {
     return findsByPresence(byCreate.createBy(name));

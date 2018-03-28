@@ -1,13 +1,13 @@
 package com.saha.slnarch.report;
 
-import com.saha.slnarch.junit.InjectableJunitPageTestImpl;
+import com.saha.slnarch.junit.JunitPageTestImpl;
 import java.io.IOException;
 import javax.mail.MessagingException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 
-public abstract class ExtentReportTest extends InjectableJunitPageTestImpl {
+public abstract class ExtentReportTest extends JunitPageTestImpl {
 
   @Rule
   public ExtentJunitListener extentJunitListener = new ExtentJunitListener(getDriver());

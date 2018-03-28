@@ -7,8 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
-public interface ElementFindExpectedConditions<T extends Element, S extends WebElement> extends
-    ElementExpectedType {
+public interface ElementFindExpectedConditions<T extends Element, S extends WebElement> {
 
   T findByExpected(ExpectedCondition<S> expectedCondition);
 

@@ -30,12 +30,12 @@ public final class JavaScriptOperationImpl implements JavaScriptOperation {
 
   @Override
   public Object executeAsyncJS(String jsStmt) {
-    return getJSExecutor().executeScript(jsStmt);
+    return getJSExecutor().executeAsyncScript(jsStmt);
   }
 
   @Override
   public Object executeAsyncJS(String jsStmt, Object... obj) {
-    return getJSExecutor().executeScript(jsStmt, obj);
+    return getJSExecutor().executeAsyncScript(jsStmt, obj);
   }
 
   @Override

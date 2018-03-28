@@ -20,16 +20,7 @@ public class SafariBrowser extends BaseBrowser<SafariDriver, SafariOptions, Safa
 
   @Override
   protected SafariOptions getDefaultOptions(Proxy proxy) {
-    SafariOptions options = new SafariOptions();
-    if (proxy != null) {
-      options.setProxy(proxy);
-    }
-    return options;
-  }
-
-  @Override
-  protected SafariOptions getOptions(SafariOptions options, Proxy proxy) {
-    return options == null ? getDefaultOptions(proxy) : options;
+    return new SafariOptions();
   }
 
   @Override

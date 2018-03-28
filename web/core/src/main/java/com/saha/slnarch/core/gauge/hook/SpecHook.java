@@ -1,4 +1,4 @@
-package com.saha.slnarch.gauge.hook;
+package com.saha.slnarch.core.gauge.hook;
 
 import com.saha.slnarch.common.log.LogHelper;
 import com.thoughtworks.gauge.AfterSpec;

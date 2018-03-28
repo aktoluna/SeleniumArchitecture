@@ -2,8 +2,8 @@ package com.saha.slnarch.report.aspect;
 
 import com.saha.slnarch.common.helper.StringHelper;
 import com.saha.slnarch.common.log.LogHelper;
-import com.saha.slnarch.core.di.Injectable;
 import com.saha.slnarch.core.driver.DriverAction;
+import com.saha.slnarch.di.Injectable;
 import com.saha.slnarch.report.ReportManager;
 import com.saha.slnarch.report.annotation.ScreenShot;
 import java.io.File;

@@ -11,26 +11,26 @@ public class InjectionHelperTest {
 
   @Test
   public void testInject() {
-      InjectionHelper.getInstance().setFeather(Feather.with(new MyModule()));
-      B b=new B();
+    InjectionHelper.getInstance().setFeather(Feather.with(new MyModule()));
+    B b = new B();
     Assert.assertNotNull(b.a);
-    Assert.assertEquals(b.a.getName(),"A");
+    Assert.assertEquals(b.a.getName(), "A");
   }
 
   @Test
   public void testInjectWithInterface() {
     InjectionHelper.getInstance().setFeather(Feather.with(new MyModule()));
-    C c=new C();
+    C c = new C();
     Assert.assertNotNull(c.a);
-    Assert.assertEquals(c.a.getName(),"A");
+    Assert.assertEquals(c.a.getName(), "A");
   }
 
   @Test
   public void testInjectWithInstance() {
     InjectionHelper.getInstance().setFeather(Feather.with(new MyModule()));
-    D d=InjectionHelper.getInstance().getFeather().instance(D.class);
+    D d = InjectionHelper.getInstance().instance(D.class);
     Assert.assertNotNull(d.a);
-    Assert.assertEquals(d.a.getName(),"A");
+    Assert.assertEquals(d.a.getName(), "A");
   }
 
 
@@ -62,7 +62,7 @@ public class InjectionHelperTest {
     @Inject
     public A a;
 
-    public C(){
+    public C() {
       inject();
     }
 
@@ -72,12 +72,13 @@ public class InjectionHelperTest {
 
   }
 
-  static class D  {
+  static class D {
+
     public A a;
 
     @Inject
-    public D(A a){
-      this.a=a;
+    public D(A a) {
+      this.a = a;
     }
 
     String getName() {

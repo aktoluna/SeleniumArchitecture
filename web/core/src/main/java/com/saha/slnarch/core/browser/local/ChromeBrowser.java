@@ -30,17 +30,10 @@ public class ChromeBrowser extends BaseBrowser<ChromeDriver, ChromeOptions, Chro
     options.addArguments("disable-popup-blocking");
     options.addArguments("ignore-certificate-errors");
     options.addArguments("disable-translate");
-    if (proxy != null) {
-      options.setCapability(CapabilityType.PROXY, proxy);
-    }
     return options;
   }
 
 
-  @Override
-  protected ChromeOptions getOptions(ChromeOptions options, Proxy proxy) {
-    return options == null ? getDefaultOptions(proxy) : options;
-  }
 
   @Override
   public ChromeDriver buildWebDriver(ChromeOptions options, Proxy proxy)

@@ -4,8 +4,10 @@ import com.saha.slnarch.core.model.Configuration;
 import com.saha.slnarch.core.model.TimeOut;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.CapabilityType;
 
 public abstract class BaseBrowser<S extends WebDriver, T extends Capabilities, V extends BaseBrowser> implements
     Browser<S, T> {
@@ -42,7 +44,25 @@ public abstract class BaseBrowser<S extends WebDriver, T extends Capabilities, V
 
   protected abstract T getDefaultOptions(Proxy proxy);
 
-  protected abstract T getOptions(T options, Proxy proxy);
+  protected T getOptions(T options, Proxy proxy) {
+    if (options == null) {
+      options = getDefaultOptions(proxy);
+    }
+    if (capabilitiesHasProxy(options)) {
+      capabilitiesAddProxy(options, proxy);
+    }
+    return options;
+  }
+
+  protected boolean capabilitiesHasProxy(Capabilities capabilities) {
+    return capabilities.getCapability(CapabilityType.PROXY) != null;
+  }
+
+  protected void capabilitiesAddProxy(Capabilities capabilities, Proxy proxy) {
+    if (proxy != null) {
+      ((MutableCapabilities) capabilities).setCapability(CapabilityType.PROXY, proxy);
+    }
+  }
 
 //  protected boolean isLocalBrowser() {
 //    return true;

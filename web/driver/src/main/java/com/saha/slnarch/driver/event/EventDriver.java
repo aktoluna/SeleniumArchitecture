@@ -43,22 +43,22 @@ import org.openqa.selenium.support.events.internal.EventFiringKeyboard;
 import org.openqa.selenium.support.events.internal.EventFiringMouse;
 import org.openqa.selenium.support.events.internal.EventFiringTouch;
 
-public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesScreenshot,
+public class EventDriver implements WebDriver, JavascriptExecutor, TakesScreenshot,
     WrapsDriver, HasInputDevices, HasTouchScreen,
     Interactive {
 
   private final WebDriver driver;
 
-  private final List<SlnarchEventListener> eventListeners =
+  private final List<EventListener> eventListeners =
       new ArrayList<>();
 
-  private final SlnarchEventListener dispatcher = (SlnarchEventListener) Proxy
+  private final EventListener dispatcher = (EventListener) Proxy
       .newProxyInstance(
-          SlnarchEventListener.class.getClassLoader(),
-          new Class[]{SlnarchEventListener.class},
+          EventListener.class.getClassLoader(),
+          new Class[]{EventListener.class},
           (proxy, method, args) -> {
             try {
-              for (SlnarchEventListener eventListener : eventListeners) {
+              for (EventListener eventListener : eventListeners) {
                 method.invoke(eventListener, args);
               }
               return null;
@@ -68,11 +68,11 @@ public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesS
           }
       );
 
-  public SlnarchEventDriver(final WebDriver driver) {
+  public EventDriver(final WebDriver driver) {
     Class<?>[] allInterfaces = extractInterfaces(driver);
 
     this.driver = (WebDriver) Proxy.newProxyInstance(
-        SlnarchEventListener.class.getClassLoader(),
+        EventListener.class.getClassLoader(),
         allInterfaces,
         (proxy, method, args) -> {
           if ("getWrappedDriver".equals(method.getName())) {
@@ -112,7 +112,7 @@ public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesS
    * @param eventListener the event listener to register
    * @return this for method chaining.
    */
-  public SlnarchEventDriver register(SlnarchEventListener eventListener) {
+  public EventDriver register(EventListener eventListener) {
     eventListeners.add(eventListener);
     return this;
   }
@@ -121,7 +121,7 @@ public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesS
    * @param eventListener the event listener to unregister
    * @return this for method chaining.
    */
-  public SlnarchEventDriver unRegister(SlnarchEventListener eventListener) {
+  public EventDriver unRegister(EventListener eventListener) {
     eventListeners.remove(eventListener);
     return this;
   }
@@ -149,7 +149,7 @@ public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesS
   }
 
   public List<WebElement> findElements(By by) {
-    dispatcher.beforeFindsBy(by, null, driver);
+    dispatcher.beforeFindsBy(by, driver);
     List<WebElement> temp = driver.findElements(by);
     dispatcher.afterFindsBy(by, temp, driver);
     List<WebElement> result = new ArrayList<>(temp.size());
@@ -234,8 +234,8 @@ public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesS
         toReturn.put(key, unpackWrappedElement(aMap.get(key)));
       }
       return toReturn;
-    } else if (arg instanceof SlnarchEventDriver.EventFiringWebElement) {
-      return ((SlnarchEventDriver.EventFiringWebElement) arg).getWrappedElement();
+    } else if (arg instanceof EventDriver.EventFiringWebElement) {
+      return ((EventDriver.EventFiringWebElement) arg).getWrappedElement();
     } else {
       return arg;
     }
@@ -243,7 +243,7 @@ public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesS
 
   private Object wrapResult(Object result) {
     if (result instanceof WebElement) {
-      return new SlnarchEventDriver.EventFiringWebElement((WebElement) result);
+      return new EventDriver.EventFiringWebElement((WebElement) result);
     }
     if (result instanceof List) {
       return ((List<?>) result).stream().map(this::wrapResult).collect(Collectors.toList());
@@ -268,19 +268,19 @@ public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesS
   }
 
   public TargetLocator switchTo() {
-    return new SlnarchEventDriver.EventFiringTargetLocator(driver.switchTo());
+    return new EventDriver.EventFiringTargetLocator(driver.switchTo());
   }
 
   public Navigation navigate() {
-    return new SlnarchEventDriver.EventFiringNavigation(driver.navigate());
+    return new EventDriver.EventFiringNavigation(driver.navigate());
   }
 
   public Options manage() {
-    return new SlnarchEventDriver.EventFiringOptions(driver.manage());
+    return new EventDriver.EventFiringOptions(driver.manage());
   }
 
   private WebElement createWebElement(WebElement from) {
-    return new SlnarchEventDriver.EventFiringWebElement(from);
+    return new EventDriver.EventFiringWebElement(from);
   }
 
   public Keyboard getKeyboard() {
@@ -336,7 +336,7 @@ public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesS
 
     private EventFiringWebElement(final WebElement element) {
       this.element = (WebElement) Proxy.newProxyInstance(
-          SlnarchEventListener.class.getClassLoader(),
+          EventListener.class.getClassLoader(),
           extractInterfaces(element),
           new InvocationHandler() {
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -418,16 +418,16 @@ public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesS
     }
 
     public WebElement findElement(By by) {
-      dispatcher.beforeFindBy(by, element, driver);
+      dispatcher.beforeFindByInElement(by, element, driver);
       WebElement temp = element.findElement(by);
-      dispatcher.afterFindBy(by, element, driver);
+      dispatcher.afterFindByInElement(by, element, temp, driver);
       return createWebElement(temp);
     }
 
     public List<WebElement> findElements(By by) {
-      dispatcher.beforeFindBy(by, element, driver);
+      dispatcher.beforeFindsByInElement(by, element, driver);
       List<WebElement> temp = element.findElements(by);
-      dispatcher.afterFindBy(by, element, driver);
+      dispatcher.afterFindsByInElement(by, element, temp, driver);
       List<WebElement> result = new ArrayList<>(temp.size());
       for (WebElement element : temp) {
         result.add(createWebElement(element));
@@ -550,7 +550,7 @@ public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesS
     }
 
     public Timeouts timeouts() {
-      return new SlnarchEventDriver.EventFiringTimeouts(options.timeouts());
+      return new EventDriver.EventFiringTimeouts(options.timeouts());
     }
 
     public ImeHandler ime() {
@@ -558,7 +558,7 @@ public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesS
     }
 
     public Window window() {
-      return new SlnarchEventDriver.EventFiringWindow(options.window());
+      return new EventDriver.EventFiringWindow(options.window());
     }
   }
 
@@ -623,7 +623,7 @@ public class SlnarchEventDriver implements WebDriver, JavascriptExecutor, TakesS
     }
 
     public Alert alert() {
-      return new SlnarchEventDriver.EventFiringAlert(this.targetLocator.alert());
+      return new EventDriver.EventFiringAlert(this.targetLocator.alert());
     }
   }
 

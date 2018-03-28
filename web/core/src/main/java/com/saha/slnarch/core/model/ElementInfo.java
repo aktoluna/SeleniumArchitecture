@@ -15,6 +15,9 @@ public class ElementInfo {
   @SerializedName("value")
   @Expose
   private String value;
+  @SerializedName("index")
+  @Expose
+  private String index;
 
   public ByType getType() {
     return type;
@@ -38,5 +41,13 @@ public class ElementInfo {
 
   public void setValue(String value) {
     this.value = value;
+  }
+
+  public String getIndex() {
+    return index;
+  }
+
+  public void setIndex(String index) {
+    this.index = index;
   }
 }

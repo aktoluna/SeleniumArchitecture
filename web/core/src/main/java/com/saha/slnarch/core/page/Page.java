@@ -1,14 +1,14 @@
-package com.saha.slnarch.core.di.page;
+package com.saha.slnarch.core.page;
 
 import com.saha.slnarch.common.log.LogHelper;
 import com.saha.slnarch.di.Injectable;
 import org.slf4j.Logger;
 
-public abstract class InjectablePage implements Injectable {
+public abstract class Page implements Injectable {
 
   protected Logger logger = LogHelper.getSlnLogger();
 
-  protected InjectablePage() {
+  protected Page() {
     inject();
   }
 

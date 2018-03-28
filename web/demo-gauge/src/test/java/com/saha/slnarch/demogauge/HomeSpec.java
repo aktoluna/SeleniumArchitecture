@@ -7,7 +7,7 @@ public class HomeSpec {
 
   @Step("open google page")
   public void openGoogle() {
-    new HomePage().pageTest();
+//    new HomePage().pageTest();
   }
 
 }

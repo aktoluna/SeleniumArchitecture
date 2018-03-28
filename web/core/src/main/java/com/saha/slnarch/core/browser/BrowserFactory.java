@@ -7,7 +7,7 @@ import com.saha.slnarch.core.browser.local.ChromeBrowser;
 import com.saha.slnarch.core.browser.local.FirefoxBrowser;
 import com.saha.slnarch.core.browser.local.SafariBrowser;
 import com.saha.slnarch.core.browser.remote.JenkinsBrowser;
-import com.saha.slnarch.core.browser.remote.LocalRemoteBrowser;
+import com.saha.slnarch.core.browser.remote.RemoteBrowser;
 import com.saha.slnarch.core.browser.remote.TestiniumBrowser;
 import com.saha.slnarch.core.model.Configuration;
 import java.net.MalformedURLException;
@@ -21,20 +21,20 @@ public class BrowserFactory {
   public WebDriver getWebDriver(@Nullable Capabilities capabilities, @Nullable Proxy proxy,
       Configuration configuration)
       throws MalformedURLException {
-    Browser browser = null;
+    Browser browser;
     if (!StringHelper.isEmpty(SystemPropertyHelper.getTestiniumKey())) {
       browser = new TestiniumBrowser(configuration);
-    } else if (!StringHelper.isEmpty(SystemPropertyHelper.getJenkinsTestiniumKey())) {
-      browser = new JenkinsBrowser(configuration);
     } else {
-      if (configuration.getBrowserType().equals("Chrome")) {
+      if (configuration.getBrowserType().equalsIgnoreCase("Chrome")) {
         browser = new ChromeBrowser(configuration);
-      } else if (configuration.getBrowserType().equals("Firefox")) {
+      } else if (configuration.getBrowserType().equalsIgnoreCase("Firefox")) {
         browser = new FirefoxBrowser(configuration);
-      } else if (configuration.getBrowserType().equals("Safari")) {
+      } else if (configuration.getBrowserType().equalsIgnoreCase("Safari")) {
         browser = new SafariBrowser(configuration);
-      } else if (configuration.getBrowserType().equals("Remote")) {
-        browser = new LocalRemoteBrowser(configuration);
+      } else if (configuration.getBrowserType().equalsIgnoreCase("Remote")) {
+        browser = new RemoteBrowser(configuration);
+      } else if (configuration.getBrowserType().equalsIgnoreCase("Jenkins")) {
+        browser = new JenkinsBrowser(configuration);
       } else {
         throw new SlnException("Browser Type Not Found");
       }

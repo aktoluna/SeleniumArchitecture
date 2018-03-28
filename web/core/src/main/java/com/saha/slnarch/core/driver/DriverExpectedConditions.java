@@ -3,7 +3,7 @@ package com.saha.slnarch.core.driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public interface DriverExpectedConditions<T extends DriverAction> extends DriverExpectedConditionsType{
+public interface DriverExpectedConditions<T extends DriverAction>{
 
   boolean urlEquals(String url);
 

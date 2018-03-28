@@ -1,13 +1,13 @@
 package com.saha.slnarch.demo;
 
-import com.saha.slnarch.core.di.page.InjectablePage;
 import com.saha.slnarch.core.element.Element;
+import com.saha.slnarch.core.page.Page;
 import com.saha.slnarch.core.wait.WaitingAction;
 import com.saha.slnarch.report.annotation.ScreenShot;
 import javax.inject.Inject;
 import org.openqa.selenium.Keys;
 
-public class HomePage extends InjectablePage {
+public class HomePage extends Page {
 
   @Inject
   Element elementAction;
