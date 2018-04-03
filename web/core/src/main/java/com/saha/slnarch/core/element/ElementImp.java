@@ -23,7 +23,6 @@ import com.saha.slnarch.core.js.JavaScriptOperation;
 import com.saha.slnarch.core.model.ElementInfo;
 import com.saha.slnarch.core.wait.WaitingAction;
 import com.saha.slnarch.core.wait.WaitingActionImpl;
-import com.thoughtworks.gauge.Step;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -91,7 +90,6 @@ public class ElementImp implements Element<ElementImp> {
     return this;
   }
 
-  @Step("Element find <name>")
   @Override
   public ElementImp find(String name) {
     return find(getByCreate().createBy(name));
@@ -766,7 +764,6 @@ public class ElementImp implements Element<ElementImp> {
     return findsByExpected(PRESENCES(by));
   }
 
-  @Step("Element find by visible <name>")
   @Override
   public ElementImp findsByPresence(String name) {
     return findsByPresence(byCreate.createBy(name));

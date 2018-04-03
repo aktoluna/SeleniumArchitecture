@@ -39,7 +39,7 @@ public abstract class PageTestImpl implements PageTest {
       driver = new BrowserFactory().getWebDriver(getCapabilities(), getProxy(), configuration);
     } catch (MalformedURLException e) {
       logger.error(e.getMessage());
-      LogHelper.getSlnLogger().error("Init WebDriver Error", e);
+      logger.error("Init WebDriver Error", e);
     }
 
   }

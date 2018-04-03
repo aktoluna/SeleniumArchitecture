@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 public class WaitEventListener implements EventListener {
 
   protected Logger logger = LogHelper.getSlnLogger();
-  
+
   private WaitingAction waitingAction;
 
   private JavaScriptAction javaScriptAction;

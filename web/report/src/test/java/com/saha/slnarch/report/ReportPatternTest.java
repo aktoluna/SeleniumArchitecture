@@ -8,7 +8,7 @@ public class ReportPatternTest {
   @Test
   public void parse() {
     String reportPattern = "Report%rp%date";
-    SystemPropertyHelper.setProperty("reportPattern", "_DOMESTIC_PREP");
+    SystemPropertyHelper.INSTANCE.setProperty("reportPattern", "_DOMESTIC_PREP");
     System.out.println(ReportPattern.parse(reportPattern));
   }
 }

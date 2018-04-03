@@ -37,7 +37,7 @@ public final class TestiniumBrowser extends
   public RemoteWebDriver buildWebDriver(DesiredCapabilities options, Proxy proxy)
       throws MalformedURLException {
     return setTimeOut(new RemoteWebDriver(new URL(
-        StringHelper.isEmpty(configuration.getHubUrl()) ? TESTINIUM_URL
-            : configuration.getHubUrl()), getOptions(options, proxy)));
+        StringHelper.isEmpty(getConfiguration().getHubUrl()) ? TESTINIUM_URL
+            : getConfiguration().getHubUrl()), getOptions(options, proxy)));
   }
 }

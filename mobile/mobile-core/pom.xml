@@ -3,33 +3,19 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>slnarch-parent</artifactId>
+    <artifactId>mobile</artifactId>
     <groupId>io.github.aktoluna</groupId>
     <version>1.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <packaging>pom</packaging>
-  <artifactId>mobile</artifactId>
-  <name>${project.artifactId}</name>
-  <description>Mobile Automation Project</description>
-  <inceptionYear>2018</inceptionYear>
 
-  <modules>
-    <module>mobile-core</module>
-    <module>mobile-driver</module>
-    <module>mobile-junit</module>
-  </modules>
-
-  <properties>
-    <appium.version>5.0.4</appium.version>
-  </properties>
+  <artifactId>mobile-core</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>io.github.aktoluna</groupId>
-      <artifactId>di</artifactId>
+      <artifactId>mobile-driver</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
-
 </project>

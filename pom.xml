@@ -51,7 +51,7 @@
     <logback.version>1.2.3</logback.version>
     <feather.version>1.0</feather.version>
     <apache.common.version>3.6</apache.common.version>
-    <kotlin.version>1.2.21</kotlin.version>
+    <kotlin.version>1.2.31</kotlin.version>
     <commons.lang3.version>3.5</commons.lang3.version>
     <junit.version>4.12</junit.version>
     <junit.jupiter.version>5.0.1</junit.jupiter.version>
@@ -85,7 +85,7 @@
   <modules>
     <module>common</module>
     <module>web</module>
-    <!--<module>mobile</module>-->
+    <module>mobile</module>
     <module>di</module>
   </modules>
 

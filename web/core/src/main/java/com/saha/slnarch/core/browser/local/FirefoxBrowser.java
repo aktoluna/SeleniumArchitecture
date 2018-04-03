@@ -17,7 +17,7 @@ public class FirefoxBrowser extends BaseBrowser<FirefoxDriver, FirefoxOptions, F
 
   @Override
   protected FirefoxBrowser setDriverPath() {
-    SystemPropertyHelper.setFirefoxDriverLocation(configuration.getDriverPath());
+    SystemPropertyHelper.setFirefoxDriverLocation(getConfiguration().getDriverPath());
     return this;
   }
 

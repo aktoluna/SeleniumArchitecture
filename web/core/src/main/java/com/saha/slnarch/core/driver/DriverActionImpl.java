@@ -14,7 +14,6 @@ import static com.saha.slnarch.core.expected.DriverExpectedConditionsType.URL_TO
 import com.saha.slnarch.common.image.ImageHelper;
 import com.saha.slnarch.common.log.LogHelper;
 import com.saha.slnarch.core.wait.WaitingAction;
-import com.thoughtworks.gauge.Step;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -59,43 +58,39 @@ public final class DriverActionImpl implements DriverAction {
     driver.get(page);
     return this;
   }
-
-  @Step("Return Back Page")
+  
   @Override
   public DriverAction goBack() {
     driver.navigate().back();
     return this;
   }
-
-  @Step("Navigate To <url>")
+  
   @Override
   public DriverAction navigateTo(String url) {
     driver.navigate().to(url);
     return this;
   }
-
-  @Step("Refresh Page")
+  
   @Override
   public DriverAction refreshTo() {
     driver.navigate().refresh();
     return this;
   }
-
-  @Step("Set Implicitly Time Out <time>")
+  
   @Override
   public DriverAction setImplicitlyTimeOut(long time) {
     driver.manage().timeouts().implicitlyWait(time, TimeUnit.MILLISECONDS);
     return this;
   }
 
-  @Step("Set Page Load Time Out <time>")
+  
   @Override
   public DriverAction setPageLoadTimeOut(long time) {
     driver.manage().timeouts().pageLoadTimeout(time, TimeUnit.MILLISECONDS);
     return this;
   }
 
-  @Step("Set Script Time Out <time>")
+  
   @Override
   public DriverAction setScriptTimeOut(long time) {
     driver.manage().timeouts().setScriptTimeout(time, TimeUnit.MILLISECONDS);
@@ -120,7 +115,7 @@ public final class DriverActionImpl implements DriverAction {
     return this;
   }
 
-  @Step("Alert popup action <accept>")
+  
   @Override
   public DriverAction alertPopupHandle(Alert alert, boolean accept) {
     if (accept) {
@@ -137,14 +132,14 @@ public final class DriverActionImpl implements DriverAction {
     return ExpectedConditions.alertIsPresent().apply(driver);
   }
 
-  @Step("Switch To Main Content")
+  
   @Override
   public DriverAction switchToMain() {
     driver.switchTo().defaultContent();
     return this;
   }
 
-  @Step("Switch To Frame <frameName>")
+  
   @Override
   public DriverAction switchToFrame(String frameName) {
     driver.switchTo().frame(frameName);
@@ -164,31 +159,31 @@ public final class DriverActionImpl implements DriverAction {
   }
 
 
-  @Step("Close Driver")
+  
   @Override
   public void close() {
     driver.close();
   }
 
-  @Step("Quit Driver")
+  
   @Override
   public void quit() {
     driver.quit();
   }
 
-  @Step("Get Current Url")
+  
   @Override
   public String getCurrentUrl() {
     return driver.getCurrentUrl();
   }
 
-  @Step("Get Page Source")
+  
   @Override
   public String getPageSource() {
     return driver.getPageSource();
   }
 
-  @Step("Get Page Title")
+  
   @Override
   public String getTitle() {
     return driver.getTitle();
@@ -215,49 +210,49 @@ public final class DriverActionImpl implements DriverAction {
     return ((TakesScreenshot) driver).getScreenshotAs(outputType);
   }
 
-  @Step("Page Url Equals To <url>")
+  
   @Override
   public boolean urlEquals(String url) {
     return waitingAction.expectedByBoolean(URL_TO_BE(url));
   }
 
-  @Step("Page Url Contains To <url>")
+  
   @Override
   public boolean urlContains(String url) {
     return waitingAction.expectedByBoolean(URL_CONTAINS(url));
   }
 
-  @Step("Page Url Matches Pattern <urlPattern>")
+  
   @Override
   public boolean urlPatternMatches(String url) {
     return waitingAction.expectedByBoolean(URL_MATCHES(url));
   }
 
-  @Step("Page Title Equals To <title>")
+  
   @Override
   public boolean titleEquals(String url) {
     return waitingAction.expectedByBoolean(TITLE_EQUALS(url));
   }
 
-  @Step("Page Title Contains To <title>")
+  
   @Override
   public boolean titleContains(String url) {
     return waitingAction.expectedByBoolean(TITLE_CONTAINS(url));
   }
 
-  @Step("Page Title Matches Pattern <titlePattern>")
+  
   @Override
   public boolean titlePatternMatches(String url) {
     return waitingAction.expectedByBoolean(TITLE_MATCHES(url));
   }
 
-  @Step("Page Source Contains <source>")
+  
   @Override
   public boolean pageSourceContains(String url) {
     return waitingAction.expectedByBoolean(PAGE_SOURCE_CONTAINS(url));
   }
 
-  @Step("Page Source Matches Pattern <sourcePattern>")
+  
   @Override
   public boolean pageSourceContainsPatternMatches(String url) {
     return waitingAction.expectedByBoolean(PAGE_SOURCE_MATCHES(url));

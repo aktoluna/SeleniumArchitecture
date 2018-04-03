@@ -21,6 +21,10 @@ public abstract class BaseBrowser<S extends WebDriver, T extends Capabilities, V
     this.configuration = configuration;
   }
 
+  public Configuration getConfiguration() {
+    return configuration;
+  }
+
   protected TimeOut getTimeout() {
     return TimeOut.TimeOutBuilder.aTimeOut()
         .withImplicitly(configuration.getImplicitlyTimeOut())

@@ -33,7 +33,7 @@ public class RemoteBrowser extends
   public RemoteWebDriver buildWebDriver(DesiredCapabilities options, Proxy proxy)
       throws MalformedURLException {
     return setTimeOut(new RemoteWebDriver(new URL(
-        StringHelper.isEmpty(configuration.getHubUrl()) ? LOCAL_URL : configuration.getHubUrl()),
+        StringHelper.isEmpty(getConfiguration().getHubUrl()) ? LOCAL_URL : getConfiguration().getHubUrl()),
         getOptions(options, proxy)));
   }
 }

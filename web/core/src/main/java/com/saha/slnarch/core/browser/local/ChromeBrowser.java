@@ -19,7 +19,7 @@ public class ChromeBrowser extends BaseBrowser<ChromeDriver, ChromeOptions, Chro
 
   @Override
   protected ChromeBrowser setDriverPath() {
-    SystemPropertyHelper.setChromeDriverLocation(configuration.getDriverPath());
+    SystemPropertyHelper.setChromeDriverLocation(getConfiguration().getDriverPath());
     return this;
   }
 

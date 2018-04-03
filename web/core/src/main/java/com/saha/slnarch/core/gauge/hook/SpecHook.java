@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 
 public class SpecHook {
 
-  Logger logger = LogHelper.getSlnLogger();
+  Logger logger = LogHelper.INSTANCE.getSlnLogger();
 
   @BeforeSpec
   public void beforeSpec() {
