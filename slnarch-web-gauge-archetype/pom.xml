@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>slnarch-parent</artifactId>
+    <groupId>io.github.aktoluna</groupId>
+    <version>BETA-1.5.3</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>slnarch-web-gauge-archetype</artifactId>
+  <name>slnarch-web-gauge-archetype</name>
+  <url>http://www.example.com</url>
+  <packaging>jar</packaging>
+
+
+  <properties>
+    <maven.resources.plugin.version>3.0.2</maven.resources.plugin.version>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>${maven.resources.plugin.version}</version>
+        <configuration>
+          <includeEmptyDirs>true</includeEmptyDirs>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
