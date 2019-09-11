@@ -7,7 +7,7 @@
       <defaultValue>Resource-default</defaultValue>
     </requiredProperty>
     <requiredProperty key="slnarch-version">
-      <defaultValue>BETA-1.5.4</defaultValue>
+      <defaultValue>BETA-1.5.7</defaultValue>
     </requiredProperty>
   </requiredProperties>
 

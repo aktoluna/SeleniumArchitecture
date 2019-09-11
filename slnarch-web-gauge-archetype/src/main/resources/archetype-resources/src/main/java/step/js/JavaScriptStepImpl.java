@@ -1,7 +1,7 @@
 package ${groupId}.step.js;
 
-import com.saha.slnarch.core.di.Injectable;
-import com.saha.slnarch.core.js.JavaScriptOperation;
+import io.github.slnarch.core.di.Injectable;
+import io.github.slnarch.core.js.JavaScriptOperation;
 import com.thoughtworks.gauge.Step;
 import javax.inject.Inject;
 

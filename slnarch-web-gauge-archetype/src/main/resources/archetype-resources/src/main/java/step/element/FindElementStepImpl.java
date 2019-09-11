@@ -1,8 +1,8 @@
 package ${groupId}.step.element;
 
-import com.saha.slnarch.core.di.Injectable;
-import com.saha.slnarch.core.element.Element;
-import com.saha.slnarch.core.element.by.ByType;
+import io.github.slnarch.core.di.Injectable;
+import io.github.slnarch.core.element.Element;
+import io.github.slnarch.core.element.by.ByType;
 import javax.inject.Inject;
 import org.openqa.selenium.By;
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AjcSettings">
+    <option name="ajcPath" value="$MAVEN_REPOSITORY$/org/aspectj/aspectjtools/1.8.9/aspectjtools-1.8.9.jar" />
+    <option name="cmdLineParams" value="-Xlint:ignore -showWeaveInfo" />
+    <option name="delegateToJavac" value="true" />
+  </component>
+  <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/slnarch-web-gauge-archetype/src/main/resources/archetype-resources" includeSubdirectories="true" />
+    </excludeFromCompile>
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="slnarch-gauge" />
+        <module name="slnarch-common" />
+        <module name="slnarch-report" />
+        <module name="slnarch-core" />
+        <module name="slnarch-junit" />
+        <module name="slnarch-web-gauge-archetype" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="slnarch-common" target="1.8" />
+      <module name="slnarch-core" target="1.8" />
+      <module name="slnarch-demo" target="1.8" />
+      <module name="slnarch-demo-gauge" target="1.8" />
+      <module name="slnarch-gauge" target="1.8" />
+      <module name="slnarch-junit" target="1.8" />
+      <module name="slnarch-parent" target="1.8" />
+      <module name="slnarch-report" target="1.8" />
+      <module name="slnarch-web-gauge-archetype" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

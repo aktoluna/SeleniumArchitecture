@@ -1,7 +1,7 @@
 package ${groupId}.step.driver;
 
-import com.saha.slnarch.core.di.Injectable;
-import com.saha.slnarch.core.driver.DriverAction;
+import io.github.slnarch.core.di.Injectable;
+import io.github.slnarch.core.driver.DriverAction;
 import com.thoughtworks.gauge.Step;
 import javax.inject.Inject;
 import org.openqa.selenium.By;

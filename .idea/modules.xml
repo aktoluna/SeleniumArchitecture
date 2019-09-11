@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/slnarch-common/slnarch-common.iml" filepath="$PROJECT_DIR$/slnarch-common/slnarch-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slnarch-core/slnarch-core.iml" filepath="$PROJECT_DIR$/slnarch-core/slnarch-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slnarch-gauge/slnarch-gauge.iml" filepath="$PROJECT_DIR$/slnarch-gauge/slnarch-gauge.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slnarch-junit/slnarch-junit.iml" filepath="$PROJECT_DIR$/slnarch-junit/slnarch-junit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slnarch-parent.iml" filepath="$PROJECT_DIR$/slnarch-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slnarch-report/slnarch-report.iml" filepath="$PROJECT_DIR$/slnarch-report/slnarch-report.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slnarch-web-gauge-archetype/slnarch-web-gauge-archetype.iml" filepath="$PROJECT_DIR$/slnarch-web-gauge-archetype/slnarch-web-gauge-archetype.iml" />
+    </modules>
+  </component>
+</project>

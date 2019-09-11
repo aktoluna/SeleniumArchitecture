@@ -1,7 +1,7 @@
 package ${groupId}.hook;
 
-import com.saha.slnarch.core.di.page.InjectablePageTestImpl;
-import com.saha.slnarch.core.helper.ConfigurationHelper;
+import io.github.slnarch.core.di.page.InjectablePageTestImpl;
+import io.github.slnarch.core.helper.ConfigurationHelper;
 import com.thoughtworks.gauge.AfterScenario;
 import com.thoughtworks.gauge.BeforeScenario;
 
