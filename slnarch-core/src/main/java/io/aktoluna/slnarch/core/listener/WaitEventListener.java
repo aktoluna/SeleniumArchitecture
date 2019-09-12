@@ -1,6 +1,7 @@
 package io.aktoluna.slnarch.core.listener;
 
 import io.aktoluna.slnarch.core.element.JavaScriptAction;
+import io.aktoluna.slnarch.core.js.JavaScriptOperation;
 import io.aktoluna.slnarch.core.model.Configuration;
 import io.aktoluna.slnarch.core.wait.WaitingAction;
 import javax.inject.Inject;
@@ -18,11 +19,14 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   private Configuration configuration;
 
+  private JavaScriptOperation javaScriptOperation;
+
   @Inject
   public WaitEventListener(WaitingAction waitingAction,
-      JavaScriptAction javaScriptAction) {
+      JavaScriptAction javaScriptAction, JavaScriptOperation javaScriptOperation) {
     this.waitingAction = waitingAction;
     this.javaScriptAction = javaScriptAction;
+    this.javaScriptOperation=javaScriptOperation;
   }
 
   public void setConfiguration(Configuration configuration) {
@@ -94,7 +98,7 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   @Override
   public void beforeFindBy(By by, WebElement webElement, WebDriver webDriver) {
-    logger.info("Searching Element  {}", by.toString());
+    logger.info("Finding Element  {}", by.toString());
     waitRequest();
   }
 
@@ -111,6 +115,7 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
   @Override
   public void beforeClickOn(WebElement webElement, WebDriver webDriver) {
     scroll(webElement);
+    changeElementBorder(webElement);
   }
 
   @Override
@@ -122,6 +127,7 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
   public void beforeChangeValueOf(WebElement webElement, WebDriver webDriver,
       CharSequence[] charSequences) {
     scroll(webElement);
+    changeElementBorder(webElement);
     waitingAction.waitByMs(150);
     if (charSequences != null) {
       logger.info("Set Value {}", charSequences.toString());
@@ -163,7 +169,7 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
   }
 
   @Override public void beforeGetText(WebElement element, WebDriver driver) {
-
+    waitRequest();
   }
 
   @Override public void afterGetText(WebElement element, WebDriver driver, String text) {
@@ -191,9 +197,14 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
 
   private void scroll(WebElement element) {
     try {
-      javaScriptAction.scrollToJs(element);
+      javaScriptAction.scrollIntoView(element);
     } catch (Exception e) {
       logger.warn("Scroll Failed ", e);
     }
+  }
+
+  private void changeElementBorder(WebElement element) {
+    javaScriptOperation.executeJS(
+        "arguments[0].setAttribute('style', 'border: 2px solid red;');", element);
   }
 }

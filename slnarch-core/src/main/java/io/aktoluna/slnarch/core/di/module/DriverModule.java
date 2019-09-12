@@ -115,8 +115,8 @@ public class DriverModule {
   @Provides
   @Singleton
   public WaitEventListener provideWaitEventListener(WaitingAction waitingAction,
-      JavaScriptAction javaScriptAction) {
-    return new WaitEventListener(waitingAction, javaScriptAction);
+      JavaScriptAction javaScriptAction,JavaScriptOperation javaScriptOperation) {
+    return new WaitEventListener(waitingAction, javaScriptAction,javaScriptOperation);
   }
 
   @Provides

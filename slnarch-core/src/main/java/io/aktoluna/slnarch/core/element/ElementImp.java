@@ -66,8 +66,6 @@ public class ElementImp implements Element<ElementImp> {
     clearElementList();
     WebElement element;
     try {
-//      element = waitingAction
-//          .waitUntil(ExpectedConditions.presenceOfElementLocated(by));
       element = driver.findElement(by);
       setElementList(element);
     } catch (Exception e) {
@@ -129,42 +127,42 @@ public class ElementImp implements Element<ElementImp> {
     return finds(getByCreate().createBy(name));
   }
 
-//  @Override
-//  public ElementImp finds(By by, String searchText) {
-//    clearElementList();
-//    List<WebElement> elements = null;
-//    try {
-////      elements = waitingAction.waitUntil(visibilityAndTextOfAllElementsLocatedBy(by, searchText));
-//      elements = driver.findElements(by);
-//      setElementList(elements);
-//    } catch (Exception e) {
-//      logger.error("Element Not Found By={} Reason={}", by.toString(), e);
-//    }
-//
-//    return this;
-//  }
+  //  @Override
+  //  public ElementImp finds(By by, String searchText) {
+  //    clearElementList();
+  //    List<WebElement> elements = null;
+  //    try {
+  ////      elements = waitingAction.waitUntil(visibilityAndTextOfAllElementsLocatedBy(by, searchText));
+  //      elements = driver.findElements(by);
+  //      setElementList(elements);
+  //    } catch (Exception e) {
+  //      logger.error("Element Not Found By={} Reason={}", by.toString(), e);
+  //    }
+  //
+  //    return this;
+  //  }
 
-//  @Override
-//  public ElementImp finds(String name, String searchText) {
-//    return finds(byCreate.createBy(name), searchText);
-//  }
+  //  @Override
+  //  public ElementImp finds(String name, String searchText) {
+  //    return finds(byCreate.createBy(name), searchText);
+  //  }
 
-//  @Override
-//  public ElementImp find(By by, String searchText) {
-//    WebElement element = null;
-//    try {
-//      element = waitingAction.waitUntil(visibilityAndTextOfElementLocatedBy(by, searchText));
-//      setElementList(element);
-//    } catch (Exception e) {
-//      logger.error("Elements Not Found By={}", e, by.toString());
-//    }
-//    return this;
-//  }
-//
-//  @Override
-//  public ElementImp find(String name, String searchText) {
-//    return find(byCreate.createBy(name), searchText);
-//  }
+  //  @Override
+  //  public ElementImp find(By by, String searchText) {
+  //    WebElement element = null;
+  //    try {
+  //      element = waitingAction.waitUntil(visibilityAndTextOfElementLocatedBy(by, searchText));
+  //      setElementList(element);
+  //    } catch (Exception e) {
+  //      logger.error("Elements Not Found By={}", e, by.toString());
+  //    }
+  //    return this;
+  //  }
+  //
+  //  @Override
+  //  public ElementImp find(String name, String searchText) {
+  //    return find(byCreate.createBy(name), searchText);
+  //  }
 
   @Override
   public List<WebElement> findElements(By by) {
@@ -229,7 +227,6 @@ public class ElementImp implements Element<ElementImp> {
   public WebElement getElement() {
     return getElement(0);
   }
-
 
   @Override
   public Actions newAction() {
@@ -303,6 +300,28 @@ public class ElementImp implements Element<ElementImp> {
   @Override
   public ElementImp sendKeys(int index, CharSequence... keys) {
     return sendKeys(getElements(), index, keys);
+  }
+
+  @Override
+  public ElementImp sendKeysWithWait(WebElement element, long waitMillis, CharSequence... keys) {
+    for (CharSequence key : keys) {
+      element.sendKeys(key);
+      waitingAction.waitByMs(waitMillis);
+    }
+    return this;
+  }
+
+  @Override public ElementImp sendKeysWithWait(long waitMillis, CharSequence... keys) {
+    return sendKeysWithWait(getElement(), waitMillis, keys);
+  }
+
+  @Override public ElementImp sendKeysWithWait(List<WebElement> element, int index, long waitMillis,
+      CharSequence... keys) {
+    return sendKeysWithWait(element.get(index), waitMillis, keys);
+  }
+
+  @Override public ElementImp sendKeysWithWait(int index, long waitMillis, CharSequence... keys) {
+    return sendKeysWithWait(getElement(index), waitMillis, keys);
   }
 
   @Override
@@ -461,6 +480,26 @@ public class ElementImp implements Element<ElementImp> {
   @Override
   public ElementImp scrollToJs() {
     return scrollToJs(getElement());
+  }
+
+  @Override public ElementImp scrollIntoView() {
+    ElementImp elementImp = scrollIntoView(getElement());
+    return elementImp;
+  }
+
+  @Override public ElementImp scrollIntoView(int index) {
+    return scrollIntoView(getElement(index));
+  }
+
+  @Override public ElementImp scrollIntoView(List<WebElement> elements, int index) {
+    return scrollIntoView(elements.get(index));
+  }
+
+  @Override public ElementImp scrollIntoView(WebElement element) {
+    javaScriptOperation.executeJS(
+        "arguments[0].scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});",
+        element);
+    return this;
   }
 
   @Override
@@ -722,7 +761,6 @@ public class ElementImp implements Element<ElementImp> {
     setElementList(elements);
     return this;
   }
-
 
   @Override
   public ElementImp findByPresence(By by) {

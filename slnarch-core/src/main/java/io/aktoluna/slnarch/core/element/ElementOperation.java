@@ -35,6 +35,14 @@ public interface ElementOperation<T extends Element> {
 
   T sendKeys(int index, CharSequence... keys);
 
+  T sendKeysWithWait(WebElement element, long waitMillis, CharSequence... keys);
+
+  T sendKeysWithWait(long waitMillis, CharSequence... keys);
+
+  T sendKeysWithWait(List<WebElement> element, int index, long waitMillis, CharSequence... keys);
+
+  T sendKeysWithWait(int index, long waitMillis, CharSequence... keys);
+
   T selectComboItem(WebElement element, String value);
 
   T selectComboItem(List<WebElement> elements, int index, String value);

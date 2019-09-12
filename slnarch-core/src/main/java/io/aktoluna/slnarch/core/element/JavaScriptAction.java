@@ -39,4 +39,12 @@ public interface JavaScriptAction<T extends Element> {
 
   T scrollToJs();
 
+  T scrollIntoView();
+
+  T scrollIntoView(int index);
+
+  T scrollIntoView(List<WebElement> elements, int index);
+
+  T scrollIntoView(WebElement element);
+
 }
