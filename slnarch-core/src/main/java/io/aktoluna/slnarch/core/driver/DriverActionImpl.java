@@ -1,6 +1,5 @@
 package io.aktoluna.slnarch.core.driver;
 
-
 import io.aktoluna.slnarch.common.image.ImageHelper;
 import io.aktoluna.slnarch.core.wait.WaitingAction;
 import java.io.File;
@@ -16,7 +15,6 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 
 public final class DriverActionImpl implements DriverAction {
 
@@ -112,7 +110,6 @@ public final class DriverActionImpl implements DriverAction {
     return this;
   }
 
-
   @Override
   public Alert getAlertIsPresent() {
     return ExpectedConditions.alertIsPresent().apply(driver);
@@ -169,12 +166,21 @@ public final class DriverActionImpl implements DriverAction {
 
   @Override
   public File takeScreenShot() {
-    return ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+    File file = null;
+    try {
+      file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+    } catch (Exception e) {
+
+    }
+    return file;
   }
 
   @Override
   public File takeScreenShotAndCompress() {
     File file = takeScreenShot();
+    if (file == null) {
+      return file;
+    }
     try {
       file = ImageHelper.resizeWithThumbnails(file, 1200, 600);
     } catch (IOException e) {

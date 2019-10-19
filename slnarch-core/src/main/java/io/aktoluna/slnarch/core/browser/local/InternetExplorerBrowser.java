@@ -4,8 +4,10 @@ import io.aktoluna.slnarch.common.helper.SystemPropertyHelper;
 import io.aktoluna.slnarch.core.browser.BaseBrowser;
 import io.aktoluna.slnarch.core.model.Configuration;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
+import org.openqa.selenium.remote.CapabilityType;
 
 public class InternetExplorerBrowser extends
     BaseBrowser<InternetExplorerDriver, InternetExplorerOptions, InternetExplorerBrowser> {
@@ -23,6 +25,8 @@ public class InternetExplorerBrowser extends
   @Override
   protected InternetExplorerOptions getDefaultOptions(Proxy proxy) {
     InternetExplorerOptions options = new InternetExplorerOptions();
+    options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR,
+        UnexpectedAlertBehaviour.IGNORE);
     if (proxy != null) {
       options.setProxy(proxy);
     }

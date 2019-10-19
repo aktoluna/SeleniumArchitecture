@@ -1,5 +1,6 @@
 package io.aktoluna.slnarch.core.di.module;
 
+import com.google.common.collect.ImmutableList;
 import io.aktoluna.slnarch.common.file.PropertyHelper;
 import io.aktoluna.slnarch.core.driver.DriverAction;
 import io.aktoluna.slnarch.core.driver.DriverActionImpl;
@@ -19,6 +20,7 @@ import javax.inject.Singleton;
 import org.codejargon.feather.Provides;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -48,7 +50,8 @@ public class DriverModule {
             : configuration.getExplicitTimeOut(),
         configuration.getPollingTime() < 0 ? POLLING_TIME : configuration.getPollingTime());
     webDriverWait
-        .ignoring(NoSuchElementException.class, StaleElementReferenceException.class);
+        .ignoreAll(ImmutableList.of(UnhandledAlertException.class, NoSuchElementException.class,
+            StaleElementReferenceException.class));
     return webDriverWait;
   }
 
@@ -60,7 +63,8 @@ public class DriverModule {
         configuration.getPageTimeOut(),
         configuration.getPollingTime() < 0 ? POLLING_TIME : configuration.getPollingTime());
     webDriverWait
-        .ignoring(NoSuchElementException.class, StaleElementReferenceException.class);
+        .ignoreAll(ImmutableList.of(UnhandledAlertException.class, NoSuchElementException.class,
+            StaleElementReferenceException.class));
     return webDriverWait;
   }
 
@@ -75,7 +79,8 @@ public class DriverModule {
         .pollingEvery(
             configuration.getPollingTime() <= 0 ? POLLING_TIME : configuration.getPollingTime(),
             TimeUnit.MILLISECONDS)
-        .ignoring(NoSuchElementException.class, StaleElementReferenceException.class);
+        .ignoreAll(ImmutableList.of(UnhandledAlertException.class, NoSuchElementException.class,
+            StaleElementReferenceException.class));
   }
 
   @Provides
@@ -115,8 +120,8 @@ public class DriverModule {
   @Provides
   @Singleton
   public WaitEventListener provideWaitEventListener(WaitingAction waitingAction,
-      JavaScriptAction javaScriptAction,JavaScriptOperation javaScriptOperation) {
-    return new WaitEventListener(waitingAction, javaScriptAction,javaScriptOperation);
+      JavaScriptAction javaScriptAction, JavaScriptOperation javaScriptOperation) {
+    return new WaitEventListener(waitingAction, javaScriptAction, javaScriptOperation);
   }
 
   @Provides

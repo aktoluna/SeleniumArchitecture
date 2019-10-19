@@ -33,7 +33,6 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
     this.frameWait = frameWait;
   }
 
-
   @Override
   public WaitingAction waitAjaxComplete() {
     javaScriptOperation.executeJS("var callback = arguments[arguments.length - 1];"
@@ -42,7 +41,6 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
         + "    callback(xhr.responseText);" + "  }" + "};" + "xhr.send();");
     return this;
   }
-
 
   @Override
   public WaitingAction waitPageLoadComplete() {
@@ -59,8 +57,13 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
 
   @Override
   public WaitingAction waitForAngularLoad() {
-    Boolean existAngular = (Boolean) javaScriptOperation
-        .executeJS("return (typeof(angular) != 'undefined')");
+    Boolean existAngular = false;
+    try {
+      existAngular = (Boolean) javaScriptOperation
+          .executeJS("return (typeof(angular) != 'undefined')");
+    } catch (Throwable e) {
+      log.error("Angular Bool Wait Exception", e);
+    }
     if (existAngular) {
       try {
         driverWait.until(driver -> ((Boolean) ((JavascriptExecutor) driver).executeScript(
@@ -74,13 +77,18 @@ public final class WaitingActionImpl implements WaitingAction<WaitingAction> {
 
   @Override
   public WaitingAction waitJQueryComplete() {
-    Boolean existJquery = (Boolean) javaScriptOperation
-        .executeJS("return (typeof(jQuery) != 'undefined')");
+    Boolean existJquery = false;
+    try {
+      existJquery = (Boolean) javaScriptOperation
+          .executeJS("return (typeof(jQuery) != 'undefined')");
+    } catch (Throwable error) {
+      log.error("Jquery Boolean Wait Exception", error);
+    }
     if (existJquery) {
       try {
         driverWait.until(driver -> (Boolean) ((JavascriptExecutor) driver)
             .executeScript("return jQuery.active == 0"));
-      } catch (Exception e) {
+      } catch (Throwable e) {
         log.error("Jquery Wait Exception", e);
       }
     }

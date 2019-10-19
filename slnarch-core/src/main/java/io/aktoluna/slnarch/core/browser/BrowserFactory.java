@@ -9,7 +9,6 @@ import io.aktoluna.slnarch.core.browser.local.InternetExplorerBrowser;
 import io.aktoluna.slnarch.core.browser.local.SafariBrowser;
 import io.aktoluna.slnarch.core.browser.remote.JenkinsBrowser;
 import io.aktoluna.slnarch.core.browser.remote.LocalRemoteBrowser;
-import io.aktoluna.slnarch.core.browser.remote.TestiniumBrowser;
 import io.aktoluna.slnarch.core.model.Configuration;
 import java.net.MalformedURLException;
 import javax.annotation.Nullable;
@@ -23,9 +22,7 @@ public class BrowserFactory {
       Configuration configuration)
       throws MalformedURLException {
     Browser browser = null;
-    if (!StringHelper.isEmpty(SystemPropertyHelper.getTestiniumKey())) {
-      browser = new TestiniumBrowser(configuration);
-    } else if (!StringHelper.isEmpty(SystemPropertyHelper.getJenkinsTestiniumKey())) {
+    if (!StringHelper.isEmpty(SystemPropertyHelper.getJenkinsTestiniumKey())) {
       browser = new JenkinsBrowser(configuration);
     } else {
       if (configuration.getBrowserType().equals("Chrome")) {
@@ -44,5 +41,4 @@ public class BrowserFactory {
     }
     return browser.buildWebDriver(capabilities, proxy);
   }
-
 }

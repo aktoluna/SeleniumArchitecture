@@ -28,7 +28,7 @@ public class LocalRemoteBrowser extends
   @Override
   protected DesiredCapabilities getDefaultOptions(Proxy proxy) {
     DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-    capabilities.setCapability("key", SystemPropertyHelper.getTestiniumKey());
+    capabilities.setCapability("key", SystemPropertyHelper.getProperty("key"));
     if (proxy != null) {
       capabilities.setCapability(CapabilityType.PROXY, proxy);
     }
@@ -44,6 +44,7 @@ public class LocalRemoteBrowser extends
   public RemoteWebDriver buildWebDriver(DesiredCapabilities options, Proxy proxy)
       throws MalformedURLException {
     return setTimeOut(new RemoteWebDriver(new URL(
-        StringHelper.isEmpty(configuration.getHubUrl()) ? LOCAL_URL : configuration.getHubUrl()), getOptions(options, proxy)));
+        StringHelper.isEmpty(configuration.getHubUrl()) ? LOCAL_URL : configuration.getHubUrl()),
+        getOptions(options, proxy)));
   }
 }

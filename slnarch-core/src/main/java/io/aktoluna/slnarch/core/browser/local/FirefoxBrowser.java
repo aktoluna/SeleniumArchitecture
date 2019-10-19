@@ -5,8 +5,10 @@ import io.aktoluna.slnarch.core.browser.BaseBrowser;
 import io.aktoluna.slnarch.core.model.Configuration;
 import java.net.MalformedURLException;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.CapabilityType;
 
 public class FirefoxBrowser extends BaseBrowser<FirefoxDriver, FirefoxOptions, FirefoxBrowser> {
 
@@ -24,6 +26,8 @@ public class FirefoxBrowser extends BaseBrowser<FirefoxDriver, FirefoxOptions, F
   @Override
   protected FirefoxOptions getDefaultOptions(Proxy proxy) {
     FirefoxOptions options = new FirefoxOptions();
+    options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR,
+        UnexpectedAlertBehaviour.IGNORE);
     if (proxy != null) {
       options.setProxy(proxy);
     }

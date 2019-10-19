@@ -5,6 +5,7 @@ import io.aktoluna.slnarch.core.browser.BaseBrowser;
 import io.aktoluna.slnarch.core.model.Configuration;
 import java.net.MalformedURLException;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
@@ -29,6 +30,8 @@ public class ChromeBrowser extends BaseBrowser<ChromeDriver, ChromeOptions, Chro
     options.addArguments("disable-popup-blocking");
     options.addArguments("ignore-certificate-errors");
     options.addArguments("disable-translate");
+    options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR,
+        UnexpectedAlertBehaviour.IGNORE);
     if (proxy != null) {
       options.setCapability(CapabilityType.PROXY, proxy);
     }

@@ -1,10 +1,11 @@
 package io.aktoluna.slnarch.core.js;
 
+import io.aktoluna.slnarch.core.helper.ConfigurationHelper;
 import javax.inject.Inject;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
-public final class JavaScriptOperationImpl implements JavaScriptOperation {
+public class JavaScriptOperationImpl implements JavaScriptOperation {
 
   private final WebDriver driver;
 

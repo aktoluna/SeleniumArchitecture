@@ -7,6 +7,7 @@ import io.aktoluna.slnarch.core.model.Configuration;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -32,6 +33,8 @@ public class JenkinsBrowser extends
     capabilities.setCapability(CapabilityType.PLATFORM, SystemPropertyHelper.getPlatform());
     capabilities.setCapability(CapabilityType.BROWSER_NAME, SystemPropertyHelper.getBrowserName());
     capabilities.setCapability(CapabilityType.VERSION, SystemPropertyHelper.getBrowserVersion());
+    capabilities.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR,
+        UnexpectedAlertBehaviour.IGNORE);
     capabilities
         .setCapability(CapabilityType.TAKES_SCREENSHOT,
             StringHelper.convertStringToBoolean(SystemPropertyHelper.getTakeScreenShot()));

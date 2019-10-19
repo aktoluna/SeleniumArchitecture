@@ -8,7 +8,7 @@ import io.aktoluna.slnarch.core.model.Configuration;
 import java.io.IOException;
 import org.slf4j.Logger;
 
-public enum ConfigurationHelper {
+public enum  ConfigurationHelper {
   INSTANCE;
 
   Logger logger = LogHelper.getSlnLogger();
@@ -16,6 +16,7 @@ public enum ConfigurationHelper {
   Configuration configuration;
 
   ConfigurationHelper() {
+
     try {
       configuration = PropertyHelper
           .propertiesToClassWithAnnotation(PropertyHelper.readProperties("slnarch.properties"),

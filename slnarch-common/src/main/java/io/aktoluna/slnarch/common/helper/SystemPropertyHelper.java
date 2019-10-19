@@ -5,7 +5,6 @@ public class SystemPropertyHelper {
   private static final String PROP_CHROME_DRIVER = "webdriver.chrome.driver";
   private static final String PROP_FIREFOX_DRIVER = "webdriver.gecko.driver";
   private static final String PROP_INTERNET_EXPLORER_DRIVER = "webdriver.gecko.driver";
-  private static final String PROP_TESTINIUM_KEY = "key";
   private static final String PROP_JENKINS_KEY = "jenkinsKey";
   private static final String PROP_ENV = "env";
   private static final String PROP_PLATFORM = "platform";
@@ -14,7 +13,6 @@ public class SystemPropertyHelper {
   private static final String PROP_RECORDS_VIDEO = "recordVideo";
   private static final String PROP_SCREEN_RESOLUTION = "screenResolution";
   private static final String PROP_TAKE_SCREEN_SHOT = "takeScreenShot";
-
 
   private SystemPropertyHelper() {
 
@@ -26,10 +24,6 @@ public class SystemPropertyHelper {
 
   public static void setProperty(String propertyKey, String propertyValue) {
     System.setProperty(propertyKey, propertyValue);
-  }
-
-  public static String getTestiniumKey() {
-    return getProperty(PROP_TESTINIUM_KEY);
   }
 
   public static String getJenkinsTestiniumKey() {
@@ -75,5 +69,4 @@ public class SystemPropertyHelper {
   public static void setInternetExplorerDriverLocation(String path) {
     setProperty(PROP_INTERNET_EXPLORER_DRIVER, path);
   }
-
 }

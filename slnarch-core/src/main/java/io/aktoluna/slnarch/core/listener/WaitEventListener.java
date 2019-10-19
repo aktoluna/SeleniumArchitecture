@@ -26,7 +26,7 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
       JavaScriptAction javaScriptAction, JavaScriptOperation javaScriptOperation) {
     this.waitingAction = waitingAction;
     this.javaScriptAction = javaScriptAction;
-    this.javaScriptOperation=javaScriptOperation;
+    this.javaScriptOperation = javaScriptOperation;
   }
 
   public void setConfiguration(Configuration configuration) {
@@ -42,11 +42,13 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
   @Override
   public void afterAlertAccept(WebDriver webDriver) {
     logger.info("Alert Popup Accept");
+    waitRequest();
   }
 
   @Override
   public void afterAlertDismiss(WebDriver webDriver) {
     logger.info("Alert Popup Dismiss");
+    waitRequest();
   }
 
   @Override
@@ -153,11 +155,12 @@ public class WaitEventListener extends BaseListener implements WebDriverEventLis
   }
 
   @Override public void afterSwitchToWindow(String windowName, WebDriver driver) {
-
+    waitRequest();
   }
 
   @Override
   public void onException(Throwable throwable, WebDriver webDriver) {
+
   }
 
   @Override public <X> void beforeGetScreenshotAs(OutputType<X> target) {
