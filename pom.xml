@@ -50,7 +50,7 @@
     <aspectj.version>1.8.9</aspectj.version>
     <feather.version>1.0</feather.version>
     <apache.common.version>3.6</apache.common.version>
-    <kotlin.version>1.2.41</kotlin.version>
+    <kotlin.version>1.6.0</kotlin.version>
     <commons.lang3.version>3.5</commons.lang3.version>
     <junit.version>4.12</junit.version>
     <junit.jupiter.version>5.0.1</junit.jupiter.version>
